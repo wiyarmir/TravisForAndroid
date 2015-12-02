@@ -1,26 +1,65 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+apply from: '../findbugs.gradle'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaSourceCompatibility
+        targetCompatibility rootProject.ext.javaTargetCompatibility
+    }
 
     defaultConfig {
         applicationId "es.guillermoorellana.travisforandroid"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionName project.VERSION_NAME
+        versionCode Integer.parseInt(project.VERSION_CODE)
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        warning 'InvalidPackage' // okhttp uses nio which is not part of android
+    }
+}
+dependencies {
+
+    compile "com.android.support:recyclerview-v7:$rootProject.ext.recyclerviewVersion"
+    compile "com.android.support:appcompat-v7:$rootProject.ext.appcompat7Version"
+    compile "com.android.support:design:$rootProject.ext.designVersion"
+    compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+
+    compile "io.reactivex:rxjava:$rootProject.ext.rxjavaVersion"
+    compile "io.reactivex:rxandroid:$rootProject.ext.rxandroidVersion"
+
+    compile 'frankiesardo:icepick:' + rootProject.ext.icepickVersion
+    apt 'frankiesardo:icepick-processor:' + rootProject.ext.icepickVersion
+
+    apt "com.hannesdorfmann.annotatedadapter:processor:$rootProject.ext.annotatedadapterVersion"
+    compile "com.hannesdorfmann.annotatedadapter:annotation:$rootProject.ext.annotatedadapterVersion"
+    compile "com.hannesdorfmann.annotatedadapter:support-recyclerview:$rootProject.ext.annotatedadapterVersion"
+
+    compile "com.google.dagger:dagger:$rootProject.ext.dagger2Version"
+    apt "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
+    compile "javax.annotation:javax.annotation-api:1.2"
+
+    compile "com.squareup.okhttp:okhttp:$rootProject.ext.okhttpVersion"
+    compile "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
+    compile "com.squareup.retrofit:retrofit:$rootProject.ext.retrofitVersion"
+    compile 'com.squareup.leakcanary:leakcanary-android:' + rootProject.ext.leakcanaryVersion
+
+    testCompile "com.squareup.retrofit:retrofit-mock:$rootProject.ext.retrofitVersion"
+    testCompile "com.google.dagger:dagger:$rootProject.ext.dagger2Version"
+    testCompile "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
+    testCompile "javax.annotation:javax.annotation-api:1.2"
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-}
