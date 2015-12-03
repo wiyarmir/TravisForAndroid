@@ -3,17 +3,10 @@ package es.guillermoorellana.travisforandroid;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.DisplayMetrics;
 
-import com.codemonkeylabs.fpslibrary.TinyDancer;
-import com.facebook.stetho.Stetho;
-import com.squareup.leakcanary.LeakCanary;
-
+import es.guillermoorellana.travisforandroid.devtools.DeveloperTools;
 import es.guillermoorellana.travisforandroid.model.api.ApiModule;
 import timber.log.Timber;
-
-import static android.view.Gravity.START;
-import static android.view.Gravity.TOP;
 
 public class TravisApp extends Application {
 
@@ -41,18 +34,7 @@ public class TravisApp extends Application {
 
         applicationComponent.inject(this);
 
-        if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this);
-            LeakCanary.install(this);
-            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-            TinyDancer.create()
-                    .redFlagPercentage(0.2f)
-                    .yellowFlagPercentage(0.05f)
-                    .startingGravity(TOP | START)
-                    .startingXPosition(displayMetrics.widthPixels / 10)
-                    .startingYPosition(displayMetrics.heightPixels / 4)
-                    .show(this);
-        }
+        DeveloperTools.init(this);
     }
 
     @NonNull

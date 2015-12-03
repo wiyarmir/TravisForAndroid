@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import es.guillermoorellana.travisforandroid.R;
 
 public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder> {
+    public RepoAdapter() {
+        // noop
+    }
 
     @Override
     public RepoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -19,6 +22,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
 
     @Override
     public void onBindViewHolder(RepoViewHolder holder, int position) {
+        // TODO do data bindings
     }
 
     @Override
@@ -26,8 +30,8 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
         return 15;
     }
 
+    @SuppressWarnings("PMD") // didnt figure out how to make PMD like ViewHolders
     public static class RepoViewHolder extends RecyclerView.ViewHolder {
-
         public RepoViewHolder(View itemView) {
             super(itemView);
         }

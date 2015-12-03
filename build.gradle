@@ -107,7 +107,7 @@ subprojects {
 
     plugins.apply('pmd')
 
-    task pmd(type: Pmd) {
+    task pmd(type: Pmd, group: 'verification') {
         ignoreFailures = false // Fail early.
         ruleSets = ['java-basic', 'java-braces', 'java-strings', 'java-design', 'java-unusedcode']
 
@@ -116,7 +116,7 @@ subprojects {
 
     plugins.apply('findbugs')
 
-    task findbugs(type: FindBugs) {
+    task findbugs(type: FindBugs, group: 'verification') {
         ignoreFailures = false // Fail early.
         effort = 'max'
         reportLevel = 'low' // Report even low priority problems.
@@ -132,7 +132,7 @@ subprojects {
 
     plugins.apply('checkstyle')
 
-    task checkstyle(type: Checkstyle) {
+    task checkstyle(type: Checkstyle, group: 'verification') {
         configFile rootProject.file('checkstyle.xml')
 
         ignoreFailures false // Fail early.
