@@ -1,10 +1,12 @@
-package es.guillermoorellana.travisforandroid;
+package es.guillermoorellana.travisforandroid.ui.activity;
 
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+
+import es.guillermoorellana.travisforandroid.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 

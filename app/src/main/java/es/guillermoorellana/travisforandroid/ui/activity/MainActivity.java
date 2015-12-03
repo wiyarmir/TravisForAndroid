@@ -1,6 +1,8 @@
-package es.guillermoorellana.travisforandroid;
+package es.guillermoorellana.travisforandroid.ui.activity;
 
 import android.os.Bundle;
+
+import es.guillermoorellana.travisforandroid.R;
 
 public class MainActivity extends BaseActivity {
 

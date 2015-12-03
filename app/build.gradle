@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply from: '../jacoco.gradle'
+apply from: '../lint-summary.gradle'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
