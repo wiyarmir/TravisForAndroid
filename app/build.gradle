@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
-apply from: '../findbugs.gradle'
+apply from: '../jacoco.gradle'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -18,6 +18,12 @@ android {
         targetSdkVersion rootProject.ext.targetSdk
         versionName project.VERSION_NAME
         versionCode Integer.parseInt(project.VERSION_CODE)
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -27,39 +33,104 @@ android {
         }
     }
 
+    sourceSets {
+        // Common code for JVM tests lives in src/jvmTestsCommon.
+        test.java.srcDir 'src/jvmTestsCommon/java'
+
+        // Unit tests live in src/unitTest.
+        test.java.srcDir 'src/unitTests/java'
+
+        // Integration tests live in src/integrationTest.
+        test.java.srcDir 'src/integrationTests/java'
+
+        // Unit tests for debug build type specific code live in src/debugUnitTest.
+        testDebug.java.srcDir 'src/debugUnitTests/java'
+
+        // Unit tests for release build type specific code live in src/releaseUnitTest.
+        testRelease.java.srcDir 'src/releaseUnitTests/java'
+
+        // Functional tests live in src/functionalTests.
+        androidTest.java.srcDir 'src/functionalTests/java'
+    }
+
     lintOptions {
-        warning 'InvalidPackage' // okhttp uses nio which is not part of android
+        warningsAsErrors true
+        abortOnError true // Fail early.
+
+        disable 'GoogleAppIndexingWarning' // App does not have deep linking.
+        disable 'InvalidPackage' // Okio references java.nio that does not presented in Android SDK.
+    }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
+    testOptions.unitTests.all {
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+            exceptionFormat 'full'
+        }
     }
 }
 dependencies {
+    compile libraries.dagger
+    apt libraries.daggerCompiler
+    compile libraries.javaxInject
+    compile libraries.javaxAnnotationApi
 
-    compile "com.android.support:recyclerview-v7:$rootProject.ext.recyclerviewVersion"
-    compile "com.android.support:appcompat-v7:$rootProject.ext.appcompat7Version"
-    compile "com.android.support:design:$rootProject.ext.designVersion"
-    compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
+    compile libraries.rxJava
 
-    compile "io.reactivex:rxjava:$rootProject.ext.rxjavaVersion"
-    compile "io.reactivex:rxandroid:$rootProject.ext.rxandroidVersion"
+    compile libraries.okHttp
+    compile libraries.okHttpLoggingInterceptor
+    compile libraries.retrofit
+    compile libraries.retrofitJacksonConverter
+    compile libraries.retrofitRxJavaAdapter
+    compile libraries.jacksonDataBind
 
-    compile 'frankiesardo:icepick:' + rootProject.ext.icepickVersion
-    apt 'frankiesardo:icepick-processor:' + rootProject.ext.icepickVersion
+    compile libraries.autoValue
 
-    apt "com.hannesdorfmann.annotatedadapter:processor:$rootProject.ext.annotatedadapterVersion"
-    compile "com.hannesdorfmann.annotatedadapter:annotation:$rootProject.ext.annotatedadapterVersion"
-    compile "com.hannesdorfmann.annotatedadapter:support-recyclerview:$rootProject.ext.annotatedadapterVersion"
+    compile libraries.supportAnnotations
+    compile libraries.supportAppCompat
+    compile libraries.supportDesign
+    compile libraries.supportRecyclerView
+    compile libraries.supportCardView
 
-    compile "com.google.dagger:dagger:$rootProject.ext.dagger2Version"
-    apt "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
-    compile "javax.annotation:javax.annotation-api:1.2"
+    compile libraries.butterKnife
+    compile libraries.picasso
+    compile libraries.timber
 
-    compile "com.squareup.okhttp:okhttp:$rootProject.ext.okhttpVersion"
-    compile "com.squareup.picasso:picasso:$rootProject.ext.picassoVersion"
-    compile "com.squareup.retrofit:retrofit:$rootProject.ext.retrofitVersion"
-    compile 'com.squareup.leakcanary:leakcanary-android:' + rootProject.ext.leakcanaryVersion
+    // Developer tools (Developer Settings)
+    debugCompile libraries.stetho
+    debugCompile libraries.stethoOkHttp
+    debugCompile libraries.leakCanary
+    debugCompile libraries.tinyDancer
 
-    testCompile "com.squareup.retrofit:retrofit-mock:$rootProject.ext.retrofitVersion"
-    testCompile "com.google.dagger:dagger:$rootProject.ext.dagger2Version"
-    testCompile "com.google.dagger:dagger-compiler:$rootProject.ext.dagger2Version"
-    testCompile "javax.annotation:javax.annotation-api:1.2"
+    testCompile libraries.junit
+    testCompile libraries.robolectric
+    testCompile libraries.assertJ
+    testCompile libraries.equalsVerifier
+    testCompile libraries.okHttpMockWebServer
+    testCompile libraries.mockitoCore
+
+    androidTestCompile libraries.supportTestRunner
+    androidTestCompile libraries.supportTestRules
+    androidTestCompile libraries.espressoCore
+    androidTestCompile(libraries.espressoContrib) {
+        // Causes IncompatibleClassChangeError. As always…
+        exclude module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'support-v4'
+    }
+    androidTestCompile libraries.okHttpMockWebServer
 }
 
+configurations.all {
+    resolutionStrategy {
+        // Force our version of support-annotations, we have a conflict between app and androidTest dependency resolution.
+        force libraries.supportAnnotations
+    }
+}
