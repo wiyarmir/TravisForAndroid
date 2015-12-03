@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import es.guillermoorellana.travisforandroid.model.api.ApiModule;
 import timber.log.Timber;
 
 public class TravisApp extends Application {
@@ -27,6 +28,7 @@ public class TravisApp extends Application {
 
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .apiModule(new ApiModule("https://api.travis-ci.org/"))
                 .build();
 
         applicationComponent.inject(this);

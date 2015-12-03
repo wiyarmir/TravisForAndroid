@@ -62,9 +62,9 @@ ext.libraries = [
         okHttp                  : "com.squareup.okhttp:okhttp:$okHttpVersion",
         okHttpLoggingInterceptor: "com.squareup.okhttp:logging-interceptor:$okHttpVersion",
         retrofit                : "com.squareup.retrofit:retrofit:$retrofitVersion",
-        retrofitJacksonConverter: "com.squareup.retrofit:converter-jackson:$retrofitVersion",
+        retrofitMoshiConverter  : "com.squareup.retrofit:converter-moshi:$retrofitVersion",
         retrofitRxJavaAdapter   : "com.squareup.retrofit:adapter-rxjava:$retrofitVersion",
-        jacksonDataBind         : "com.fasterxml.jackson.core:jackson-databind:2.6.3",
+        moshi                   : "com.squareup.moshi:moshi:1.0.0",
 
         autoValue               : "com.google.auto.value:auto-value:1.1",
 

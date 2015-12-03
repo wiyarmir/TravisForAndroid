@@ -88,9 +88,9 @@ dependencies {
     compile libraries.okHttp
     compile libraries.okHttpLoggingInterceptor
     compile libraries.retrofit
-    compile libraries.retrofitJacksonConverter
+    compile libraries.retrofitMoshiConverter
     compile libraries.retrofitRxJavaAdapter
-    compile libraries.jacksonDataBind
+    compile libraries.moshi
 
     compile libraries.autoValue
 
