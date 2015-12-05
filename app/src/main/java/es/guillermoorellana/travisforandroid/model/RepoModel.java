@@ -20,6 +20,6 @@ public class RepoModel {
     }
 
     public Single<List<Repo>> getRepos() {
-        return mTravisRestApi.getRepos();
+        return mTravisRestApi.repos();
     }
 }

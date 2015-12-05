@@ -8,5 +8,5 @@ import rx.Single;
 
 public interface TravisRestApi {
     @GET
-    Single<List<Repo>> getRepos();
+    Single<List<Repo>> repos();
 }
