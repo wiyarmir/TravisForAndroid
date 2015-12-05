@@ -62,11 +62,13 @@ ext.libraries = [
         okHttp                  : "com.squareup.okhttp:okhttp:$okHttpVersion",
         okHttpLoggingInterceptor: "com.squareup.okhttp:logging-interceptor:$okHttpVersion",
         retrofit                : "com.squareup.retrofit:retrofit:$retrofitVersion",
-        retrofitGsonConverter  : "com.squareup.retrofit:converter-gson:$retrofitVersion",
+        retrofitGsonConverter   : "com.squareup.retrofit:converter-gson:$retrofitVersion",
         retrofitRxJavaAdapter   : "com.squareup.retrofit:adapter-rxjava:$retrofitVersion",
         moshi                   : "com.squareup.moshi:moshi:1.0.0",
 
         autoValue               : "com.google.auto.value:auto-value:1.1",
+        jodaTimeAndroid         : "net.danlew:android.joda:2.9.0",
+        jodaTimeGsonConverter   : "com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.2.0",
 
         supportAnnotations      : "com.android.support:support-annotations:$supportLibsVersion",
         supportAppCompat        : "com.android.support:appcompat-v7:$supportLibsVersion",
@@ -128,6 +130,11 @@ subprojects {
         classpath = files()
 
         excludeFilter = rootProject.file('findbugs-filter.xml')
+
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
     }
 
     plugins.apply('checkstyle')

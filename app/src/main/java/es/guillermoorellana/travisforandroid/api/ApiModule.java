@@ -2,6 +2,7 @@ package es.guillermoorellana.travisforandroid.api;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
 
 import javax.inject.Singleton;
@@ -34,11 +35,12 @@ public class ApiModule {
     @NonNull
     @Singleton
     public TravisRestApi provideQualityMattersApi(@NonNull OkHttpClient okHttpClient,
-                                                  @NonNull ChangeableBaseUrl changeableBaseUrl) {
+                                                  @NonNull ChangeableBaseUrl changeableBaseUrl,
+                                                  @NonNull Gson gson) {
         final Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(changeableBaseUrl)
                 .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
 
         // Fail early: check Retrofit configuration at creation time

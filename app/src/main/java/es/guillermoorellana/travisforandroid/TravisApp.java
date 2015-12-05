@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import es.guillermoorellana.travisforandroid.devtools.DeveloperTools;
 import es.guillermoorellana.travisforandroid.api.ApiModule;
 import timber.log.Timber;
@@ -26,6 +28,8 @@ public class TravisApp extends Application {
         super.onCreate();
         // Since this is app for developers we can log even in release build.
         Timber.plant(new Timber.DebugTree());
+
+        JodaTimeAndroid.init(this);
 
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
