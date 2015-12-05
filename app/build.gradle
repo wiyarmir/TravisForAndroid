@@ -84,6 +84,7 @@ dependencies {
     compile libraries.javaxAnnotationApi
 
     compile libraries.rxJava
+    compile libraries.rxAndroid
 
     compile libraries.okHttp
     compile libraries.okHttpLoggingInterceptor

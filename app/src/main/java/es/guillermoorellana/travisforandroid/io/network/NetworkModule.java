@@ -24,6 +24,7 @@ public class NetworkModule {
     public OkHttpClient provideOkHttpClient(@NonNull HttpLoggingInterceptor httpLoggingInterceptor) {
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.interceptors().add(httpLoggingInterceptor);
+        okHttpClient.interceptors().add(new UserAgentInterceptor());
         return okHttpClient;
     }
 

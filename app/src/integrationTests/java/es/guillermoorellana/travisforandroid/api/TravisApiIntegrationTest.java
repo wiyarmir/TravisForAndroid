@@ -102,6 +102,9 @@ public class TravisApiIntegrationTest {
         List<Repo> items = travisRestApi.repos().toBlocking().value();
 
         assertThat(items).hasSize(3);
+
+        // TODO test item #0
+
         assertThat(items.get(1).getId()).isEqualTo(82);
         assertThat(items.get(1).getSlug()).isEqualTo("sinatra/sinatra");
         assertThat(items.get(1).isActive()).isEqualTo(true);
@@ -119,5 +122,6 @@ public class TravisApiIntegrationTest {
                 .isEqualTo(DateTime.parse("2015-12-04T09:00:25Z"));
         assertThat(items.get(1).getGithubLanguage()).isEqualTo("Ruby");
 
+        // TODO test item #2
     }
 }
