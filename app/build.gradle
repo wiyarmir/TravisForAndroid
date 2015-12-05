@@ -94,9 +94,6 @@ dependencies {
 
     compile libraries.autoValue
     compile libraries.jodaTimeAndroid
-    compile(libraries.jodaTimeGsonConverter) {
-        exclude module: 'joda-time'
-    }
 
     compile libraries.supportAnnotations
     compile libraries.supportAppCompat

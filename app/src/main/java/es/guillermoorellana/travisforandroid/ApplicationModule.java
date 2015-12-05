@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
-import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -45,9 +44,8 @@ public class ApplicationModule {
     @NonNull
     @Singleton
     public Gson provideGson() {
-        return Converters.registerAll(
-                new GsonBuilder()
-                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-        ).create();
+        return new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
     }
 }

@@ -38,6 +38,11 @@ public class TravisApp extends Application {
 
         applicationComponent.inject(this);
 
+        developerTools();
+    }
+
+    // To be overriden in robolectric tests
+    protected void developerTools() {
         DeveloperTools.init(this);
     }
 

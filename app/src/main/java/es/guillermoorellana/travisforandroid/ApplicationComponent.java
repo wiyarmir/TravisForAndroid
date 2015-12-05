@@ -2,6 +2,8 @@ package es.guillermoorellana.travisforandroid;
 
 import android.support.annotation.NonNull;
 
+import com.google.gson.Gson;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -23,6 +25,9 @@ public interface ApplicationComponent {
 
     @NonNull
     ChangeableBaseUrl changeableBaseUrl();
+
+    @NonNull
+    Gson gson();
 
     void inject(@NonNull TravisApp travisApp);
 

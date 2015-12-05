@@ -68,7 +68,6 @@ ext.libraries = [
 
         autoValue               : "com.google.auto.value:auto-value:1.1",
         jodaTimeAndroid         : "net.danlew:android.joda:2.9.0",
-        jodaTimeGsonConverter   : "com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:1.2.0",
 
         supportAnnotations      : "com.android.support:support-annotations:$supportLibsVersion",
         supportAppCompat        : "com.android.support:appcompat-v7:$supportLibsVersion",

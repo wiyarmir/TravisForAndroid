@@ -1,6 +1,9 @@
 package es.guillermoorellana.travisforandroid.api.entities;
 
+
 import org.joda.time.DateTime;
+
+import java.util.Date;
 
 public class Repo {
     private int id;
@@ -12,8 +15,8 @@ public class Repo {
     private String lastBuildState;
     private long lastBuildDuration;
     private String lastBuildLanguage;
-    private DateTime lastBuildStartedAt;
-    private DateTime lastBuildFinishedAt;
+    private Date lastBuildStartedAt;
+    private Date lastBuildFinishedAt;
     private String githubLanguage;
 
     public int getId() {
@@ -32,7 +35,7 @@ public class Repo {
         return description;
     }
 
-    public int getLastBuildId() {
+    public long getLastBuildId() {
         return lastBuildId;
     }
 
@@ -53,11 +56,11 @@ public class Repo {
     }
 
     public DateTime getLastBuildStartedAt() {
-        return lastBuildStartedAt;
+        return new DateTime(lastBuildStartedAt);
     }
 
     public DateTime getLastBuildFinishedAt() {
-        return lastBuildFinishedAt;
+        return new DateTime(lastBuildFinishedAt);
     }
 
     public String getGithubLanguage() {
