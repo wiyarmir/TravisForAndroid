@@ -8,7 +8,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
-import es.guillermoorellana.travisforandroid.model.RepoAdapter;
+import es.guillermoorellana.travisforandroid.ui.adapter.RepoAdapter;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 
 public class MainActivity extends BaseActivity {
