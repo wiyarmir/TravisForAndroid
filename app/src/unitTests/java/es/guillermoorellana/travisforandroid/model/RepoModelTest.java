@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entities.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.Repo;
 import rx.Single;
 
 import static java.util.Arrays.asList;

@@ -7,7 +7,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entities.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.Repo;
 import rx.Single;
 
 public class RepoModel {

@@ -2,11 +2,11 @@ package es.guillermoorellana.travisforandroid.api;
 
 import java.util.List;
 
-import es.guillermoorellana.travisforandroid.api.entities.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.Repo;
 import retrofit.http.GET;
 import rx.Single;
 
 public interface TravisRestApi {
-    @GET
+    @GET("repos/")
     Single<List<Repo>> repos();
 }

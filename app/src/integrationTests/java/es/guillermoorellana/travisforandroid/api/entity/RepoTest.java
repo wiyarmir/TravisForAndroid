@@ -1,4 +1,4 @@
-package es.guillermoorellana.travisforandroid.entity;
+package es.guillermoorellana.travisforandroid.api.entity;
 
 import com.google.gson.Gson;
 
@@ -7,12 +7,11 @@ import org.joda.time.DateTimeComparator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import es.guillermoorellana.travisforandroid.QualityMattersRobolectricTestRunner;
-import es.guillermoorellana.travisforandroid.api.entities.Repo;
+import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(QualityMattersRobolectricTestRunner.class)
+@RunWith(TravisDroidRobolectricTestRunner.class)
 public class RepoTest {
     private static final String JSON_STRING = "{\n" +
             "    \"id\": 82,\n" +
@@ -31,7 +30,7 @@ public class RepoTest {
 
     @Test
     public void fromJson() {
-        Gson gson = QualityMattersRobolectricTestRunner.travisApp().applicationComponent().gson();
+        Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
         Repo item = gson.fromJson(JSON_STRING, Repo.class);
         assertThat(item.getId()).isEqualTo(82);
         assertThat(item.getSlug()).isEqualTo("sinatra/sinatra");

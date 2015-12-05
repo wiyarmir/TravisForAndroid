@@ -13,12 +13,12 @@ import java.lang.reflect.Method;
  * <p>
  * Taken from github.com/artemzin/qualitymatters
  */
-public class QualityMattersRobolectricTestRunner extends RobolectricGradleTestRunner {
+public class TravisDroidRobolectricTestRunner extends RobolectricGradleTestRunner {
 
     // This value should be changed as soon as Robolectric will support newer api.
     private static final int SDK_EMULATE_LEVEL = 21;
 
-    public QualityMattersRobolectricTestRunner(@NonNull Class<?> klass) throws Exception {
+    public TravisDroidRobolectricTestRunner(@NonNull Class<?> klass) throws Exception {
         super(klass);
     }
 

@@ -1,4 +1,4 @@
-package es.guillermoorellana.travisforandroid.api.entities;
+package es.guillermoorellana.travisforandroid.api.entity;
 
 
 import org.joda.time.DateTime;
