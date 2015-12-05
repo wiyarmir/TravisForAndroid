@@ -1,4 +1,4 @@
-package es.guillermoorellana.travisforandroid.model.api;
+package es.guillermoorellana.travisforandroid.api;
 
 import android.support.annotation.NonNull;
 
@@ -9,7 +9,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import es.guillermoorellana.travisforandroid.BuildConfig;
-import retrofit.MoshiConverterFactory;
+import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 
@@ -38,7 +38,7 @@ public class ApiModule {
         final Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(changeableBaseUrl)
                 .client(okHttpClient)
-                .addConverterFactory(MoshiConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
 
         // Fail early: check Retrofit configuration at creation time

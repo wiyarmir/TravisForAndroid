@@ -62,7 +62,7 @@ ext.libraries = [
         okHttp                  : "com.squareup.okhttp:okhttp:$okHttpVersion",
         okHttpLoggingInterceptor: "com.squareup.okhttp:logging-interceptor:$okHttpVersion",
         retrofit                : "com.squareup.retrofit:retrofit:$retrofitVersion",
-        retrofitMoshiConverter  : "com.squareup.retrofit:converter-moshi:$retrofitVersion",
+        retrofitGsonConverter  : "com.squareup.retrofit:converter-gson:$retrofitVersion",
         retrofitRxJavaAdapter   : "com.squareup.retrofit:adapter-rxjava:$retrofitVersion",
         moshi                   : "com.squareup.moshi:moshi:1.0.0",
 

@@ -6,9 +6,9 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import es.guillermoorellana.travisforandroid.io.network.NetworkModule;
-import es.guillermoorellana.travisforandroid.model.api.ApiModule;
-import es.guillermoorellana.travisforandroid.model.api.ChangeableBaseUrl;
-import es.guillermoorellana.travisforandroid.model.api.TravisRestApi;
+import es.guillermoorellana.travisforandroid.api.ApiModule;
+import es.guillermoorellana.travisforandroid.api.ChangeableBaseUrl;
+import es.guillermoorellana.travisforandroid.api.TravisRestApi;
 import es.guillermoorellana.travisforandroid.ui.activity.MainActivity;
 
 @Singleton

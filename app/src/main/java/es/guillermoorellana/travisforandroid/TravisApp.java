@@ -5,7 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import es.guillermoorellana.travisforandroid.devtools.DeveloperTools;
-import es.guillermoorellana.travisforandroid.model.api.ApiModule;
+import es.guillermoorellana.travisforandroid.api.ApiModule;
 import timber.log.Timber;
 
 public class TravisApp extends Application {

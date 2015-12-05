@@ -1,4 +1,4 @@
-package es.guillermoorellana.travisforandroid.model.api;
+package es.guillermoorellana.travisforandroid.api;
 
 import android.support.annotation.NonNull;
 
