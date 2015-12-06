@@ -13,8 +13,8 @@ import static android.view.Gravity.START;
 import static android.view.Gravity.TOP;
 
 @Module
-public class DeveloperTools {
-    private DeveloperTools() {
+public class DevTools {
+    private DevTools() {
     }
 
     public static void init(Application application) {

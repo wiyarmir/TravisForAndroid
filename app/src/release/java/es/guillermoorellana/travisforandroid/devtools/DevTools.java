@@ -5,8 +5,8 @@ import android.app.Application;
 import dagger.Module;
 
 @Module
-public class DeveloperTools {
-    private DeveloperTools() {
+public class DevTools {
+    private DevTools() {
     }
 
     public static void init(Application application) {

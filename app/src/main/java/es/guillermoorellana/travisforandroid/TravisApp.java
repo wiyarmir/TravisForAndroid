@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import es.guillermoorellana.travisforandroid.devtools.DeveloperTools;
+import es.guillermoorellana.travisforandroid.devtools.DevTools;
 import es.guillermoorellana.travisforandroid.api.ApiModule;
 import timber.log.Timber;
 
@@ -43,7 +43,7 @@ public class TravisApp extends Application {
 
     // To be overriden in robolectric tests
     protected void developerTools() {
-        DeveloperTools.init(this);
+        DevTools.init(this);
     }
 
     @NonNull
