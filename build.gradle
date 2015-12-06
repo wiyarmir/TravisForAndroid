@@ -80,6 +80,8 @@ ext.libraries = [
         picasso                 : "com.squareup.picasso:picasso:2.5.2",
         timber                  : "com.jakewharton.timber:timber:4.1.0",
 
+        mosby                   : "com.hannesdorfmann.mosby:mvp:2.0.0",
+
         // Developer Tools
         stetho                  : "com.facebook.stetho:stetho:$stethoVersion",
         stethoOkHttp            : "com.facebook.stetho:stetho-okhttp:$stethoVersion",
