@@ -1,14 +1,18 @@
 package es.guillermoorellana.travisforandroid.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
+
+import com.hannesdorfmann.mosby.mvp.MvpFragment;
+import com.hannesdorfmann.mosby.mvp.MvpPresenter;
+import com.hannesdorfmann.mosby.mvp.MvpView;
 
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.TravisApp;
 
 @SuppressWarnings("PMD.AbstractClassWithoutAnyMethod")
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment<V extends MvpView, P extends MvpPresenter<V>>
+        extends MvpFragment<V, P> {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

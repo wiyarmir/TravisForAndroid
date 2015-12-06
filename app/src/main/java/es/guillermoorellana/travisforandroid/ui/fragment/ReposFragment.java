@@ -11,16 +11,36 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
+import dagger.Module;
+import dagger.Provides;
+import dagger.Subcomponent;
 import es.guillermoorellana.travisforandroid.R;
+import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.model.RepoModel;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.RepoAdapter;
+import es.guillermoorellana.travisforandroid.ui.presenter.ReposPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.ReposView;
+import timber.log.Timber;
 
-public class ReposFragment extends BaseFragment implements ReposView {
+public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> implements ReposView {
+
+    @Inject
+    ReposPresenter reposPresenter;
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    private RepoAdapter mAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Timber.tag(ReposFragment.class.getSimpleName());
+        TravisApp.get(getContext()).applicationComponent().plus(new ReposFragmentModule()).inject(this);
+    }
 
     @Nullable
     @Override
@@ -31,9 +51,16 @@ public class ReposFragment extends BaseFragment implements ReposView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView.setAdapter(new RepoAdapter());
+        mAdapter = new RepoAdapter();
+        recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+        getPresenter().reloadData();
+    }
+
+    @Override
+    public ReposPresenter createPresenter() {
+        return reposPresenter;
     }
 
     @Override
@@ -47,7 +74,23 @@ public class ReposFragment extends BaseFragment implements ReposView {
     }
 
     @Override
-    public void showContentUi(@NonNull List<Repo> items) {
-// TODO impl
+    public void showContentUi(@NonNull List<Repo> repos) {
+        Timber.d("Recived data: %d repos", repos.size());
+        mAdapter.setData(repos);
+    }
+
+    @Subcomponent(modules = ReposFragmentModule.class)
+    public interface ReposFragmentComponent {
+        void inject(@NonNull ReposFragment itemsFragment);
+    }
+
+    @Module
+    public static class ReposFragmentModule {
+
+        @Provides
+        @NonNull
+        public ReposPresenter provideReposPresenter(@NonNull RepoModel repoModel) {
+            return new ReposPresenter(repoModel);
+        }
     }
 }

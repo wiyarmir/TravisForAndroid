@@ -14,6 +14,7 @@ import es.guillermoorellana.travisforandroid.api.ApiModule;
 import es.guillermoorellana.travisforandroid.api.ChangeableBaseUrl;
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
 import es.guillermoorellana.travisforandroid.ui.activity.MainActivity;
+import es.guillermoorellana.travisforandroid.ui.fragment.ReposFragment;
 
 @Singleton
 @Component(modules = {
@@ -34,6 +35,8 @@ public interface ApplicationComponent {
 
     @NonNull
     LeakCanaryProxy leakCanaryProxy();
+
+    ReposFragment.ReposFragmentComponent plus(@NonNull ReposFragment.ReposFragmentModule reposFragmentModule);
 
     void inject(@NonNull TravisApp travisApp);
 

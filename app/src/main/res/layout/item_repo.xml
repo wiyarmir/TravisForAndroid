@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
-                android:text="wiyarmir/Capstone-Project"/>
+                tools:text="wiyarmir/Capstone-Project"/>
 
             <TextView
                 android:id="@+id/buildNumber"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="#27"/>
+                tools:text="#27"/>
         </LinearLayout>
 
         <TextView
@@ -47,12 +47,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Duration: 10 min 50 sec"/>
+            tools:text="Duration: 10 min 50 sec"/>
 
         <TextView
             android:id="@+id/finishedAgo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Finished: 5 minutes ago"/>
+            tools:text="Finished: 5 minutes ago"/>
     </LinearLayout>
 </LinearLayout>
