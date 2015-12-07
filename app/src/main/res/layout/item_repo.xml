@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:ignore="HardcodedText"
     android:minHeight="?android:attr/listPreferredItemHeightLarge"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText">
 
     <View
         android:id="@+id/status"
@@ -33,21 +33,38 @@
                 android:layout_weight="3"
                 tools:text="wiyarmir/Capstone-Project"/>
 
-            <TextView
-                android:id="@+id/buildNumber"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                tools:text="#27"/>
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#"/>
+
+                <TextView
+                    android:id="@+id/buildNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="27"/>
+            </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/duration"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            tools:text="Duration: 10 min 50 sec"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                tools:text="Duration: 10 min 50 sec"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/finishedAgo"
