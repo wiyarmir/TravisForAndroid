@@ -50,7 +50,7 @@ public class TravisApiIntegrationTest {
     }
 
     @Test
-    public void items_shouldHandleCorrectResponse() {
+    public void repos_shouldHandleCorrectResponse() {
         mockWebServer.enqueue(new MockResponse().setBody("{\n" +
                 "   \"repos\":[\n" +
                 "      {\n" +
@@ -98,30 +98,69 @@ public class TravisApiIntegrationTest {
                 "   ]\n" +
                 "}"));
 
-        // Get items from the API
-        List<Repo> items = travisRestApi.repos().toBlocking().value();
+        // Get repos from the API
+        List<Repo> repos = travisRestApi.repos().toBlocking().value();
 
-        assertThat(items).hasSize(3);
+        assertThat(repos).hasSize(3);
 
         // TODO test item #0
 
-        assertThat(items.get(1).getId()).isEqualTo(82);
-        assertThat(items.get(1).getSlug()).isEqualTo("sinatra/sinatra");
-        assertThat(items.get(1).isActive()).isEqualTo(true);
-        assertThat(items.get(1).getDescription())
+        assertThat(repos.get(1).getId()).isEqualTo(82);
+        assertThat(repos.get(1).getSlug()).isEqualTo("sinatra/sinatra");
+        assertThat(repos.get(1).isActive()).isEqualTo(true);
+        assertThat(repos.get(1).getDescription())
                 .isEqualTo("Classy web-development dressed in a DSL (official / canonical repo)");
-        assertThat(items.get(1).getLastBuildId()).isEqualTo(94825892L);
-        assertThat(items.get(1).getLastBuildNumber()).isEqualTo("1059");
-        assertThat(items.get(1).getLastBuildState()).isEqualTo("passed");
-        assertThat(items.get(1).getLastBuildDuration()).isEqualTo(1361);
-        assertThat(items.get(1).getLastBuildStartedAt())
+        assertThat(repos.get(1).getLastBuildId()).isEqualTo(94825892L);
+        assertThat(repos.get(1).getLastBuildNumber()).isEqualTo("1059");
+        assertThat(repos.get(1).getLastBuildState()).isEqualTo("passed");
+        assertThat(repos.get(1).getLastBuildDuration()).isEqualTo(1361);
+        assertThat(repos.get(1).getLastBuildStartedAt())
                 .usingComparator(DateTimeComparator.getInstance())
                 .isEqualTo(DateTime.parse("2015-12-04T08:54:43Z"));
-        assertThat(items.get(1).getLastBuildFinishedAt())
+        assertThat(repos.get(1).getLastBuildFinishedAt())
                 .usingComparator(DateTimeComparator.getInstance())
                 .isEqualTo(DateTime.parse("2015-12-04T09:00:25Z"));
-        assertThat(items.get(1).getGithubLanguage()).isEqualTo("Ruby");
+        assertThat(repos.get(1).getGithubLanguage()).isEqualTo("Ruby");
 
         // TODO test item #2
+    }
+
+    @Test
+    public void repo_byId_shouldHandleCorrectResponse() {
+        mockWebServer.enqueue(new MockResponse().setBody("{\n" +
+                "  \"repo\": {\n" +
+                "    \"id\": 82,\n" +
+                "    \"slug\": \"sinatra/sinatra\",\n" +
+                "    \"active\": true,\n" +
+                "    \"description\": \"Classy web-development dressed in a DSL (official / canonical repo)\",\n" +
+                "    \"last_build_id\": 94825892,\n" +
+                "    \"last_build_number\": \"1059\",\n" +
+                "    \"last_build_state\": \"passed\",\n" +
+                "    \"last_build_duration\": 1361,\n" +
+                "    \"last_build_language\": null,\n" +
+                "    \"last_build_started_at\": \"2015-12-04T08:54:43Z\",\n" +
+                "    \"last_build_finished_at\": \"2015-12-04T09:00:25Z\",\n" +
+                "    \"github_language\": \"Ruby\"\n" +
+                "  }\n" +
+                "}"));
+
+        Repo repo = travisRestApi.repo(82).toBlocking().value();
+
+        assertThat(repo.getId()).isEqualTo(82);
+        assertThat(repo.getSlug()).isEqualTo("sinatra/sinatra");
+        assertThat(repo.isActive()).isEqualTo(true);
+        assertThat(repo.getDescription())
+                .isEqualTo("Classy web-development dressed in a DSL (official / canonical repo)");
+        assertThat(repo.getLastBuildId()).isEqualTo(94825892L);
+        assertThat(repo.getLastBuildNumber()).isEqualTo("1059");
+        assertThat(repo.getLastBuildState()).isEqualTo("passed");
+        assertThat(repo.getLastBuildDuration()).isEqualTo(1361);
+        assertThat(repo.getLastBuildStartedAt())
+                .usingComparator(DateTimeComparator.getInstance())
+                .isEqualTo(DateTime.parse("2015-12-04T08:54:43Z"));
+        assertThat(repo.getLastBuildFinishedAt())
+                .usingComparator(DateTimeComparator.getInstance())
+                .isEqualTo(DateTime.parse("2015-12-04T09:00:25Z"));
+        assertThat(repo.getGithubLanguage()).isEqualTo("Ruby");
     }
 }
