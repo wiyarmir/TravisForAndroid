@@ -55,7 +55,8 @@ public class ReposPresenter extends BasePresenter<ReposView> {
 
     private void ensureUnsubscribed() {
         if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+            // there is a bug that marks unsubscription as network on UI thread
+            Schedulers.io().createWorker().schedule(subscription::unsubscribe);
         }
     }
 }
