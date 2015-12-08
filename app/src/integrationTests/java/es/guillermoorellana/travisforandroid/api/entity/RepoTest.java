@@ -30,6 +30,7 @@ public class RepoTest {
 
     @Test
     public void fromJson() {
+        // this way Gson is configured same way as in the app
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
         Repo item = gson.fromJson(JSON_STRING, Repo.class);
         assertThat(item.getId()).isEqualTo(82);

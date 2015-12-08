@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
+import es.guillermoorellana.travisforandroid.api.entity.Build;
+import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -162,5 +164,179 @@ public class TravisApiIntegrationTest {
                 .usingComparator(DateTimeComparator.getInstance())
                 .isEqualTo(DateTime.parse("2015-12-04T09:00:25Z"));
         assertThat(repo.getGithubLanguage()).isEqualTo("Ruby");
+    }
+
+    @Test
+    public void build_byId_shouldHandleCorrectResponse() {
+        mockWebServer.enqueue(new MockResponse().setBody("{\n" +
+                "    \"build\": {\n" +
+                "      \"commit_id\": 6534711,\n" +
+                "      \"config\": { },\n" +
+                "      \"duration\": 2648,\n" +
+                "      \"finished_at\": \"2014-04-08T19:52:56Z\",\n" +
+                "      \"id\": 22555277,\n" +
+                "      \"job_ids\": [22555278, 22555279, 22555280, 22555281],\n" +
+                "      \"number\": \"784\",\n" +
+                "      \"pull_request\": true,\n" +
+                "      \"pull_request_number\": \"1912\",\n" +
+                "      \"pull_request_title\": \"Example PR\",\n" +
+                "      \"repository_id\": 82,\n" +
+                "      \"started_at\": \"2014-04-08T19:37:44Z\",\n" +
+                "      \"state\": \"failed\"\n" +
+                "    },\n" +
+                "    \"commit\": {\n" +
+                "        \"id\": 6534711,\n" +
+                "        \"sha\": \"a02354f98395166360cb76a545751f234e5045fd\",\n" +
+                "        \"branch\": \"master\",\n" +
+                "        \"message\": \"Merge pull request #861 from kant/patch-1\\n\\nUpdate README.es.md\",\n" +
+                "        \"committed_at\": \"2014-04-08T19:36:07Z\",\n" +
+                "        \"author_name\": \"Konstantin Haase\",\n" +
+                "        \"author_email\": \"konstantin.mailinglists@googlemail.com\",\n" +
+                "        \"committer_name\": \"Konstantin Haase\",\n" +
+                "        \"committer_email\": \"konstantin.mailinglists@googlemail.com\",\n" +
+                "        \"compare_url\": \"https://github.com/sinatra/sinatra/compare/1ac65a4089a5...a02354f98395\"\n" +
+                "    },\n" +
+                "    \"jobs\": [],\n" +
+                "    \"annotations\": []\n" +
+                "}"));
+
+        Build build = travisRestApi.build(22555277).toBlocking().value().getBuild();
+
+        assertThat(build.getCommitId()).isEqualTo(6534711L);
+        assertThat(build.getDuration()).isEqualTo(2648L);
+        assertThat(build.getFinishedAt())
+                .usingComparator(DateTimeComparator.getInstance())
+                .isEqualTo(DateTime.parse("2014-04-08T19:52:56Z"));
+        assertThat(build.getId()).isEqualTo(22555277L);
+        assertThat(build.getNumber()).isEqualTo("784");
+        assertThat(build.isPullRequest()).isEqualTo(true);
+        assertThat(build.getPullRequestNumber()).isEqualTo("1912");
+        assertThat(build.getPullRequestTitle()).isEqualTo("Example PR");
+        assertThat(build.getRepositoryId()).isEqualTo(82);
+        assertThat(build.getStartedAt())
+                .usingComparator(DateTimeComparator.getInstance())
+                .isEqualTo(DateTime.parse("2014-04-08T19:37:44Z"));
+        assertThat(build.getState()).isEqualTo("failed");
+    }
+
+    @Test
+    public void buildHistory_bySlug_shouldHandleCorrectResponse() {
+        mockWebServer.enqueue(new MockResponse().setBody("{\n" +
+                "    \"builds\": [\n" +
+                " {\n" +
+                "      \"commit_id\": 6534711,\n" +
+                "      \"config\": { },\n" +
+                "      \"duration\": 2648,\n" +
+                "      \"finished_at\": \"2014-04-08T19:52:56Z\",\n" +
+                "      \"id\": 22555277,\n" +
+                "      \"job_ids\": [22555278, 22555279, 22555280, 22555281],\n" +
+                "      \"number\": \"784\",\n" +
+                "      \"pull_request\": true,\n" +
+                "      \"pull_request_number\": \"1912\",\n" +
+                "      \"pull_request_title\": \"Example PR\",\n" +
+                "      \"repository_id\": 82,\n" +
+                "      \"started_at\": \"2014-04-08T19:37:44Z\",\n" +
+                "      \"state\": \"failed\"\n" +
+                "    },\n" +
+                "        {\n" +
+                "            \"id\": 94742163,\n" +
+                "            \"repository_id\": 82,\n" +
+                "            \"commit_id\": 26925170,\n" +
+                "            \"number\": \"1058\",\n" +
+                "            \"event_type\": \"pull_request\",\n" +
+                "            \"pull_request\": true,\n" +
+                "            \"pull_request_title\": \"extended Helper with Forwardable for delegation\",\n" +
+                "            \"pull_request_number\": 1053,\n" +
+                "            \"config\": {},\n" +
+                "            \"state\": \"passed\",\n" +
+                "            \"started_at\": \"2015-12-03T21:46:07Z\",\n" +
+                "            \"finished_at\": \"2015-12-03T21:51:29Z\",\n" +
+                "            \"duration\": 1298,\n" +
+                "            \"job_ids\": []\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": 94707827,\n" +
+                "            \"repository_id\": 82,\n" +
+                "            \"commit_id\": 26916021,\n" +
+                "            \"number\": \"1057\",\n" +
+                "            \"event_type\": \"pull_request\",\n" +
+                "            \"pull_request\": true,\n" +
+                "            \"pull_request_title\": \"Clarify default setting of :static to reflect the Proc\",\n" +
+                "            \"pull_request_number\": 1052,\n" +
+                "            \"config\": {},\n" +
+                "            \"state\": \"passed\",\n" +
+                "            \"started_at\": \"2015-12-03T19:08:54Z\",\n" +
+                "            \"finished_at\": \"2015-12-03T19:14:30Z\",\n" +
+                "            \"duration\": 1406,\n" +
+                "            \"job_ids\": []\n" +
+                "        }" +
+                "    ],\n" +
+                "    \"commits\": [\n" +
+                "        {\n" +
+                "            \"id\": 26947606,\n" +
+                "            \"sha\": \"f4823b6e13ca97a40207a9341ed00d1c5f4b9beb\",\n" +
+                "            \"branch\": \"master\",\n" +
+                "            \"message\": \"explicitly require Forwardable before usage\",\n" +
+                "            \"committed_at\": \"2015-12-04T08:54:18Z\",\n" +
+                "            \"author_name\": \"Syed Humza Shah\",\n" +
+                "            \"author_email\": \"humzashah@gmail.com\",\n" +
+                "            \"committer_name\": \"Syed Humza Shah\",\n" +
+                "            \"committer_email\": \"humzashah@gmail.com\",\n" +
+                "            \"compare_url\": \"https://github.com/sinatra/sinatra/pull/1053\",\n" +
+                "            \"pull_request_number\": 1053\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": 26925170,\n" +
+                "            \"sha\": \"b43754e821ce625b9edf9eb52269f2eaafe89c17\",\n" +
+                "            \"branch\": \"master\",\n" +
+                "            \"message\": \"extended Helper with Forwardable for delegation\",\n" +
+                "            \"committed_at\": \"2015-12-03T21:42:28Z\",\n" +
+                "            \"author_name\": \"Syed Humza Shah\",\n" +
+                "            \"author_email\": \"humzashah@gmail.com\",\n" +
+                "            \"committer_name\": \"Syed Humza Shah\",\n" +
+                "            \"committer_email\": \"humzashah@gmail.com\",\n" +
+                "            \"compare_url\": \"https://github.com/sinatra/sinatra/pull/1053\",\n" +
+                "            \"pull_request_number\": 1053\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": 26916021,\n" +
+                "            \"sha\": \"2f780e5fea16838c7c67fb7c93dfe516257766e0\",\n" +
+                "            \"branch\": \"master\",\n" +
+                "            \"message\": \"Clarify default setting of :static to reflect the Proc\",\n" +
+                "            \"committed_at\": \"2015-12-03T19:05:29Z\",\n" +
+                "            \"author_name\": \"Mike Pastore\",\n" +
+                "            \"author_email\": \"mike@oobak.org\",\n" +
+                "            \"committer_name\": \"Mike Pastore\",\n" +
+                "            \"committer_email\": \"mike@oobak.org\",\n" +
+                "            \"compare_url\": \"https://github.com/sinatra/sinatra/pull/1052\",\n" +
+                "            \"pull_request_number\": 1052\n" +
+                "        }" +
+                "    ]\n" +
+                "}"));
+
+        BuildHistory buildHistory = travisRestApi.buildsHistory("sinatra/sinatra").toBlocking().value();
+        assertThat(buildHistory).isNotNull();
+        assertThat(buildHistory.getBuilds())
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(3);
+
+        Build build = buildHistory.getBuilds().get(0);
+
+        assertThat(build.getCommitId()).isEqualTo(6534711L);
+        assertThat(build.getDuration()).isEqualTo(2648L);
+        assertThat(build.getFinishedAt())
+                .usingComparator(DateTimeComparator.getInstance())
+                .isEqualTo(DateTime.parse("2014-04-08T19:52:56Z"));
+        assertThat(build.getId()).isEqualTo(22555277L);
+        assertThat(build.getNumber()).isEqualTo("784");
+        assertThat(build.isPullRequest()).isEqualTo(true);
+        assertThat(build.getPullRequestNumber()).isEqualTo("1912");
+        assertThat(build.getPullRequestTitle()).isEqualTo("Example PR");
+        assertThat(build.getRepositoryId()).isEqualTo(82);
+        assertThat(build.getStartedAt())
+                .usingComparator(DateTimeComparator.getInstance())
+                .isEqualTo(DateTime.parse("2014-04-08T19:37:44Z"));
+        assertThat(build.getState()).isEqualTo("failed");
     }
 }
