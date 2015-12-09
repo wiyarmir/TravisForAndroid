@@ -11,7 +11,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
-public class ReposPresenter extends BasePresenter<ReposView> {
+public class ReposPresenter extends BasePresenter<ReposView>  {
     @NonNull private final RepoModel repoModel;
     private Subscription subscription;
 
