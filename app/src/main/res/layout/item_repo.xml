@@ -7,7 +7,7 @@
     android:background="?android:attr/selectableItemBackground"
     android:minHeight="?android:attr/listPreferredItemHeightLarge"
     android:orientation="horizontal"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,Overdraw">
 
     <View
         android:id="@+id/status"

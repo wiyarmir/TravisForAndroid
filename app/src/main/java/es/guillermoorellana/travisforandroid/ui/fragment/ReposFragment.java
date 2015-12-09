@@ -68,11 +68,6 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public ReposPresenter createPresenter() {
         return reposPresenter;
     }

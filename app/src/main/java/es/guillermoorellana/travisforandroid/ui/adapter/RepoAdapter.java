@@ -34,7 +34,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
     @NonNull
     private List<Repo> mRepos = emptyList();
     @NonNull
-    private PublishSubject<View> onClickSubject = PublishSubject.create();
+    private final PublishSubject<View> onClickSubject = PublishSubject.create();
 
     public RepoAdapter() {
         // noop
