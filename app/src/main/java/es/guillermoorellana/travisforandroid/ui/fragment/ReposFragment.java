@@ -3,6 +3,7 @@ package es.guillermoorellana.travisforandroid.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
     ReposPresenter reposPresenter;
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
+    @Bind(R.id.loadingView) ContentLoadingProgressBar contentLoadingProgressBar;
     private RepoAdapter mAdapter;
 
     @Override
@@ -65,7 +67,7 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
 
     @Override
     public void showLoadingUi() {
-// TODO impl
+        contentLoadingProgressBar.show();
     }
 
     @Override
@@ -75,6 +77,7 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
 
     @Override
     public void showContentUi(@NonNull List<Repo> repos) {
+        contentLoadingProgressBar.hide();
         Timber.d("Recived data: %d repos", repos.size());
         mAdapter.setData(repos);
     }
