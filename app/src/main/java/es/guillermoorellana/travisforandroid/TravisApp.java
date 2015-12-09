@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import es.guillermoorellana.travisforandroid.devtools.DevTools;
 import es.guillermoorellana.travisforandroid.api.ApiModule;
+import es.guillermoorellana.travisforandroid.devtools.DevTools;
 import timber.log.Timber;
 
 public class TravisApp extends Application {
