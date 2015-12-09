@@ -30,11 +30,11 @@ import timber.log.Timber;
 
 public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> implements ReposView {
 
-    @Inject
-    ReposPresenter reposPresenter;
+    @Inject ReposPresenter reposPresenter;
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     @Bind(R.id.loadingView) ContentLoadingProgressBar contentLoadingProgressBar;
+
     private RepoAdapter mAdapter;
 
     @Override
@@ -58,7 +58,18 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
         recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+        mAdapter.getOnClickSubject().subscribe(
+                clickedView -> {
+                    Timber.d("clicked position " + recyclerView.getChildAdapterPosition(clickedView));
+                    getMainView().addFragment(new BuildsFragment());
+                }
+        );
         getPresenter().reloadData();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     @Override

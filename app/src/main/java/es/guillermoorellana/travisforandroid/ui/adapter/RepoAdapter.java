@@ -1,6 +1,5 @@
 package es.guillermoorellana.travisforandroid.ui.adapter;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -9,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.fernandocejas.frodo.annotation.RxLogObservable;
+import com.jakewharton.rxbinding.view.RxView;
 
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
@@ -21,6 +23,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import rx.Observable;
+import rx.subjects.PublishSubject;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
@@ -28,10 +32,21 @@ import static java.util.Collections.unmodifiableList;
 public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder> {
 
     @NonNull
-    List<Repo> mRepos = emptyList();
+    private List<Repo> mRepos = emptyList();
+    @NonNull
+    private PublishSubject<View> onClickSubject = PublishSubject.create();
 
     public RepoAdapter() {
         // noop
+    }
+
+    @RxLogObservable
+    public Observable<View> getOnClickSubject() {
+        return onClickSubject;
+    }
+
+    public Repo getItem(int adapterPosition) {
+        return mRepos.get(adapterPosition);
     }
 
     public void setData(@NonNull List<Repo> repos) {
@@ -41,9 +56,13 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
 
     @Override
     public RepoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        View view = LayoutInflater.from(context).inflate(R.layout.item_repo, parent, false);
-        return RepoViewHolder.newInstance(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_repo, parent, false);
+        RepoViewHolder repoViewHolder = RepoViewHolder.newInstance(view);
+        RxView.clicks(view)
+                .map(notUseful -> view)
+                .takeUntil(RxView.detaches(parent))
+                .subscribe(onClickSubject);
+        return repoViewHolder;
     }
 
     @Override
