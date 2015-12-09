@@ -47,6 +47,7 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.view_repos, container, false);
     }
 
