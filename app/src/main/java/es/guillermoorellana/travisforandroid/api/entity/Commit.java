@@ -16,7 +16,10 @@
 
 package es.guillermoorellana.travisforandroid.api.entity;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
+import java.util.Date;
 
 public class Commit implements Serializable {
     private static final long serialVersionUID = 4390847522215353298L;
@@ -26,12 +29,13 @@ public class Commit implements Serializable {
     private String sha;
     private String branch;
     private String message;
-    private String commitedAt;
+    private Date committedAt;
     private String authorName;
     private String authorEmail;
     private String committerName;
     private String committerEmail;
     private String compareUrl;
+    private long pullRequestNumber;
 
     public long getId() {
         return id;
@@ -53,8 +57,8 @@ public class Commit implements Serializable {
         return message;
     }
 
-    public String getCommitedAt() {
-        return commitedAt;
+    public DateTime getCommittedAt() {
+        return new DateTime(committedAt);
     }
 
     public String getAuthorName() {
@@ -75,5 +79,13 @@ public class Commit implements Serializable {
 
     public String getCompareUrl() {
         return compareUrl;
+    }
+
+    public long getPullRequestNumber() {
+        return pullRequestNumber;
+    }
+
+    public void setPullRequestNumber(long pullRequestNumber) {
+        this.pullRequestNumber = pullRequestNumber;
     }
 }
