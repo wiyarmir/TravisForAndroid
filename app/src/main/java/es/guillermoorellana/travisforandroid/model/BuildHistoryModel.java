@@ -36,8 +36,7 @@ public class BuildHistoryModel {
     }
 
     @RxLogObservable
-    public Single<BuildHistory> getBuildHistory(String slug) {
-        String[] split = slug.split("/");
-        return mTravisRestApi.buildHistory(split[0], split[1]);
+    public Single<BuildHistory> getBuildHistory(long repoId) {
+        return mTravisRestApi.buildHistory(repoId);
     }
 }

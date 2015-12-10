@@ -27,6 +27,7 @@ import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -34,7 +35,12 @@ import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
 
-public class RepoAdapter extends BaseAdapter<Repo, RepoAdapter.RepoViewHolder> {
+import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableList;
+
+public class RepoAdapter extends ItemClickableAdapter<RepoAdapter.RepoViewHolder> {
+
+    @NonNull protected List<Repo> mData = emptyList();
 
     public RepoAdapter() {
         // noop
@@ -52,6 +58,20 @@ public class RepoAdapter extends BaseAdapter<Repo, RepoAdapter.RepoViewHolder> {
 
     protected int getItemLayout() {
         return R.layout.item_repo;
+    }
+
+    public Repo getItem(int adapterPosition) {
+        return mData.get(adapterPosition);
+    }
+
+    public void setData(@NonNull List<Repo> data) {
+        mData = unmodifiableList(data); // Prevent possible side-effects.
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
     }
 
     public static class RepoViewHolder extends RecyclerView.ViewHolder {

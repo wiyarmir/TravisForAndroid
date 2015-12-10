@@ -84,8 +84,4 @@ public class Commit implements Serializable {
     public long getPullRequestNumber() {
         return pullRequestNumber;
     }
-
-    public void setPullRequestNumber(long pullRequestNumber) {
-        this.pullRequestNumber = pullRequestNumber;
-    }
 }

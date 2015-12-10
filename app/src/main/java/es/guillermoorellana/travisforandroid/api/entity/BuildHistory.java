@@ -18,10 +18,13 @@ package es.guillermoorellana.travisforandroid.api.entity;
 
 import java.util.List;
 
-public class BuildHistory {
-    private List<Build> builds;
+import static java.util.Collections.emptyList;
 
-    private List<Commit> commits;
+public class BuildHistory {
+    @SuppressWarnings("PMD.ImmutableField")
+    private List<Build> builds = emptyList();
+    @SuppressWarnings("PMD.ImmutableField")
+    private List<Commit> commits = emptyList();
 
     public List<Build> getBuilds() {
         return builds;

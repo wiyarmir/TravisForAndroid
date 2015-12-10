@@ -29,8 +29,6 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import dagger.Module;
@@ -38,9 +36,9 @@ import dagger.Provides;
 import dagger.Subcomponent;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
-import es.guillermoorellana.travisforandroid.api.entity.Build;
+import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
-import es.guillermoorellana.travisforandroid.model.BuildModel;
+import es.guillermoorellana.travisforandroid.model.BuildHistoryModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.BuildHistoryAdapter;
@@ -48,7 +46,7 @@ import es.guillermoorellana.travisforandroid.ui.presenter.BuildHistoryPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
 
 @FragmentWithArgs
-public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, List<Build>, BuildsView, BuildHistoryPresenter>
+public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, BuildHistory, BuildsView, BuildHistoryPresenter>
         implements BuildsView {
 
     @NonNull
@@ -95,7 +93,7 @@ public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, List<
     }
 
     @Override
-    public void setData(List<Build> data) {
+    public void setData(BuildHistory data) {
         mAdapter.setData(data);
     }
 
@@ -119,8 +117,8 @@ public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, List<
 
         @Provides
         @NonNull
-        public BuildHistoryPresenter provideReposPresenter(@NonNull BuildModel buildModel) {
-            return new BuildHistoryPresenter(buildModel, mRepo);
+        public BuildHistoryPresenter provideReposPresenter(@NonNull BuildHistoryModel buildHistoryModel) {
+            return new BuildHistoryPresenter(buildHistoryModel, mRepo);
         }
     }
 }

@@ -130,5 +130,9 @@ public class BuildHistoryTest {
                 .isNotNull()
                 .isNotEmpty()
                 .hasSize(3);
+        assertThat(build.getCommits())
+                .isNotNull()
+                .isNotEmpty()
+                .hasSize(3);
     }
 }

@@ -17,6 +17,7 @@
 package es.guillermoorellana.travisforandroid.ui.adapter;
 
 import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.api.entity.Build;
+import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
 
-public class BuildHistoryAdapter extends BaseAdapter<Build, BuildHistoryAdapter.BuildViewHolder> {
+public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapter.BuildViewHolder> {
+    @NonNull protected BuildHistory mData = new BuildHistory();
+
     @Override
     protected BuildViewHolder createViewHolder(View view) {
         return new BuildViewHolder(view);
@@ -45,6 +49,20 @@ public class BuildHistoryAdapter extends BaseAdapter<Build, BuildHistoryAdapter.
 
     protected int getItemLayout() {
         return R.layout.item_build;
+    }
+
+    public Build getItem(int adapterPosition) {
+        return mData.getBuilds().get(adapterPosition);
+    }
+
+    public void setData(@NonNull BuildHistory data) {
+        mData = data; // Prevent possible side-effects.
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.getBuilds().size();
     }
 
     @SuppressLint("SetTextI18n")

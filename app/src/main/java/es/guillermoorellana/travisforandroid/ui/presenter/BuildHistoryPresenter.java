@@ -18,23 +18,21 @@ package es.guillermoorellana.travisforandroid.ui.presenter;
 
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import es.guillermoorellana.travisforandroid.api.entity.Build;
+import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
-import es.guillermoorellana.travisforandroid.model.BuildModel;
+import es.guillermoorellana.travisforandroid.model.BuildHistoryModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseRxLcePresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
 
-public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildsView, List<Build>> {
-    @NonNull private final BuildModel mBuildModel;
+public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildsView, BuildHistory> {
+    @NonNull private final BuildHistoryModel mBuildHistoryModel;
     @NonNull private final Repo mRepo;
 
     @Inject
-    public BuildHistoryPresenter(@NonNull BuildModel buildModel, @NonNull Repo repo) {
-        mBuildModel = buildModel;
+    public BuildHistoryPresenter(@NonNull BuildHistoryModel buildHistoryModel, @NonNull Repo repo) {
+        mBuildHistoryModel = buildHistoryModel;
         mRepo = repo;
     }
 
@@ -45,6 +43,6 @@ public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildsView, List<B
 
         unsubscribe();
 
-        subscribe(mBuildModel.getBuilds(mRepo.getSlug()), pullToRefresh);
+        subscribe(mBuildHistoryModel.getBuildHistory(mRepo.getId()), pullToRefresh);
     }
 }
