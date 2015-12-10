@@ -1,4 +1,4 @@
-package es.guillermoorellana.travisforandroid.ui.view;
+package es.guillermoorellana.travisforandroid.mvp;
 
 import com.hannesdorfmann.mosby.mvp.MvpView;
 

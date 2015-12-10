@@ -1,4 +1,4 @@
-package es.guillermoorellana.travisforandroid.ui.fragment;
+package es.guillermoorellana.travisforandroid.mvp;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +11,6 @@ import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.ui.view.MainView;
 
-@SuppressWarnings("PMD.AbstractClassWithoutAnyMethod")
 public abstract class BaseFragment<V extends MvpView, P extends MvpPresenter<V>>
         extends MvpFragment<V, P> {
     @Override

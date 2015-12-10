@@ -1,6 +1,10 @@
 package es.guillermoorellana.travisforandroid.ui.view;
 
-import com.hannesdorfmann.mosby.mvp.MvpView;
+import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
 
-public interface BuildsView extends MvpView {
+import java.util.List;
+
+import es.guillermoorellana.travisforandroid.api.entity.Build;
+
+public interface BuildsView extends MvpLceView<List<Build>> {
 }

@@ -3,19 +3,16 @@ package es.guillermoorellana.travisforandroid.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
 import dagger.Module;
 import dagger.Provides;
 import dagger.Subcomponent;
@@ -23,19 +20,18 @@ import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
 import es.guillermoorellana.travisforandroid.model.RepoModel;
+import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.RepoAdapter;
 import es.guillermoorellana.travisforandroid.ui.presenter.ReposPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.ReposView;
 import timber.log.Timber;
 
-public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> implements ReposView {
+public class ReposFragment
+        extends BaseMvpLceFragment<RecyclerView, List<Repo>, ReposView, ReposPresenter>
+        implements ReposView {
 
     @Inject ReposPresenter reposPresenter;
-
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
-    @Bind(R.id.loadingView) ContentLoadingProgressBar contentLoadingProgressBar;
-    @Bind(R.id.errorView) TextView errorView;
 
     private RepoAdapter mAdapter;
 
@@ -57,16 +53,21 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAdapter = new RepoAdapter();
-        recyclerView.setAdapter(mAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext()));
+        contentView.setAdapter(mAdapter);
+        contentView.setLayoutManager(new LinearLayoutManager(getContext()));
+        contentView.addItemDecoration(new DividerItemDecoration(getContext()));
         mAdapter.getOnClickSubject().subscribe(
                 clickedView -> {
-                    Timber.d("clicked position " + recyclerView.getChildAdapterPosition(clickedView));
+                    Timber.d("clicked position " + contentView.getChildAdapterPosition(clickedView));
                     getMainView().replaceFragmentBackStack(new BuildsFragment());
                 }
         );
-        getPresenter().reloadData();
+        loadData(false);
+    }
+
+    @Override
+    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
+        return e.getMessage();
     }
 
     @Override
@@ -75,23 +76,14 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
     }
 
     @Override
-    public void showLoadingUi() {
-        contentLoadingProgressBar.show();
-        errorView.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void showErrorUi(@NonNull Throwable error) {
-        errorView.setText(error.getMessage());
-        contentLoadingProgressBar.hide();
-        errorView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void showContentUi(@NonNull List<Repo> repos) {
-        contentLoadingProgressBar.hide();
+    public void setData(List<Repo> repos) {
         Timber.d("Recived data: %d repos", repos.size());
         mAdapter.setData(repos);
+    }
+
+    @Override
+    public void loadData(boolean pullToRefresh) {
+        getPresenter().reloadData(pullToRefresh);
     }
 
     @Subcomponent(modules = ReposFragmentModule.class)

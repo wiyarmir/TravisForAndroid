@@ -1,13 +1,10 @@
 package es.guillermoorellana.travisforandroid.ui.view;
 
-import android.support.annotation.NonNull;
+import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
 
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
 
-public interface ReposView extends BaseView {    // Presenter does not know about Main Thread. It's a detail of View implementation!
-    void showLoadingUi();
-    void showErrorUi(@NonNull Throwable error);
-    void showContentUi(@NonNull List<Repo> repos);
+public interface ReposView extends MvpLceView<List<Repo>> {
 }

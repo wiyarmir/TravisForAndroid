@@ -2,18 +2,17 @@ package es.guillermoorellana.travisforandroid.ui.presenter;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
+import es.guillermoorellana.travisforandroid.api.entity.Repo;
 import es.guillermoorellana.travisforandroid.model.RepoModel;
+import es.guillermoorellana.travisforandroid.mvp.BaseRxLcePresenter;
 import es.guillermoorellana.travisforandroid.ui.view.ReposView;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import timber.log.Timber;
 
-public class ReposPresenter extends BasePresenter<ReposView>  {
+public class ReposPresenter extends BaseRxLcePresenter<ReposView, List<Repo>> {
     @NonNull private final RepoModel repoModel;
-    private Subscription subscription;
 
     @Inject
     public ReposPresenter(@NonNull RepoModel repoModel) {
@@ -21,42 +20,13 @@ public class ReposPresenter extends BasePresenter<ReposView>  {
     }
 
 
-    public void reloadData() {
+    public void reloadData(boolean pullToRefresh) {
         if (isViewAttached()) {
-            getView().showLoadingUi();
+            getView().showLoading(pullToRefresh);
         }
 
-        ensureUnsubscribed();
+        unsubscribe();
 
-        subscription = repoModel.getRepos()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        items -> {
-                            Timber.d("items success");
-                            if (isViewAttached()) {
-                                getView().showContentUi(items);
-                            }
-                        },
-                        error -> {
-                            Timber.e(error, "items error");
-                            if (isViewAttached()) {
-                                getView().showErrorUi(error);
-                            }
-                        }
-                );
-    }
-
-    @Override
-    public void detachView(boolean retainInstance) {
-        ensureUnsubscribed();
-        super.detachView(retainInstance);
-    }
-
-    private void ensureUnsubscribed() {
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            // there is a bug that marks unsubscription as network on UI thread
-            Schedulers.io().createWorker().schedule(subscription::unsubscribe);
-        }
+        subscribe(repoModel.getRepos(), pullToRefresh);
     }
 }
