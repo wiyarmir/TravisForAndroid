@@ -21,7 +21,13 @@ import java.util.List;
 public class BuildHistory {
     private List<Build> builds;
 
+    private List<Commit> commits;
+
     public List<Build> getBuilds() {
         return builds;
+    }
+
+    public List<Commit> getCommits() {
+        return commits;
     }
 }

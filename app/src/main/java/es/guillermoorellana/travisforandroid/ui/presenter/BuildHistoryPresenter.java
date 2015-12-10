@@ -28,12 +28,12 @@ import es.guillermoorellana.travisforandroid.model.BuildModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseRxLcePresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
 
-public class BuildsPresenter extends BaseRxLcePresenter<BuildsView, List<Build>> {
+public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildsView, List<Build>> {
     @NonNull private final BuildModel mBuildModel;
     @NonNull private final Repo mRepo;
 
     @Inject
-    public BuildsPresenter(@NonNull BuildModel buildModel, @NonNull Repo repo) {
+    public BuildHistoryPresenter(@NonNull BuildModel buildModel, @NonNull Repo repo) {
         mBuildModel = buildModel;
         mRepo = repo;
     }

@@ -330,7 +330,7 @@ public class TravisApiIntegrationTest {
                 "    ]\n" +
                 "}"));
 
-        BuildHistory buildHistory = travisRestApi.buildsHistory("sinatra", "sinatra").toBlocking().value();
+        BuildHistory buildHistory = travisRestApi.buildHistory("sinatra", "sinatra").toBlocking().value();
         assertThat(buildHistory).isNotNull();
         assertThat(buildHistory.getBuilds())
                 .isNotNull()

@@ -76,7 +76,7 @@ public class ReposFragment
                 clickedView -> {
                     int adapterPosition = contentView.getChildAdapterPosition(clickedView);
                     Timber.d("clicked position " + adapterPosition);
-                    getMainView().replaceFragmentBackStack(BuildsFragmentBuilder.newBuildsFragment(mAdapter.getItem(adapterPosition)));
+                    getMainView().replaceFragmentBackStack(BuildHistoryFragmentBuilder.newBuildHistoryFragment(mAdapter.getItem(adapterPosition)));
                 }
         );
         loadData(false);

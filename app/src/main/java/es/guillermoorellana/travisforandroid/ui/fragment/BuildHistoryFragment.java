@@ -43,12 +43,12 @@ import es.guillermoorellana.travisforandroid.api.entity.Repo;
 import es.guillermoorellana.travisforandroid.model.BuildModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
-import es.guillermoorellana.travisforandroid.ui.adapter.BuildAdapter;
-import es.guillermoorellana.travisforandroid.ui.presenter.BuildsPresenter;
+import es.guillermoorellana.travisforandroid.ui.adapter.BuildHistoryAdapter;
+import es.guillermoorellana.travisforandroid.ui.presenter.BuildHistoryPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
 
 @FragmentWithArgs
-public class BuildsFragment extends BaseMvpLceFragment<RecyclerView, List<Build>, BuildsView, BuildsPresenter>
+public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, List<Build>, BuildsView, BuildHistoryPresenter>
         implements BuildsView {
 
     @NonNull
@@ -56,8 +56,8 @@ public class BuildsFragment extends BaseMvpLceFragment<RecyclerView, List<Build>
     Repo repo;
     @NonNull
     @Inject
-    BuildsPresenter buildsPresenter;
-    private BuildAdapter mAdapter;
+    BuildHistoryPresenter buildHistoryPresenter;
+    private BuildHistoryAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class BuildsFragment extends BaseMvpLceFragment<RecyclerView, List<Build>
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new BuildAdapter();
+        mAdapter = new BuildHistoryAdapter();
         contentView.setAdapter(mAdapter);
         contentView.setLayoutManager(new LinearLayoutManager(getContext()));
         contentView.addItemDecoration(new DividerItemDecoration(getContext()));
@@ -90,8 +90,8 @@ public class BuildsFragment extends BaseMvpLceFragment<RecyclerView, List<Build>
     }
 
     @Override
-    public BuildsPresenter createPresenter() {
-        return buildsPresenter;
+    public BuildHistoryPresenter createPresenter() {
+        return buildHistoryPresenter;
     }
 
     @Override
@@ -106,7 +106,7 @@ public class BuildsFragment extends BaseMvpLceFragment<RecyclerView, List<Build>
 
     @Subcomponent(modules = BuildsFragmentModule.class)
     public interface BuildsFragmentComponent {
-        void inject(@NonNull BuildsFragment buildsFragment);
+        void inject(@NonNull BuildHistoryFragment buildHistoryFragment);
     }
 
     @Module
@@ -119,8 +119,8 @@ public class BuildsFragment extends BaseMvpLceFragment<RecyclerView, List<Build>
 
         @Provides
         @NonNull
-        public BuildsPresenter provideReposPresenter(@NonNull BuildModel buildModel) {
-            return new BuildsPresenter(buildModel, mRepo);
+        public BuildHistoryPresenter provideReposPresenter(@NonNull BuildModel buildModel) {
+            return new BuildHistoryPresenter(buildModel, mRepo);
         }
     }
 }

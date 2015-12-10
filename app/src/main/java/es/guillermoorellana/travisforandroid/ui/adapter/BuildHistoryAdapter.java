@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.api.entity.Build;
 
-public class BuildAdapter extends BaseAdapter<Build, BuildAdapter.BuildViewHolder> {
+public class BuildHistoryAdapter extends BaseAdapter<Build, BuildHistoryAdapter.BuildViewHolder> {
     @Override
     protected BuildViewHolder createViewHolder(View view) {
         return new BuildViewHolder(view);

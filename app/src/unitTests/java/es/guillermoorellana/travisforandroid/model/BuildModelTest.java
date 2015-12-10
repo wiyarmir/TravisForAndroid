@@ -56,7 +56,7 @@ public class BuildModelTest {
         BuildHistory item = mock(BuildHistory.class);
         List<Build> list = asList(mock(Build.class), mock(Build.class));
         when(item.getBuilds()).thenReturn(list);
-        when(travisRestApi.buildsHistory(anyString(), anyString())).thenReturn(Single.just(item));
+        when(travisRestApi.buildHistory(anyString(), anyString())).thenReturn(Single.just(item));
 
         assertThat(buildModel.getBuilds("sl/ug").toBlocking().value()).containsExactlyElementsOf(list);
     }
@@ -64,7 +64,7 @@ public class BuildModelTest {
     @Test
     public void getRepos_shouldReturnErrorFromTravisApi() {
         Exception error = new RuntimeException();
-        when(travisRestApi.buildsHistory(anyString(), anyString())).thenReturn(Single.error(error));
+        when(travisRestApi.buildHistory(anyString(), anyString())).thenReturn(Single.error(error));
 
         try {
             buildModel.getBuilds("sl/ug").toBlocking().value();
