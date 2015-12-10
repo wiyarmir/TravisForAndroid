@@ -28,6 +28,7 @@ import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.api.entity.Build;
 import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.Commit;
 
 public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapter.BuildViewHolder> {
     @NonNull protected BuildHistory mData = new BuildHistory();
@@ -44,7 +45,15 @@ public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapte
 
     @Override
     public void onBindViewHolder(BuildViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        Build build = getItem(position);
+        Commit relatedCommit = null;
+        for (Commit commit : mData.getCommits()) {
+            if (build.getCommitId() == commit.getId()) {
+                relatedCommit = commit;
+                break;
+            }
+        }
+        holder.bind(build, relatedCommit);
     }
 
     protected int getItemLayout() {
@@ -78,12 +87,14 @@ public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapte
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Build build) {
+        public void bind(Build build, Commit relatedCommit) {
             buildStatus.setText("Build #" + build.getNumber());
-            starter.setText("Started by:");
-            branch.setText("Branch:");
-            duration.setText("Duration:");
-            finishedAgo.setText("Finished:");
+            duration.setText("Duration:" + build.getDuration());
+            finishedAgo.setText("Finished:" + build.getFinishedAt());
+            if (relatedCommit != null) {
+                starter.setText("Started by:" + relatedCommit.getCommitterName());
+                branch.setText("Branch:" + relatedCommit.getBranch());
+            }
         }
     }
 }
