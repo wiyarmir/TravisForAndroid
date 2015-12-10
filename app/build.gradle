@@ -109,7 +109,9 @@ dependencies {
     compile libraries.picasso
     compile libraries.timber
     compile libraries.mosby
-    
+    compile libraries.fragmentargs
+    apt libraries.fragmentargsProcessor
+
     // Developer tools (Developer Settings)
     debugCompile libraries.stetho
     debugCompile libraries.stethoOkHttp

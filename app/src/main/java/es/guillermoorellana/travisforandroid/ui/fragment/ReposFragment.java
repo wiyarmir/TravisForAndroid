@@ -58,8 +58,9 @@ public class ReposFragment
         contentView.addItemDecoration(new DividerItemDecoration(getContext()));
         mAdapter.getOnClickSubject().subscribe(
                 clickedView -> {
-                    Timber.d("clicked position " + contentView.getChildAdapterPosition(clickedView));
-                    getMainView().replaceFragmentBackStack(new BuildsFragment());
+                    int adapterPosition = contentView.getChildAdapterPosition(clickedView);
+                    Timber.d("clicked position " + adapterPosition);
+                    getMainView().replaceFragmentBackStack(BuildsFragmentBuilder.newBuildsFragment(mAdapter.getItem(adapterPosition)));
                 }
         );
         loadData(false);

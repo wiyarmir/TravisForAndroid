@@ -3,9 +3,10 @@ package es.guillermoorellana.travisforandroid.api.entity;
 
 import org.joda.time.DateTime;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Repo {
+public class Repo implements Serializable {
     private int id;
     private String slug;
     private boolean active;

@@ -7,16 +7,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hannesdorfmann.fragmentargs.FragmentArgs;
+import com.hannesdorfmann.fragmentargs.annotation.Arg;
+import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
+
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.api.entity.Build;
+import es.guillermoorellana.travisforandroid.api.entity.Repo;
 import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
 import es.guillermoorellana.travisforandroid.ui.presenter.BuildsPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
 
+@FragmentWithArgs
 public class BuildsFragment extends BaseMvpLceFragment<RecyclerView, List<Build>, BuildsView, BuildsPresenter>
         implements BuildsView {
+
+    @Arg Repo repo;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FragmentArgs.inject(this);
+    }
 
     @Nullable
     @Override
@@ -27,7 +41,7 @@ public class BuildsFragment extends BaseMvpLceFragment<RecyclerView, List<Build>
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-// TODO
+
     }
 
     @Override
