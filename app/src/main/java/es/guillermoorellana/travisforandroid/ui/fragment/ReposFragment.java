@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
 
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     @Bind(R.id.loadingView) ContentLoadingProgressBar contentLoadingProgressBar;
+    @Bind(R.id.errorView) TextView errorView;
 
     private RepoAdapter mAdapter;
 
@@ -75,11 +77,14 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
     @Override
     public void showLoadingUi() {
         contentLoadingProgressBar.show();
+        errorView.setVisibility(View.GONE);
     }
 
     @Override
     public void showErrorUi(@NonNull Throwable error) {
-// TODO impl
+        errorView.setText(error.getMessage());
+        contentLoadingProgressBar.hide();
+        errorView.setVisibility(View.VISIBLE);
     }
 
     @Override
