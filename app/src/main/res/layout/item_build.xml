@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:minHeight="102dp"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:background="@android:color/darker_gray"
+    tools:ignore="HardcodedText,Overdraw">
+
+    <TextView
+        android:id="@+id/buildStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        tools:text="Build: #15 started"/>
+
+    <TextView
+        android:id="@+id/starter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        tools:text="Started by: wiyarmir"/>
+
+    <TextView
+        android:id="@+id/branch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        tools:text="Branch: master"/>
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        tools:text="Duration: 10 min 50 sec"/>
+
+    <TextView
+        android:id="@+id/finishedAgo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Finished: 5 minutes ago"/>
+</LinearLayout>

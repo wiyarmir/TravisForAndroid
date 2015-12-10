@@ -1,5 +1,6 @@
 package es.guillermoorellana.travisforandroid.ui.adapter;
 
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.List;
 
-import es.guillermoorellana.travisforandroid.R;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
@@ -41,7 +41,7 @@ public abstract class BaseAdapter<M, VH extends RecyclerView.ViewHolder> extends
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_repo, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(getItemLayout(), parent, false);
         VH viewHolder = createViewHolder(view);
         RxView.clicks(view)
                 .map(notUseful -> view)
@@ -49,6 +49,9 @@ public abstract class BaseAdapter<M, VH extends RecyclerView.ViewHolder> extends
                 .subscribe(onClickSubject);
         return viewHolder;
     }
+
+    @LayoutRes
+    protected abstract int getItemLayout();
 
     @Override
     public int getItemCount() {

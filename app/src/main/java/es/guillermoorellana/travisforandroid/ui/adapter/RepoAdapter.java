@@ -34,6 +34,10 @@ public class RepoAdapter extends BaseAdapter<Repo, RepoAdapter.RepoViewHolder> {
         return new RepoViewHolder(view);
     }
 
+    protected int getItemLayout() {
+        return R.layout.item_repo;
+    }
+
     public static class RepoViewHolder extends RecyclerView.ViewHolder {
         private static final PeriodFormatter FORMATTER = PeriodFormat.wordBased(Locale.getDefault());
 

@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:minHeight="?android:attr/listPreferredItemHeightLarge"
+    android:minHeight="102dp"
     android:orientation="horizontal"
-    tools:ignore="HardcodedText,Overdraw">
+    tools:ignore="HardcodedText,Overdraw"
+    tools:layout_height="102dp">
 
     <View
         android:id="@+id/status"
@@ -53,19 +54,14 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="8dp"
+            tools:text="Duration: 10 min 50 sec"/>
 
-            <TextView
-                android:id="@+id/duration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                tools:text="Duration: 10 min 50 sec"/>
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/finishedAgo"
