@@ -4,75 +4,34 @@ import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.fernandocejas.frodo.annotation.RxLogObservable;
-import com.jakewharton.rxbinding.view.RxView;
 
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
-import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
-import rx.Observable;
-import rx.subjects.PublishSubject;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
-
-public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder> {
-
-    @NonNull
-    private List<Repo> mRepos = emptyList();
-    @NonNull
-    private final PublishSubject<View> onClickSubject = PublishSubject.create();
+public class RepoAdapter extends BaseAdapter<Repo, RepoAdapter.RepoViewHolder> {
 
     public RepoAdapter() {
         // noop
     }
 
-    @RxLogObservable
-    public Observable<View> getOnClickSubject() {
-        return onClickSubject;
-    }
-
-    public Repo getItem(int adapterPosition) {
-        return mRepos.get(adapterPosition);
-    }
-
-    public void setData(@NonNull List<Repo> repos) {
-        mRepos = unmodifiableList(repos); // Prevent possible side-effects.
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public RepoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_repo, parent, false);
-        RepoViewHolder repoViewHolder = RepoViewHolder.newInstance(view);
-        RxView.clicks(view)
-                .map(notUseful -> view)
-                .takeUntil(RxView.detaches(parent))
-                .subscribe(onClickSubject);
-        return repoViewHolder;
-    }
-
     @Override
     public void onBindViewHolder(RepoViewHolder holder, int position) {
-        holder.bind(mRepos.get(position));
+        holder.bind(getItem(position));
     }
 
     @Override
-    public int getItemCount() {
-        return mRepos.size();
+    protected RepoViewHolder createViewHolder(View view) {
+        return new RepoViewHolder(view);
     }
 
     public static class RepoViewHolder extends RecyclerView.ViewHolder {
@@ -87,10 +46,6 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.RepoViewHolder
         public RepoViewHolder(View repoView) {
             super(repoView);
             ButterKnife.bind(this, repoView);
-        }
-
-        public static RepoViewHolder newInstance(@NonNull View view) {
-            return new RepoViewHolder(view);
         }
 
         public void bind(@NonNull Repo repo) {
