@@ -1,5 +1,6 @@
 package es.guillermoorellana.travisforandroid.ui.adapter;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class BuildAdapter extends BaseAdapter<Build, BuildAdapter.BuildViewHolde
         return R.layout.item_build;
     }
 
+    @SuppressLint("SetTextI18n")
     public static class BuildViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.buildStatus) TextView buildStatus;
         @Bind(R.id.starter) TextView starter;
