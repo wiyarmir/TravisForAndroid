@@ -63,7 +63,7 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter> imple
         mAdapter.getOnClickSubject().subscribe(
                 clickedView -> {
                     Timber.d("clicked position " + recyclerView.getChildAdapterPosition(clickedView));
-                    getMainView().addFragment(new BuildsFragment());
+                    getMainView().replaceFragmentBackStack(new BuildsFragment());
                 }
         );
         getPresenter().reloadData();

@@ -28,12 +28,30 @@ public class MainActivity extends BaseActivity implements MainView {
                 .commit();
     }
 
+    @Override
+    public void addFragmentBackstack(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.mainFrame, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
     @DebugLog
     @Override
     public void replaceFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.mainFrame, fragment)
+                .commit();
+    }
+
+    @Override
+    public void replaceFragmentBackStack(Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mainFrame, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 
