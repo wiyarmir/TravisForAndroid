@@ -24,7 +24,8 @@ public class BuildModel {
 
     @RxLogObservable
     public Single<List<Build>> getBuilds(String slug) {
-        return mTravisRestApi.buildsHistory(slug)
+        String[] split = slug.split("/");
+        return mTravisRestApi.buildsHistory(split[0], split[1])
                 .map(BuildHistory::getBuilds);
     }
 }

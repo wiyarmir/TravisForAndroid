@@ -19,6 +19,6 @@ public interface TravisRestApi {
     @GET("builds/{id}")
     Single<BuildDetails> build(@Path("id") int id);
 
-    @GET("repos/{slug}/builds")
-    Single<BuildHistory> buildsHistory(@Path("slug") String slug);
+    @GET("repos/{user}/{repo}/builds")
+    Single<BuildHistory> buildsHistory(@Path("user") String user, @Path("repo") String repo);
 }
