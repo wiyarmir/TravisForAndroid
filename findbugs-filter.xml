@@ -38,6 +38,12 @@
              type="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR"/>
     </Match>
 
+    <Match>
+        <Class name="~.*Test"/>
+        <Bug pattern="MS_CANNOT_BE_FINAL"
+             type="MS_CANNOT_BE_FINAL"/>
+    </Match>
+
     <!-- Ignore UPM in lambdas from Retrolambda, FindBugs does not correctly understand them -->
     <Match>
         <Bug code="UPM"/>

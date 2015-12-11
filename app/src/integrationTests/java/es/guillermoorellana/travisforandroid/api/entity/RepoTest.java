@@ -38,7 +38,7 @@ public class RepoTest {
             "    \"last_build_number\": \"1059\",\n" +
             "    \"last_build_state\": \"passed\",\n" +
             "    \"last_build_duration\": 1361,\n" +
-            "    \"last_build_language\": null,\n" +
+            "    \"last_build_language\": \"Ruby\",\n" +
             "    \"last_build_started_at\": \"2015-12-04T08:54:43Z\",\n" +
             "    \"last_build_finished_at\": \"2015-12-04T09:00:25Z\",\n" +
             "    \"github_language\": \"Ruby\"\n" +
@@ -55,6 +55,7 @@ public class RepoTest {
         assertThat(item.getDescription())
                 .isEqualTo("Classy web-development dressed in a DSL (official / canonical repo)");
         assertThat(item.getLastBuildId()).isEqualTo(94825892L);
+        assertThat(item.getLastBuildLanguage()).isEqualTo("Ruby");
         assertThat(item.getLastBuildNumber()).isEqualTo("1059");
         assertThat(item.getLastBuildState()).isEqualTo("passed");
         assertThat(item.getLastBuildDuration()).isEqualTo(1361);

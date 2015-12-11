@@ -24,9 +24,9 @@ import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
 import es.guillermoorellana.travisforandroid.api.entity.Repo;
 import es.guillermoorellana.travisforandroid.model.BuildHistoryModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseRxLcePresenter;
-import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
+import es.guillermoorellana.travisforandroid.ui.view.BuildHistoryView;
 
-public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildsView, BuildHistory> {
+public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildHistoryView, BuildHistory> {
     @NonNull private final BuildHistoryModel mBuildHistoryModel;
     @NonNull private final Repo mRepo;
 
@@ -37,12 +37,6 @@ public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildsView, BuildH
     }
 
     public void reloadData(boolean pullToRefresh) {
-        if (isViewAttached()) {
-            getView().showLoading(pullToRefresh);
-        }
-
-        unsubscribe();
-
         subscribe(mBuildHistoryModel.getBuildHistory(mRepo.getId()), pullToRefresh);
     }
 }

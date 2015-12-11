@@ -236,7 +236,7 @@ public class TravisApiIntegrationTest {
     }
 
     @Test
-    public void buildHistory_bySlug_shouldHandleCorrectResponse() {
+    public void buildHistory_byId_shouldHandleCorrectResponse() {
         mockWebServer.enqueue(new MockResponse().setBody("{\n" +
                 "    \"builds\": [\n" +
                 " {\n" +
@@ -330,7 +330,7 @@ public class TravisApiIntegrationTest {
                 "    ]\n" +
                 "}"));
 
-        BuildHistory buildHistory = travisRestApi.buildHistory("sinatra", "sinatra").toBlocking().value();
+        BuildHistory buildHistory = travisRestApi.buildHistory(42).toBlocking().value();
         assertThat(buildHistory).isNotNull();
         assertThat(buildHistory.getBuilds())
                 .isNotNull()

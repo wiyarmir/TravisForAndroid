@@ -20,5 +20,5 @@ import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
 
 import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
 
-public interface BuildsView extends MvpLceView<BuildHistory> {
+public interface BuildHistoryView extends MvpLceView<BuildHistory> {
 }

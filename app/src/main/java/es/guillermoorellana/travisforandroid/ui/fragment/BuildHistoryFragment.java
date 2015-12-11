@@ -43,11 +43,11 @@ import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.BuildHistoryAdapter;
 import es.guillermoorellana.travisforandroid.ui.presenter.BuildHistoryPresenter;
-import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
+import es.guillermoorellana.travisforandroid.ui.view.BuildHistoryView;
 
 @FragmentWithArgs
-public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, BuildHistory, BuildsView, BuildHistoryPresenter>
-        implements BuildsView {
+public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, BuildHistory, BuildHistoryView, BuildHistoryPresenter>
+        implements BuildHistoryView {
 
     @NonNull
     @Arg
