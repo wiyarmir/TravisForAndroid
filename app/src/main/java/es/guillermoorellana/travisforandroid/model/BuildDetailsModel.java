@@ -16,32 +16,21 @@
 
 package es.guillermoorellana.travisforandroid.model;
 
-import android.support.annotation.NonNull;
-
-import com.fernandocejas.frodo.annotation.RxLogObservable;
-
-import java.util.List;
-
 import javax.inject.Inject;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entity.Build;
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.BuildDetails;
 import rx.Single;
 
-public class BuildModel {
-
+public class BuildDetailsModel {
     private final TravisRestApi mTravisRestApi;
 
     @Inject
-    public BuildModel(@NonNull TravisRestApi travisRestApi) {
+    public BuildDetailsModel(TravisRestApi travisRestApi) {
         mTravisRestApi = travisRestApi;
     }
 
-    @RxLogObservable
-    public Single<List<Build>> getBuilds(String slug) {
-        String[] split = slug.split("/");
-        return mTravisRestApi.buildHistory(split[0], split[1])
-                .map(BuildHistory::getBuilds);
+    public Single<BuildDetails> getBuildDetails(long buildId) {
+        return mTravisRestApi.build(buildId);
     }
 }
