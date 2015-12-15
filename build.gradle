@@ -100,6 +100,7 @@ ext.libraries = [
         timber                  : "com.jakewharton.timber:timber:4.1.0",
 
         mosby                   : "com.hannesdorfmann.mosby:mvp:2.0.0",
+        mosbyViewstate          : "com.hannesdorfmann.mosby:viewstate:2.0.0",
         fragmentargs            : "com.hannesdorfmann.fragmentargs:annotation:3.0.0",
         fragmentargsProcessor   : "com.hannesdorfmann.fragmentargs:processor:3.0.0",
 

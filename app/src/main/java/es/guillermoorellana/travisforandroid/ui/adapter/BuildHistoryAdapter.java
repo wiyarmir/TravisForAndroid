@@ -74,6 +74,10 @@ public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapte
         return mData.getBuilds().size();
     }
 
+    public BuildHistory getData() {
+        return mData;
+    }
+
     @SuppressLint("SetTextI18n")
     public static class BuildViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.buildStatus) TextView buildStatus;

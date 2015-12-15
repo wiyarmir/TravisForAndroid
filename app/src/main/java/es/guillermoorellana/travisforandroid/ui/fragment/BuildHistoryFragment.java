@@ -28,6 +28,8 @@ import android.view.ViewGroup;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
+import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
+import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
 
 import javax.inject.Inject;
 
@@ -46,7 +48,8 @@ import es.guillermoorellana.travisforandroid.ui.presenter.BuildHistoryPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
 
 @FragmentWithArgs
-public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, BuildHistory, BuildsView, BuildHistoryPresenter>
+public class BuildHistoryFragment
+        extends BaseMvpLceFragment<RecyclerView, BuildHistory, BuildsView, BuildHistoryPresenter>
         implements BuildsView {
 
     @NonNull
@@ -60,6 +63,7 @@ public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, Build
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         FragmentArgs.inject(this);
         TravisApp.get(getContext()).applicationComponent()
                 .plus(new BuildsFragmentModule(repo))
@@ -100,6 +104,16 @@ public class BuildHistoryFragment extends BaseMvpLceFragment<RecyclerView, Build
     @Override
     public void loadData(boolean pullToRefresh) {
         getPresenter().reloadData(pullToRefresh);
+    }
+
+    @Override
+    public LceViewState<BuildHistory, BuildsView> createViewState() {
+        return new RetainingLceViewState<>();
+    }
+
+    @Override
+    public BuildHistory getData() {
+        return mAdapter == null ? null : mAdapter.getData();
     }
 
     @Subcomponent(modules = BuildsFragmentModule.class)

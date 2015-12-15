@@ -125,6 +125,7 @@ dependencies {
     compile libraries.picasso
     compile libraries.timber
     compile libraries.mosby
+    compile libraries.mosbyViewstate
     compile libraries.fragmentargs
     apt libraries.fragmentargsProcessor
 

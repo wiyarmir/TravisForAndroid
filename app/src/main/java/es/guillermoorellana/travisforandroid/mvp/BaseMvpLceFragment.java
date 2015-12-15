@@ -22,13 +22,14 @@ import android.view.View;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceFragment;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
+import com.hannesdorfmann.mosby.mvp.viewstate.lce.MvpLceViewStateFragment;
 
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.ui.view.MainView;
 
 public abstract class BaseMvpLceFragment<CV extends View, M, V extends MvpLceView<M>, P extends MvpPresenter<V>>
-        extends MvpLceFragment<CV, M, V, P> {
+        extends MvpLceViewStateFragment<CV, M, V, P> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

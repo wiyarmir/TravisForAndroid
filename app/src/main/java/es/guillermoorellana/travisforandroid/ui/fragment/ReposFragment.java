@@ -25,6 +25,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
+import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -54,7 +57,7 @@ public class ReposFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Timber.tag(ReposFragment.class.getSimpleName());
+        setRetainInstance(true);
         TravisApp.get(getContext()).applicationComponent().plus(new ReposFragmentModule()).inject(this);
     }
 
@@ -101,6 +104,16 @@ public class ReposFragment
     @Override
     public void loadData(boolean pullToRefresh) {
         getPresenter().reloadData(pullToRefresh);
+    }
+
+    @Override
+    public LceViewState<List<Repo>, ReposView> createViewState() {
+        return new RetainingLceViewState<>();
+    }
+
+    @Override
+    public List<Repo> getData() {
+        return mAdapter == null ? null : mAdapter.getData();
     }
 
     @Subcomponent(modules = ReposFragmentModule.class)

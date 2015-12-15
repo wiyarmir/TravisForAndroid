@@ -74,6 +74,10 @@ public class RepoAdapter extends ItemClickableAdapter<RepoAdapter.RepoViewHolder
         return mData.size();
     }
 
+    public List<Repo> getData() {
+        return mData;
+    }
+
     public static class RepoViewHolder extends RecyclerView.ViewHolder {
         private static final PeriodFormatter FORMATTER = PeriodFormat.wordBased(Locale.getDefault());
 
