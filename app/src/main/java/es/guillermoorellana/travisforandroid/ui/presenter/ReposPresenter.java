@@ -37,12 +37,6 @@ public class ReposPresenter extends BaseRxLcePresenter<ReposView, List<Repo>> {
 
 
     public void reloadData(boolean pullToRefresh) {
-        if (isViewAttached()) {
-            getView().showLoading(pullToRefresh);
-        }
-
-        unsubscribe();
-
         subscribe(repoModel.getRepos(), pullToRefresh);
     }
 }

@@ -16,6 +16,8 @@
 
 package es.guillermoorellana.travisforandroid.mvp;
 
+import android.support.annotation.VisibleForTesting;
+
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
 
@@ -28,7 +30,7 @@ public abstract class BaseRxLcePresenter<V extends MvpLceView<M>, M>
         extends BasePresenter<V>
         implements MvpPresenter<V> {
 
-    protected Subscriber<M> subscriber;
+    @VisibleForTesting Subscriber<M> subscriber;
 
     protected void unsubscribe() {
         if (subscriber != null && !subscriber.isUnsubscribed()) {
