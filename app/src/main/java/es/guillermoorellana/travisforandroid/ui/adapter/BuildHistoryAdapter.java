@@ -26,12 +26,12 @@ import android.widget.TextView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
-import es.guillermoorellana.travisforandroid.api.entity.Build;
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
-import es.guillermoorellana.travisforandroid.api.entity.Commit;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuild;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiCommit;
 
 public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapter.BuildViewHolder> {
-    @NonNull protected BuildHistory mData = new BuildHistory();
+    @NonNull protected ApiBuildHistory mData = new ApiBuildHistory();
 
     @Override
     protected BuildViewHolder createViewHolder(View view) {
@@ -45,9 +45,9 @@ public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapte
 
     @Override
     public void onBindViewHolder(BuildViewHolder holder, int position) {
-        Build build = getItem(position);
-        Commit relatedCommit = null;
-        for (Commit commit : mData.getCommits()) {
+        ApiBuild build = getItem(position);
+        ApiCommit relatedCommit = null;
+        for (ApiCommit commit : mData.getCommits()) {
             if (build.getCommitId() == commit.getId()) {
                 relatedCommit = commit;
                 break;
@@ -60,11 +60,11 @@ public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapte
         return R.layout.item_build;
     }
 
-    public Build getItem(int adapterPosition) {
+    public ApiBuild getItem(int adapterPosition) {
         return mData.getBuilds().get(adapterPosition);
     }
 
-    public void setData(@NonNull BuildHistory data) {
+    public void setData(@NonNull ApiBuildHistory data) {
         mData = data; // Prevent possible side-effects.
         notifyDataSetChanged();
     }
@@ -74,7 +74,7 @@ public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapte
         return mData.getBuilds().size();
     }
 
-    public BuildHistory getData() {
+    public ApiBuildHistory getData() {
         return mData;
     }
 
@@ -91,7 +91,7 @@ public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapte
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Build build, Commit relatedCommit) {
+        public void bind(ApiBuild build, ApiCommit relatedCommit) {
             buildStatus.setText("Build #" + build.getNumber());
             duration.setText("Duration:" + build.getDuration());
             finishedAgo.setText("Finished:" + build.getFinishedAt());

@@ -32,9 +32,9 @@ import java.io.IOException;
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
-import es.guillermoorellana.travisforandroid.api.entity.Build;
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuild;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -117,7 +117,7 @@ public class TravisApiIntegrationTest {
                 "}"));
 
         // Get repos from the API
-        List<Repo> repos = travisRestApi.repos().toBlocking().value();
+        List<ApiRepo> repos = travisRestApi.repos().toBlocking().value();
 
         assertThat(repos).hasSize(3);
 
@@ -162,7 +162,7 @@ public class TravisApiIntegrationTest {
                 "  }\n" +
                 "}"));
 
-        Repo repo = travisRestApi.repo(82).toBlocking().value();
+        ApiRepo repo = travisRestApi.repo(82).toBlocking().value();
 
         assertThat(repo.getId()).isEqualTo(82);
         assertThat(repo.getSlug()).isEqualTo("sinatra/sinatra");
@@ -216,7 +216,7 @@ public class TravisApiIntegrationTest {
                 "    \"annotations\": []\n" +
                 "}"));
 
-        Build build = travisRestApi.build(22555277).toBlocking().value().getBuild();
+        ApiBuild build = travisRestApi.build(22555277).toBlocking().value().getBuild();
 
         assertThat(build.getCommitId()).isEqualTo(6534711L);
         assertThat(build.getDuration()).isEqualTo(2648L);
@@ -330,14 +330,14 @@ public class TravisApiIntegrationTest {
                 "    ]\n" +
                 "}"));
 
-        BuildHistory buildHistory = travisRestApi.buildHistory(42).toBlocking().value();
+        ApiBuildHistory buildHistory = travisRestApi.buildHistory(42).toBlocking().value();
         assertThat(buildHistory).isNotNull();
         assertThat(buildHistory.getBuilds())
                 .isNotNull()
                 .isNotEmpty()
                 .hasSize(3);
 
-        Build build = buildHistory.getBuilds().get(0);
+        ApiBuild build = buildHistory.getBuilds().get(0);
 
         assertThat(build.getCommitId()).isEqualTo(6534711L);
         assertThat(build.getDuration()).isEqualTo(2648L);

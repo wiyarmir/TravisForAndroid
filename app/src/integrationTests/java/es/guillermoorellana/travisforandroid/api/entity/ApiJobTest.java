@@ -28,7 +28,7 @@ import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
-public class JobTest {
+public class ApiJobTest {
     private static final String JSON_STRING = "{\n" +
             "      \"id\": 94825893,\n" +
             "      \"repository_id\": 82,\n" +
@@ -57,7 +57,7 @@ public class JobTest {
     @Test
     public void test_fromJson() {
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
-        Job job = gson.fromJson(JSON_STRING, Job.class);
+        ApiJob job = gson.fromJson(JSON_STRING, ApiJob.class);
         assertThat(job.getId()).isEqualTo(94825893L);
         assertThat(job.getRepositoryId()).isEqualTo(82);
         assertThat(job.getBuildId()).isEqualTo(94825892L);

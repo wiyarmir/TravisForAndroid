@@ -24,7 +24,7 @@ import org.junit.Test;
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import rx.Single;
 
 import static java.util.Arrays.asList;
@@ -51,7 +51,7 @@ public class RepoModelTest {
 
     @Test
     public void getRepos_shouldReturnReposFromTravisApi() {
-        List<Repo> items = asList(mock(Repo.class), mock(Repo.class));
+        List<ApiRepo> items = asList(mock(ApiRepo.class), mock(ApiRepo.class));
         when(travisRestApi.repos()).thenReturn(Single.just(items));
 
         assertThat(repoModel.getRepos().toBlocking().value()).containsExactlyElementsOf(items);

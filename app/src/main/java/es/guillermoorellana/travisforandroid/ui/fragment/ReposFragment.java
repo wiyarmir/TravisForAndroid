@@ -37,7 +37,7 @@ import dagger.Provides;
 import dagger.Subcomponent;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.RepoModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
@@ -47,7 +47,7 @@ import es.guillermoorellana.travisforandroid.ui.view.ReposView;
 import timber.log.Timber;
 
 public class ReposFragment
-        extends BaseMvpLceFragment<RecyclerView, List<Repo>, ReposView, ReposPresenter>
+        extends BaseMvpLceFragment<RecyclerView, List<ApiRepo>, ReposView, ReposPresenter>
         implements ReposView {
 
     @Inject ReposPresenter reposPresenter;
@@ -96,7 +96,7 @@ public class ReposFragment
     }
 
     @Override
-    public void setData(List<Repo> repos) {
+    public void setData(List<ApiRepo> repos) {
         Timber.d("Recived data: %d repos", repos.size());
         mAdapter.setData(repos);
     }
@@ -107,12 +107,12 @@ public class ReposFragment
     }
 
     @Override
-    public LceViewState<List<Repo>, ReposView> createViewState() {
+    public LceViewState<List<ApiRepo>, ReposView> createViewState() {
         return new RetainingLceViewState<>();
     }
 
     @Override
-    public List<Repo> getData() {
+    public List<ApiRepo> getData() {
         return mAdapter == null ? null : mAdapter.getData();
     }
 

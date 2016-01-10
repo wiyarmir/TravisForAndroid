@@ -16,20 +16,20 @@
 
 package es.guillermoorellana.travisforandroid.api.entity;
 
-public class BuildDetails {
-    private Build build;
-    private Commit commit;
-    private Job job;
+public class ApiBuildDetails {
+    private ApiBuild build;
+    private ApiCommit commit;
+    private ApiJob job;
 
-    public Build getBuild() {
+    public ApiBuild getBuild() {
         return build;
     }
 
-    public Commit getCommit() {
+    public ApiCommit getCommit() {
         return commit;
     }
 
-    public Job getJob() {
+    public ApiJob getJob() {
         return job;
     }
 }

@@ -20,7 +20,7 @@ import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
 
 import java.util.List;
 
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 
-public interface ReposView extends MvpLceView<List<Repo>> {
+public interface ReposView extends MvpLceView<List<ApiRepo>> {
 }

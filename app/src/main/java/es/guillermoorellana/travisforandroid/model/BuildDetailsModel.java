@@ -19,7 +19,7 @@ package es.guillermoorellana.travisforandroid.model;
 import javax.inject.Inject;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entity.BuildDetails;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildDetails;
 import rx.Single;
 
 public class BuildDetailsModel {
@@ -30,7 +30,7 @@ public class BuildDetailsModel {
         mTravisRestApi = travisRestApi;
     }
 
-    public Single<BuildDetails> getBuildDetails(long buildId) {
+    public Single<ApiBuildDetails> getBuildDetails(long buildId) {
         return mTravisRestApi.build(buildId);
     }
 }

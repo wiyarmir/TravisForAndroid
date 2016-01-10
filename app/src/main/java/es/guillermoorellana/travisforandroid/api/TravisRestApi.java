@@ -18,9 +18,9 @@ package es.guillermoorellana.travisforandroid.api;
 
 import java.util.List;
 
-import es.guillermoorellana.travisforandroid.api.entity.BuildDetails;
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildDetails;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -28,14 +28,14 @@ import rx.Single;
 
 public interface TravisRestApi {
     @GET("repos/")
-    Single<List<Repo>> repos();
+    Single<List<ApiRepo>> repos();
 
     @GET("repos/{id}")
-    Single<Repo> repo(@Path("id") int id);
+    Single<ApiRepo> repo(@Path("id") int id);
 
     @GET("builds/{id}")
-    Single<BuildDetails> build(@Path("id") long id);
+    Single<ApiBuildDetails> build(@Path("id") long id);
 
     @GET("builds")
-    Single<BuildHistory> buildHistory(@Query("repository_id") long repositoryId);
+    Single<ApiBuildHistory> buildHistory(@Query("repository_id") long repositoryId);
 }

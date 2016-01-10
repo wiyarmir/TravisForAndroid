@@ -26,7 +26,7 @@ import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
-public class BuildHistoryTest {
+public class ApiBuildHistoryTest {
     private static final String JSON_STRING = "{\n" +
             "    \"builds\": [\n" +
             "        {\n" +
@@ -125,7 +125,7 @@ public class BuildHistoryTest {
     @Test
     public void fromJson() {
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
-        BuildHistory build = gson.fromJson(JSON_STRING, BuildHistory.class);
+        ApiBuildHistory build = gson.fromJson(JSON_STRING, ApiBuildHistory.class);
         assertThat(build.getBuilds())
                 .isNotNull()
                 .isNotEmpty()

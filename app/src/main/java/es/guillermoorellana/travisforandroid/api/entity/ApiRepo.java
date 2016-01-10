@@ -22,7 +22,7 @@ import org.joda.time.DateTime;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Repo implements Serializable {
+public class ApiRepo implements Serializable {
     private static final long serialVersionUID = 8763033273883847886L;
 
     private int id;

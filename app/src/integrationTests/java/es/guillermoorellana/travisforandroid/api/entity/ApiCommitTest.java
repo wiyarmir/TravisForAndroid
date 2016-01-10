@@ -28,7 +28,7 @@ import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
-public class CommitTest {
+public class ApiCommitTest {
     private static final String JSON_STRING = "{\n" +
             "      \"id\": 25061640,\n" +
             "      \"sha\": \"70cdbd4c93ed80a04e16256c780d96a8cdbed84d\",\n" +
@@ -46,10 +46,10 @@ public class CommitTest {
     @Test
     public void fromJson() {
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
-        Commit commit = gson.fromJson(JSON_STRING, Commit.class);
+        ApiCommit commit = gson.fromJson(JSON_STRING, ApiCommit.class);
         assertThat(commit.getId()).isEqualTo(25061640);
         assertThat(commit.getSha()).isEqualTo("70cdbd4c93ed80a04e16256c780d96a8cdbed84d");
-        assertThat(commit.getShortSha()).isEqualTo(commit.getSha().substring(0, Commit.SHORT_SHA_LENGTH - 1));
+        assertThat(commit.getShortSha()).isEqualTo(commit.getSha().substring(0, ApiCommit.SHORT_SHA_LENGTH - 1));
         assertThat(commit.getBranch()).isEqualTo("2.2.0-alpha");
         assertThat(commit.getMessage()).isEqualTo("Add POST verb to Rack::File's ALLOWED_VERBS array\n\nThis is a commit to make the tests pass.");
         assertThat(commit.getCommittedAt())

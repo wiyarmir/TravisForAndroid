@@ -28,7 +28,7 @@ import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
-public class RepoTest {
+public class ApiRepoTest {
     private static final String JSON_STRING = "{\n" +
             "    \"id\": 82,\n" +
             "    \"slug\": \"sinatra/sinatra\",\n" +
@@ -48,7 +48,7 @@ public class RepoTest {
     public void fromJson() {
         // this way Gson is configured same way as in the app
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
-        Repo item = gson.fromJson(JSON_STRING, Repo.class);
+        ApiRepo item = gson.fromJson(JSON_STRING, ApiRepo.class);
         assertThat(item.getId()).isEqualTo(82);
         assertThat(item.getSlug()).isEqualTo("sinatra/sinatra");
         assertThat(item.isActive()).isEqualTo(true);

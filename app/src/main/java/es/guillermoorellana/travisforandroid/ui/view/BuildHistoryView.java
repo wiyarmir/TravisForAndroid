@@ -18,7 +18,7 @@ package es.guillermoorellana.travisforandroid.ui.view;
 
 import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
 
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
 
-public interface BuildHistoryView extends MvpLceView<BuildHistory> {
+public interface BuildHistoryView extends MvpLceView<ApiBuildHistory> {
 }

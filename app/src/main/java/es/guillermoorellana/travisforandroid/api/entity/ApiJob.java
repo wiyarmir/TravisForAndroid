@@ -20,7 +20,7 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 
-public class Job {
+public class ApiJob {
     private long id;
 
     private long repositoryId;

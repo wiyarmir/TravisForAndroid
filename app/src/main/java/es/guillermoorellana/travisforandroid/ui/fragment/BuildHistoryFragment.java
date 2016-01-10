@@ -38,8 +38,8 @@ import dagger.Provides;
 import dagger.Subcomponent;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.BuildHistoryModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
@@ -49,12 +49,12 @@ import es.guillermoorellana.travisforandroid.ui.view.BuildHistoryView;
 
 @FragmentWithArgs
 public class BuildHistoryFragment
-        extends BaseMvpLceFragment<RecyclerView, BuildHistory, BuildHistoryView, BuildHistoryPresenter>
+        extends BaseMvpLceFragment<RecyclerView, ApiBuildHistory, BuildHistoryView, BuildHistoryPresenter>
         implements BuildHistoryView {
 
     @NonNull
     @Arg
-    Repo repo;
+    ApiRepo repo;
     @NonNull
     @Inject
     BuildHistoryPresenter buildHistoryPresenter;
@@ -97,7 +97,7 @@ public class BuildHistoryFragment
     }
 
     @Override
-    public void setData(BuildHistory data) {
+    public void setData(ApiBuildHistory data) {
         mAdapter.setData(data);
     }
 
@@ -107,12 +107,12 @@ public class BuildHistoryFragment
     }
 
     @Override
-    public LceViewState<BuildHistory, BuildHistoryView> createViewState() {
+    public LceViewState<ApiBuildHistory, BuildHistoryView> createViewState() {
         return new RetainingLceViewState<>();
     }
 
     @Override
-    public BuildHistory getData() {
+    public ApiBuildHistory getData() {
         return mAdapter == null ? null : mAdapter.getData();
     }
 
@@ -123,9 +123,9 @@ public class BuildHistoryFragment
 
     @Module
     public static class BuildsFragmentModule {
-        private final Repo mRepo;
+        private final ApiRepo mRepo;
 
-        public BuildsFragmentModule(Repo repo) {
+        public BuildsFragmentModule(ApiRepo repo) {
             this.mRepo = repo;
         }
 

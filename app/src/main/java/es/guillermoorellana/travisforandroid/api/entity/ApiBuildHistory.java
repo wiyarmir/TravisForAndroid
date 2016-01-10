@@ -20,17 +20,17 @@ import java.util.List;
 
 import static java.util.Collections.emptyList;
 
-public class BuildHistory {
+public class ApiBuildHistory {
     @SuppressWarnings("PMD.ImmutableField")
-    private List<Build> builds = emptyList();
+    private List<ApiBuild> builds = emptyList();
     @SuppressWarnings("PMD.ImmutableField")
-    private List<Commit> commits = emptyList();
+    private List<ApiCommit> commits = emptyList();
 
-    public List<Build> getBuilds() {
+    public List<ApiBuild> getBuilds() {
         return builds;
     }
 
-    public List<Commit> getCommits() {
+    public List<ApiCommit> getCommits() {
         return commits;
     }
 }

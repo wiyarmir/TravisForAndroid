@@ -24,8 +24,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.BuildHistoryModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseRxLcePresenterTest;
 import es.guillermoorellana.travisforandroid.ui.view.BuildHistoryView;
@@ -37,12 +37,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
-public class BuildHistoryPresenterTest extends BaseRxLcePresenterTest<BuildHistoryView, BuildHistory> {
+public class BuildHistoryPresenterTest extends BaseRxLcePresenterTest<BuildHistoryView, ApiBuildHistory> {
     private BuildHistoryPresenter presenter;
 
     @SuppressWarnings("NullableProblems") // Initialized in @Before.
     @NonNull
-    private Repo repo;
+    private ApiRepo repo;
 
     @SuppressWarnings("NullableProblems") // Initialized in @Before.
     @NonNull
@@ -50,12 +50,12 @@ public class BuildHistoryPresenterTest extends BaseRxLcePresenterTest<BuildHisto
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {
-        testImpl = new BuildHistoryPresenter(mock(BuildHistoryModel.class), mock(Repo.class));
+        testImpl = new BuildHistoryPresenter(mock(BuildHistoryModel.class), mock(ApiRepo.class));
     }
 
     @Before
     public void setUp() {
-        repo = mock(Repo.class);
+        repo = mock(ApiRepo.class);
         buildHistoryModel = mock(BuildHistoryModel.class);
         presenter = new BuildHistoryPresenter(buildHistoryModel, repo);
     }

@@ -23,7 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import rx.Single;
 
 public class RepoModel {
@@ -35,7 +35,7 @@ public class RepoModel {
         mTravisRestApi = travisRestApi;
     }
 
-    public Single<List<Repo>> getRepos() {
+    public Single<List<ApiRepo>> getRepos() {
         return mTravisRestApi.repos();
     }
 }

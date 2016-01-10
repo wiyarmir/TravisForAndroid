@@ -20,7 +20,7 @@ import org.joda.time.DateTime;
 
 import java.util.Date;
 
-public class Build {
+public class ApiBuild {
     private long commitId;
     private long duration;
     private Date finishedAt;

@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.RepoModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseRxLcePresenterTest;
 import es.guillermoorellana.travisforandroid.ui.view.ReposView;
@@ -35,7 +35,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
-public class ReposPresenterTest extends BaseRxLcePresenterTest<ReposView, List<Repo>> {
+public class ReposPresenterTest extends BaseRxLcePresenterTest<ReposView, List<ApiRepo>> {
 
     private ReposPresenter presenter;
     private RepoModel repoModel;

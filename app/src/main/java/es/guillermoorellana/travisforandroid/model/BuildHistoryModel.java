@@ -23,7 +23,7 @@ import com.fernandocejas.frodo.annotation.RxLogObservable;
 import javax.inject.Inject;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
 import rx.Single;
 
 public class BuildHistoryModel {
@@ -36,7 +36,7 @@ public class BuildHistoryModel {
     }
 
     @RxLogObservable
-    public Single<BuildHistory> getBuildHistory(long repoId) {
+    public Single<ApiBuildHistory> getBuildHistory(long repoId) {
         return mTravisRestApi.buildHistory(repoId);
     }
 }

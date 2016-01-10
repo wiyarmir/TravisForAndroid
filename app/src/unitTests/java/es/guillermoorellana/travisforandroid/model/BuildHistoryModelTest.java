@@ -22,7 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
 import rx.Single;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,7 +48,7 @@ public class BuildHistoryModelTest {
 
     @Test
     public void getBuildHistory_shouldReturnBuildHistoryFromTravisApi() {
-        BuildHistory buildHistory = mock(BuildHistory.class);
+        ApiBuildHistory buildHistory = mock(ApiBuildHistory.class);
         when(travisRestApi.buildHistory(anyInt())).thenReturn(Single.just(buildHistory));
 
         assertThat(buildHistoryModel.getBuildHistory(42).toBlocking().value()).isEqualTo(buildHistory);

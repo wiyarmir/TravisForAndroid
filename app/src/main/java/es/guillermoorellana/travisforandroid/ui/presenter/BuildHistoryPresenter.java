@@ -20,18 +20,18 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import es.guillermoorellana.travisforandroid.api.entity.BuildHistory;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.BuildHistoryModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseRxLcePresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BuildHistoryView;
 
-public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildHistoryView, BuildHistory> {
+public class BuildHistoryPresenter extends BaseRxLcePresenter<BuildHistoryView, ApiBuildHistory> {
     @NonNull private final BuildHistoryModel mBuildHistoryModel;
-    @NonNull private final Repo mRepo;
+    @NonNull private final ApiRepo mRepo;
 
     @Inject
-    public BuildHistoryPresenter(@NonNull BuildHistoryModel buildHistoryModel, @NonNull Repo repo) {
+    public BuildHistoryPresenter(@NonNull BuildHistoryModel buildHistoryModel, @NonNull ApiRepo repo) {
         mBuildHistoryModel = buildHistoryModel;
         mRepo = repo;
     }

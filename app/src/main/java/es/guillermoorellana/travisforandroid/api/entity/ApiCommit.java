@@ -21,7 +21,7 @@ import org.joda.time.DateTime;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Commit implements Serializable {
+public class ApiCommit implements Serializable {
     private static final long serialVersionUID = 4390847522215353298L;
     public static final int SHORT_SHA_LENGTH = 7;
 

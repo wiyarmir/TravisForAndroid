@@ -33,14 +33,14 @@ import java.util.Locale;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
-import es.guillermoorellana.travisforandroid.api.entity.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 
 import static java.util.Collections.emptyList;
 import static java.util.Collections.unmodifiableList;
 
 public class RepoAdapter extends ItemClickableAdapter<RepoAdapter.RepoViewHolder> {
 
-    @NonNull protected List<Repo> mData = emptyList();
+    @NonNull protected List<ApiRepo> mData = emptyList();
 
     public RepoAdapter() {
         // noop
@@ -60,11 +60,11 @@ public class RepoAdapter extends ItemClickableAdapter<RepoAdapter.RepoViewHolder
         return R.layout.item_repo;
     }
 
-    public Repo getItem(int adapterPosition) {
+    public ApiRepo getItem(int adapterPosition) {
         return mData.get(adapterPosition);
     }
 
-    public void setData(@NonNull List<Repo> data) {
+    public void setData(@NonNull List<ApiRepo> data) {
         mData = unmodifiableList(data); // Prevent possible side-effects.
         notifyDataSetChanged();
     }
@@ -74,7 +74,7 @@ public class RepoAdapter extends ItemClickableAdapter<RepoAdapter.RepoViewHolder
         return mData.size();
     }
 
-    public List<Repo> getData() {
+    public List<ApiRepo> getData() {
         return mData;
     }
 
@@ -92,7 +92,7 @@ public class RepoAdapter extends ItemClickableAdapter<RepoAdapter.RepoViewHolder
             ButterKnife.bind(this, repoView);
         }
 
-        public void bind(@NonNull Repo repo) {
+        public void bind(@NonNull ApiRepo repo) {
             buildNumber.setText(repo.getLastBuildNumber());
             duration.setText(durationText(repo.getLastBuildDuration()));
             finishedAgo.setText(finishedText(repo));
@@ -101,7 +101,7 @@ public class RepoAdapter extends ItemClickableAdapter<RepoAdapter.RepoViewHolder
         }
 
         @NonNull
-        private static String finishedText(@NonNull Repo repo) {
+        private static String finishedText(@NonNull ApiRepo repo) {
             String verb;
             if (repo.isActive()) {
                 verb = "Started: %s ago";
@@ -116,7 +116,7 @@ public class RepoAdapter extends ItemClickableAdapter<RepoAdapter.RepoViewHolder
         }
 
         @ColorInt
-        private static int colorForRepo(@NonNull Repo repo) {
+        private static int colorForRepo(@NonNull ApiRepo repo) {
             if (repo.isActive()) {
                 return Color.YELLOW;
             }
