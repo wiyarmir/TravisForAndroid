@@ -129,6 +129,10 @@ dependencies {
     compile libraries.fragmentargs
     apt libraries.fragmentargsProcessor
 
+    apt libraries.dbflowProcessor
+    compile libraries.dbflowCore
+    compile libraries.dbflow
+
     // Developer tools (Developer Settings)
     debugCompile libraries.stetho
     debugCompile libraries.stethoOkHttp

@@ -66,6 +66,7 @@ ext {
     retrofitVersion = '2.0.0-beta2'
     espressoVersion = '2.2.1'
     stethoVersion = '1.2.0'
+    dbflowVersion = '3.0.0-beta1'
 }
 
 
@@ -103,6 +104,10 @@ ext.libraries = [
         mosbyViewstate          : "com.hannesdorfmann.mosby:viewstate:2.0.0",
         fragmentargs            : "com.hannesdorfmann.fragmentargs:annotation:3.0.0",
         fragmentargsProcessor   : "com.hannesdorfmann.fragmentargs:processor:3.0.0",
+
+        dbflowProcessor         : "com.github.Raizlabs.DBFlow:dbflow-processor:$dbflowVersion",
+        dbflowCore              : "com.github.Raizlabs.DBFlow:dbflow-core:$dbflowVersion",
+        dbflow                  : "com.github.Raizlabs.DBFlow:dbflow:$dbflowVersion",
 
         // Developer Tools
         stetho                  : "com.facebook.stetho:stetho:$stethoVersion",

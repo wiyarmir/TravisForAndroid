@@ -29,7 +29,7 @@ public class ApiRepo implements Serializable {
     private String slug;
     private boolean active;
     private String description;
-    private int lastBuildId;
+    private long lastBuildId;
     private String lastBuildNumber;
     private String lastBuildState;
     private long lastBuildDuration;

@@ -1,0 +1,54 @@
+/*
+ *   Copyright 2016 Guillermo Orellana Ruiz
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package es.guillermoorellana.travisforandroid.data;
+
+import com.raizlabs.android.dbflow.structure.provider.ContentUtils;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import es.guillermoorellana.travisforandroid.api.TravisRestApi;
+import es.guillermoorellana.travisforandroid.model.Repo;
+import rx.Observable;
+import rx.Single;
+import rx.functions.Func1;
+
+public class Repository {
+
+    private final TravisRestApi api;
+
+    @Inject
+    public Repository(TravisRestApi travisRestApi) {
+        api = travisRestApi;
+    }
+
+    public Single<Integer> getRepos() {
+        return api.repos()
+                .toObservable()
+                .flatMapIterable(repos -> repos)
+                .map(ApiAdapter::fromApi)
+                .toList()
+                .flatMap((Func1<List<Repo>, Observable<Integer>>) repos -> Observable.create(
+                        subscriber -> {
+                            ContentUtils.bulkInsert(TravisDatabase.RepoModel.CONTENT_REPO_URI, Repo.class, repos);
+                            subscriber.onNext(repos.size());
+                            subscriber.onCompleted();
+                        })
+                ).toSingle();
+    }
+}

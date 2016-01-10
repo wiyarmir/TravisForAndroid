@@ -20,6 +20,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.raizlabs.android.dbflow.config.FlowManager;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import es.guillermoorellana.travisforandroid.api.ApiModule;
@@ -46,6 +48,8 @@ public class TravisApp extends Application {
         Timber.plant(new Timber.DebugTree());
 
         JodaTimeAndroid.init(this);
+
+        FlowManager.init(this);
 
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))

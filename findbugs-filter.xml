@@ -31,6 +31,11 @@
         <Class name="~.*Dagger*.*"/>
     </Match>
 
+    <!-- Do not check auto-generated classes with _ -->
+    <Match>
+        <Class name="~.*_Provider*.*"/>
+    </Match>
+
     <!-- Do not check for non-initialized fields in tests because usually we initialize them in @Before -->
     <Match>
         <Class name="~.*Test"/>
