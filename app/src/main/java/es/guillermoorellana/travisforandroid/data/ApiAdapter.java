@@ -16,7 +16,10 @@
 
 package es.guillermoorellana.travisforandroid.data;
 
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuild;
 import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
+import es.guillermoorellana.travisforandroid.model.Build;
+import es.guillermoorellana.travisforandroid.model.BuildBuilder;
 import es.guillermoorellana.travisforandroid.model.Repo;
 import es.guillermoorellana.travisforandroid.model.RepoBuilder;
 
@@ -40,5 +43,20 @@ public final class ApiAdapter {
                 .setLastBuildFinishedAt(apiRepo.getLastBuildFinishedAt().getMillis())
                 .setGithubLanguage(apiRepo.getGithubLanguage())
                 .createRepo();
+    }
+
+    public static Build fromApi(ApiBuild apiBuild) {
+        return new BuildBuilder().setCommitId(apiBuild.getCommitId())
+                .setDuration(apiBuild.getDuration())
+                .setFinishedAt(apiBuild.getFinishedAt().getMillis())
+                .setId(apiBuild.getId())
+                .setNumber(apiBuild.getNumber())
+                .setPullRequest(apiBuild.isPullRequest())
+                .setPullRequestNumber(apiBuild.getPullRequestNumber())
+                .setPullRequestTitle(apiBuild.getPullRequestTitle())
+                .setRepositoryId(apiBuild.getRepositoryId())
+                .setStartedAt(apiBuild.getStartedAt().getMillis())
+                .setState(apiBuild.getState())
+                .createBuild();
     }
 }

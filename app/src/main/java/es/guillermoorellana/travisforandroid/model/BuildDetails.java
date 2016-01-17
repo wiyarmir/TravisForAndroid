@@ -16,21 +16,20 @@
 
 package es.guillermoorellana.travisforandroid.model;
 
-import javax.inject.Inject;
+public class BuildDetails {
+    private Build build;
+    private Commit commit;
+    private Job job;
 
-import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entity.ApiBuildDetails;
-import rx.Single;
-
-public class BuildDetailsModel {
-    private final TravisRestApi mTravisRestApi;
-
-    @Inject
-    public BuildDetailsModel(TravisRestApi travisRestApi) {
-        mTravisRestApi = travisRestApi;
+    public Build getBuild() {
+        return build;
     }
 
-    public Single<ApiBuildDetails> getBuildDetails(long buildId) {
-        return mTravisRestApi.build(buildId);
+    public Commit getCommit() {
+        return commit;
+    }
+
+    public Job getJob() {
+        return job;
     }
 }

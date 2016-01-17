@@ -26,10 +26,9 @@ import com.raizlabs.android.dbflow.annotation.provider.TableEndpoint;
 @ContentProvider(authority = TravisDatabase.CONTENT_AUTHORITY,
         database = TravisDatabase.class,
         baseContentUri = "content://" + TravisDatabase.CONTENT_AUTHORITY)
-@Database(version = TravisDatabase.VERSION, name = TravisDatabase.NAME)
+@Database(version = TravisDatabase.VERSION)
 public class TravisDatabase {
     public static final int VERSION = 1;
-    public static final String NAME = "travis";
     public static final String CONTENT_AUTHORITY = "es.guillermoorellana.travisforandroid";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
@@ -37,7 +36,7 @@ public class TravisDatabase {
         // util class
     }
 
-    @TableEndpoint(name = "Repo", contentProviderName = "TravisDatabase")
+    @TableEndpoint(name = "Repo")
     public static final class RepoModel {
         public static final String PATH_REPO = "repo";
         @ContentUri(path = PATH_REPO, type = ContentUri.ContentType.VND_MULTIPLE + PATH_REPO)

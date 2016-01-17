@@ -1,22 +1,21 @@
 /*
- *   Copyright 2016 Guillermo Orellana Ruiz
+ * Copyright 2015 Guillermo Orellana Ruiz
  *
- *   Licensed under the Apache License, Version 2.0 (the "License");
- *   you may not use this file except in compliance with the License.
- *   You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *       http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *   Unless required by applicable law or agreed to in writing, software
- *   distributed under the License is distributed on an "AS IS" BASIS,
- *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *   See the License for the specific language governing permissions and
- *   limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package es.guillermoorellana.travisforandroid.ui.adapter;
 
-import android.database.Cursor;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
@@ -24,29 +23,32 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.raizlabs.android.dbflow.config.FlowManager;
-
 import org.joda.time.Period;
 import org.joda.time.format.PeriodFormat;
 import org.joda.time.format.PeriodFormatter;
 
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
-import es.guillermoorellana.travisforandroid.model.Repo;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 
-public class RepoAdapter extends CursorRecyclerAdapter<RepoAdapter.RepoViewHolder> {
+import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableList;
 
-    public RepoAdapter(Cursor cursor) {
-        super(cursor);
+public class ApiRepoAdapter extends ItemClickableAdapter<ApiRepoAdapter.RepoViewHolder> {
+
+    @NonNull protected List<ApiRepo> mData = emptyList();
+
+    public ApiRepoAdapter() {
+        // noop
     }
 
     @Override
-    public void onBindViewHolderCursor(RepoViewHolder holder, Cursor cursor) {
-        Repo repo = FlowManager.getModelAdapter(Repo.class).loadFromCursor(cursor);
-        holder.bind(repo);
+    public void onBindViewHolder(RepoViewHolder holder, int position) {
+        holder.bind(getItem(position));
     }
 
     @Override
@@ -56,6 +58,24 @@ public class RepoAdapter extends CursorRecyclerAdapter<RepoAdapter.RepoViewHolde
 
     protected int getItemLayout() {
         return R.layout.item_repo;
+    }
+
+    public ApiRepo getItem(int adapterPosition) {
+        return mData.get(adapterPosition);
+    }
+
+    public void setData(@NonNull List<ApiRepo> data) {
+        mData = unmodifiableList(data); // Prevent possible side-effects.
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
+    }
+
+    public List<ApiRepo> getData() {
+        return mData;
     }
 
     public static class RepoViewHolder extends RecyclerView.ViewHolder {
@@ -72,7 +92,7 @@ public class RepoAdapter extends CursorRecyclerAdapter<RepoAdapter.RepoViewHolde
             ButterKnife.bind(this, repoView);
         }
 
-        public void bind(@NonNull Repo repo) {
+        public void bind(@NonNull ApiRepo repo) {
             buildNumber.setText(repo.getLastBuildNumber());
             duration.setText(durationText(repo.getLastBuildDuration()));
             finishedAgo.setText(finishedText(repo));
@@ -81,7 +101,7 @@ public class RepoAdapter extends CursorRecyclerAdapter<RepoAdapter.RepoViewHolde
         }
 
         @NonNull
-        private static String finishedText(@NonNull Repo repo) {
+        private static String finishedText(@NonNull ApiRepo repo) {
             String verb;
             if (repo.isActive()) {
                 verb = "Started: %s ago";
@@ -96,7 +116,7 @@ public class RepoAdapter extends CursorRecyclerAdapter<RepoAdapter.RepoViewHolde
         }
 
         @ColorInt
-        private static int colorForRepo(@NonNull Repo repo) {
+        private static int colorForRepo(@NonNull ApiRepo repo) {
             if (repo.isActive()) {
                 return Color.YELLOW;
             }

@@ -32,9 +32,9 @@ import java.io.IOException;
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuild;
 import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
 import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
-import es.guillermoorellana.travisforandroid.api.entity.ApiBuild;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

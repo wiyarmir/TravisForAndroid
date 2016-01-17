@@ -16,30 +16,33 @@
 
 package es.guillermoorellana.travisforandroid.ui.fragment;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
-import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
-
-import java.util.List;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import dagger.Module;
 import dagger.Provides;
 import dagger.Subcomponent;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
-import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
-import es.guillermoorellana.travisforandroid.model.RepoModel;
-import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
+import es.guillermoorellana.travisforandroid.data.Repository;
+import es.guillermoorellana.travisforandroid.data.TravisDatabase;
+import es.guillermoorellana.travisforandroid.model.Repo_Table;
+import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.RepoAdapter;
 import es.guillermoorellana.travisforandroid.ui.presenter.ReposPresenter;
@@ -47,10 +50,31 @@ import es.guillermoorellana.travisforandroid.ui.view.ReposView;
 import timber.log.Timber;
 
 public class ReposFragment
-        extends BaseMvpLceFragment<RecyclerView, List<ApiRepo>, ReposView, ReposPresenter>
-        implements ReposView {
+        extends BaseFragment<ReposView, ReposPresenter>
+        implements LoaderManager.LoaderCallbacks<Cursor>, ReposView, SwipeRefreshLayout.OnRefreshListener {
+
+    public static final int LOADER_ID = 1001;
+
+    private static final String[] PROJECTION = new String[]{
+            Repo_Table._id.toString(),
+            Repo_Table.repoId.toString(),
+            Repo_Table.slug.toString(),
+            Repo_Table.active.toString(),
+            Repo_Table.description.toString(),
+            Repo_Table.lastBuildId.toString(),
+            Repo_Table.lastBuildNumber.toString(),
+            Repo_Table.lastBuildState.toString(),
+            Repo_Table.lastBuildDuration.toString(),
+            Repo_Table.lastBuildLanguage.toString(),
+            Repo_Table.lastBuildStartedAt.toString(),
+            Repo_Table.lastBuildFinishedAt.toString(),
+            Repo_Table.githubLanguage.toString(),
+    };
 
     @Inject ReposPresenter reposPresenter;
+    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @Bind(R.id.contentView) RecyclerView contentView;
+    @Bind(R.id.errorView) TextView errorView;
 
     private RepoAdapter mAdapter;
 
@@ -71,7 +95,8 @@ public class ReposFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new RepoAdapter();
+        swipeContainer.setOnRefreshListener(this);
+        mAdapter = new RepoAdapter(null);
         contentView.setAdapter(mAdapter);
         contentView.setLayoutManager(new LinearLayoutManager(getContext()));
         contentView.addItemDecoration(new DividerItemDecoration(getContext()));
@@ -79,15 +104,15 @@ public class ReposFragment
                 clickedView -> {
                     int adapterPosition = contentView.getChildAdapterPosition(clickedView);
                     Timber.d("clicked position " + adapterPosition);
-                    getMainView().replaceFragmentBackStack(BuildHistoryFragmentBuilder.newBuildHistoryFragment(mAdapter.getItem(adapterPosition)));
+//                    getMainView().replaceFragmentBackStack(BuildHistoryFragmentBuilder.newBuildHistoryFragment(adapterPosition));
                 }
         );
-        loadData(false);
     }
 
     @Override
-    protected String getErrorMessage(Throwable e, boolean pullToRefresh) {
-        return e.getMessage();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     @Override
@@ -96,24 +121,38 @@ public class ReposFragment
     }
 
     @Override
-    public void setData(List<ApiRepo> repos) {
-        Timber.d("Recived data: %d repos", repos.size());
-        mAdapter.setData(repos);
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(
+                getActivity(),
+                TravisDatabase.RepoModel.CONTENT_REPO_URI,
+                PROJECTION,
+                null,
+                null,
+                Repo_Table.lastBuildStartedAt.getContainerKey() + "DESC"
+        );
     }
 
     @Override
-    public void loadData(boolean pullToRefresh) {
-        getPresenter().reloadData(pullToRefresh);
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        Timber.d("onLoadFinished");
+        mAdapter.changeCursor(data);
+        swipeContainer.setRefreshing(false);
     }
 
     @Override
-    public LceViewState<List<ApiRepo>, ReposView> createViewState() {
-        return new RetainingLceViewState<>();
+    public void onLoaderReset(Loader<Cursor> loader) {
+        Timber.d("onLoaderReset");
+        swipeContainer.setRefreshing(false);
     }
 
     @Override
-    public List<ApiRepo> getData() {
-        return mAdapter == null ? null : mAdapter.getData();
+    public void onRefresh() {
+        getPresenter().reloadData();
+    }
+
+    @Override
+    public void showError(Throwable error) {
+        errorView.setText(error.getMessage());
     }
 
     @Subcomponent(modules = ReposFragmentModule.class)
@@ -126,8 +165,8 @@ public class ReposFragment
 
         @Provides
         @NonNull
-        public ReposPresenter provideReposPresenter(@NonNull RepoModel repoModel) {
-            return new ReposPresenter(repoModel);
+        public ReposPresenter provideReposPresenter(@NonNull Repository repository) {
+            return new ReposPresenter(repository);
         }
     }
 }

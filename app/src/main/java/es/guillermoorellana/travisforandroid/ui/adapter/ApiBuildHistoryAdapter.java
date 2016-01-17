@@ -20,7 +20,6 @@ import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -30,17 +29,12 @@ import es.guillermoorellana.travisforandroid.api.entity.ApiBuild;
 import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
 import es.guillermoorellana.travisforandroid.api.entity.ApiCommit;
 
-public class BuildHistoryAdapter extends ItemClickableAdapter<BuildHistoryAdapter.BuildViewHolder> {
+public class ApiBuildHistoryAdapter extends ItemClickableAdapter<ApiBuildHistoryAdapter.BuildViewHolder> {
     @NonNull protected ApiBuildHistory mData = new ApiBuildHistory();
 
     @Override
     protected BuildViewHolder createViewHolder(View view) {
         return new BuildViewHolder(view);
-    }
-
-    @Override
-    public BuildViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return super.onCreateViewHolder(parent, viewType);
     }
 
     @Override

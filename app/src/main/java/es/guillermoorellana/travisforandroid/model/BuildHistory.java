@@ -16,21 +16,21 @@
 
 package es.guillermoorellana.travisforandroid.model;
 
-import javax.inject.Inject;
+import java.util.List;
 
-import es.guillermoorellana.travisforandroid.api.TravisRestApi;
-import es.guillermoorellana.travisforandroid.api.entity.ApiBuildDetails;
-import rx.Single;
+import static java.util.Collections.emptyList;
 
-public class BuildDetailsModel {
-    private final TravisRestApi mTravisRestApi;
+public class BuildHistory {
+    @SuppressWarnings("PMD.ImmutableField")
+    private List<Build> builds = emptyList();
+    @SuppressWarnings("PMD.ImmutableField")
+    private List<Commit> commits = emptyList();
 
-    @Inject
-    public BuildDetailsModel(TravisRestApi travisRestApi) {
-        mTravisRestApi = travisRestApi;
+    public List<Build> getBuilds() {
+        return builds;
     }
 
-    public Single<ApiBuildDetails> getBuildDetails(long buildId) {
-        return mTravisRestApi.build(buildId);
+    public List<Commit> getCommits() {
+        return commits;
     }
 }

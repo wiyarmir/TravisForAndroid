@@ -1,0 +1,139 @@
+/*
+ *   Copyright 2016 Guillermo Orellana Ruiz
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
+package es.guillermoorellana.travisforandroid.model;
+
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
+
+import es.guillermoorellana.travisforandroid.data.TravisDatabase;
+
+@Table(database = TravisDatabase.class)
+public class Build extends BaseModel {
+    @SuppressWarnings("checkstyle:membername")
+    @PrimaryKey(autoincrement = true)
+    int _id;
+
+    @Column
+    long commitId;
+
+    @Column
+    long duration;
+
+    @Column
+    long finishedAt;
+
+    @Column
+    long id;
+
+    @Column
+    String number;
+
+    @Column
+    boolean pullRequest;
+
+    @Column
+    String pullRequestNumber;
+
+    @Column
+    String pullRequestTitle;
+
+    @Column
+    int repositoryId;
+
+    @Column
+    long startedAt;
+
+    @Column
+    String state;
+
+    @ForeignKey(saveForeignKeyModel = false, references = {})
+    ForeignKeyContainer<Repo> repoForeignKeyContainer;
+
+    Build() {
+        // ctor for DBFlow
+    }
+
+    public Build(long commitId, long duration, long finishedAt, long id, String number,
+                 boolean pullRequest, String pullRequestNumber, String pullRequestTitle,
+                 int repositoryId, long startedAt, String state) {
+        this.commitId = commitId;
+        this.duration = duration;
+        this.finishedAt = finishedAt;
+        this.id = id;
+        this.number = number;
+        this.pullRequest = pullRequest;
+        this.pullRequestNumber = pullRequestNumber;
+        this.pullRequestTitle = pullRequestTitle;
+        this.repositoryId = repositoryId;
+        this.startedAt = startedAt;
+        this.state = state;
+    }
+
+    public void associateRepo(Repo repo) {
+        repoForeignKeyContainer = FlowManager.getContainerAdapter(Repo.class).toForeignKeyContainer(repo);
+    }
+
+    public long getCommitId() {
+        return commitId;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public long getFinishedAt() {
+        return finishedAt;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public boolean isPullRequest() {
+        return pullRequest;
+    }
+
+    public String getPullRequestNumber() {
+        return pullRequestNumber;
+    }
+
+    public String getPullRequestTitle() {
+        return pullRequestTitle;
+    }
+
+    public int getRepositoryId() {
+        return repositoryId;
+    }
+
+    public long getStartedAt() {
+        return startedAt;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+}

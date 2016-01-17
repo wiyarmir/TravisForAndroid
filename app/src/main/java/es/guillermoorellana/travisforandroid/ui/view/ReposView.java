@@ -16,11 +16,8 @@
 
 package es.guillermoorellana.travisforandroid.ui.view;
 
-import com.hannesdorfmann.mosby.mvp.lce.MvpLceView;
+import com.hannesdorfmann.mosby.mvp.MvpView;
 
-import java.util.List;
-
-import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
-
-public interface ReposView extends MvpLceView<List<ApiRepo>> {
+public interface ReposView extends MvpView {
+    void showError(Throwable error);
 }

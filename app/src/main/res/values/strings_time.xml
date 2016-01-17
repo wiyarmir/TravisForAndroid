@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright 2016 Guillermo Orellana Ruiz
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<resources>
+
+  <string name="time_seconds">less than a minute</string>
+
+  <plurals name="time_minute">
+    <item quantity="one">about %d minute</item>
+    <item quantity="other">%d minutes</item>
+  </plurals>
+
+  <plurals name="time_day">
+    <item quantity="one">%d day</item>
+    <item quantity="other">%d days</item>
+  </plurals>
+
+  <plurals name="time_hour">
+    <item quantity="one">about %d hour</item>
+    <item quantity="other">%d hours</item>
+  </plurals>
+
+  <plurals name="time_year">
+    <item quantity="one">about %d year</item>
+    <item quantity="other">%d years</item>
+  </plurals>
+
+  <plurals name="time_month">
+    <item quantity="one">about %d month</item>
+    <item quantity="other">%d months</item>
+  </plurals>
+
+  <string name="time_ago">ago</string>
+
+</resources>

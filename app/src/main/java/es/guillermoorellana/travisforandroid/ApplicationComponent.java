@@ -54,6 +54,7 @@ public interface ApplicationComponent {
     LeakCanaryProxy leakCanaryProxy();
 
     ReposFragment.ReposFragmentComponent plus(@NonNull ReposFragment.ReposFragmentModule reposFragmentModule);
+
     BuildHistoryFragment.BuildsFragmentComponent plus(@NonNull BuildHistoryFragment.BuildsFragmentModule buildsFragmentModule);
 
     void inject(@NonNull TravisApp travisApp);

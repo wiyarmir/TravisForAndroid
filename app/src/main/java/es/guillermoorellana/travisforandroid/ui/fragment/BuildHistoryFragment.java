@@ -28,8 +28,6 @@ import android.view.ViewGroup;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
-import com.hannesdorfmann.mosby.mvp.viewstate.lce.LceViewState;
-import com.hannesdorfmann.mosby.mvp.viewstate.lce.data.RetainingLceViewState;
 
 import javax.inject.Inject;
 
@@ -43,7 +41,7 @@ import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.BuildHistoryModel;
 import es.guillermoorellana.travisforandroid.mvp.BaseMvpLceFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
-import es.guillermoorellana.travisforandroid.ui.adapter.BuildHistoryAdapter;
+import es.guillermoorellana.travisforandroid.ui.adapter.ApiBuildHistoryAdapter;
 import es.guillermoorellana.travisforandroid.ui.presenter.BuildHistoryPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BuildHistoryView;
 
@@ -58,7 +56,7 @@ public class BuildHistoryFragment
     @NonNull
     @Inject
     BuildHistoryPresenter buildHistoryPresenter;
-    private BuildHistoryAdapter mAdapter;
+    private ApiBuildHistoryAdapter mAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +77,7 @@ public class BuildHistoryFragment
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new BuildHistoryAdapter();
+        mAdapter = new ApiBuildHistoryAdapter();
         contentView.setAdapter(mAdapter);
         contentView.setLayoutManager(new LinearLayoutManager(getContext()));
         contentView.addItemDecoration(new DividerItemDecoration(getContext()));
@@ -104,16 +102,6 @@ public class BuildHistoryFragment
     @Override
     public void loadData(boolean pullToRefresh) {
         getPresenter().reloadData(pullToRefresh);
-    }
-
-    @Override
-    public LceViewState<ApiBuildHistory, BuildHistoryView> createViewState() {
-        return new RetainingLceViewState<>();
-    }
-
-    @Override
-    public ApiBuildHistory getData() {
-        return mAdapter == null ? null : mAdapter.getData();
     }
 
     @Subcomponent(modules = BuildsFragmentModule.class)

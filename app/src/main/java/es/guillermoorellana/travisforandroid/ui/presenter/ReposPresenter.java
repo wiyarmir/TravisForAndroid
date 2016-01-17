@@ -18,25 +18,34 @@ package es.guillermoorellana.travisforandroid.ui.presenter;
 
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
-import es.guillermoorellana.travisforandroid.model.RepoModel;
-import es.guillermoorellana.travisforandroid.mvp.BaseRxLcePresenter;
+import es.guillermoorellana.travisforandroid.data.Repository;
+import es.guillermoorellana.travisforandroid.mvp.BasePresenter;
 import es.guillermoorellana.travisforandroid.ui.view.ReposView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import timber.log.Timber;
 
-public class ReposPresenter extends BaseRxLcePresenter<ReposView, List<ApiRepo>> {
-    @NonNull private final RepoModel repoModel;
+public class ReposPresenter extends BasePresenter<ReposView> {
+
+    @NonNull private final Repository repository;
 
     @Inject
-    public ReposPresenter(@NonNull RepoModel repoModel) {
-        this.repoModel = repoModel;
+    public ReposPresenter(@NonNull Repository repository) {
+        this.repository = repository;
     }
 
-
-    public void reloadData(boolean pullToRefresh) {
-        subscribe(repoModel.getRepos(), pullToRefresh);
+    public void reloadData() {
+        repository.getRepos()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((n) -> {
+                }, (error) -> {
+                    Timber.e(error, "error reloading data");
+                    if (isViewAttached()) {
+                        getView().showError(error);
+                    }
+                });
     }
 }

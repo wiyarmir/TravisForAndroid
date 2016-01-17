@@ -18,14 +18,21 @@ package es.guillermoorellana.travisforandroid.model;
 
 
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.io.Serializable;
+import java.util.List;
 
 import es.guillermoorellana.travisforandroid.data.TravisDatabase;
 
+import static com.raizlabs.android.dbflow.annotation.OneToMany.Method.ALL;
+
+@ModelContainer
 @Table(database = TravisDatabase.class)
 public class Repo extends BaseModel implements Serializable {
     private static final long serialVersionUID = 8763033273883847886L;
@@ -70,6 +77,8 @@ public class Repo extends BaseModel implements Serializable {
     @Column
     String githubLanguage;
 
+    List<Build> builds;
+
     Repo() {
         // for DBFlow to use
     }
@@ -90,6 +99,17 @@ public class Repo extends BaseModel implements Serializable {
         this.lastBuildStartedAt = lastBuildStartedAt;
         this.lastBuildFinishedAt = lastBuildFinishedAt;
         this.githubLanguage = githubLanguage;
+    }
+
+    @OneToMany(methods = ALL)
+    public List<Build> getBuilds() {
+        if (builds == null || builds.isEmpty()) {
+            builds = SQLite.select()
+                    .from(Build.class)
+                    .where(Build_Table.repoForeignKeyContainer__id.eq(_id))
+                    .queryList();
+        }
+        return builds;
     }
 
     public int getId() {
