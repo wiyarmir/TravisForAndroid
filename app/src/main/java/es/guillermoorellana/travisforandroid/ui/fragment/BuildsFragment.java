@@ -63,8 +63,15 @@ public class BuildsFragment
             Build_Table.duration.toString(),
             Build_Table.startedAt.toString(),
             Build_Table.number.toString(),
-            Build_Table.repositoryId.toString()
+            Build_Table.repositoryId.toString(),
+            Build_Table.state.toString(),
+            Build_Table.finishedAt.toString(),
+            Build_Table.pullRequest.toString(),
+            Build_Table.pullRequestNumber.toString(),
+            Build_Table.pullRequestTitle.toString(),
+            Build_Table.commitId.toString()
     };
+
     private static final int LOADER_ID = 1002;
 
     @Arg long repoId;
@@ -130,6 +137,7 @@ public class BuildsFragment
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.changeCursor(data);
+
         swipeContainer.setRefreshing(false);
     }
 

@@ -18,6 +18,7 @@ package es.guillermoorellana.travisforandroid.model;
 
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ConflictAction;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
@@ -25,7 +26,10 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import es.guillermoorellana.travisforandroid.data.TravisDatabase;
 
-@Table(database = TravisDatabase.class, insertConflict = ConflictAction.REPLACE, updateConflict = ConflictAction.REPLACE)
+@ModelContainer
+@Table(database = TravisDatabase.class,
+        insertConflict = ConflictAction.REPLACE,
+        updateConflict = ConflictAction.REPLACE)
 public class GHCommit extends BaseModel {
 
     public static final int SHORT_SHA_LENGTH = 7;

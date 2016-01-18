@@ -29,8 +29,10 @@ import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.model.Build;
 import es.guillermoorellana.travisforandroid.model.GHCommit;
+import es.guillermoorellana.travisforandroid.model.TimeAgo;
 
 public class BuildsAdapter extends CursorRecyclerAdapter<BuildsAdapter.BuildViewHolder> {
+
     public BuildsAdapter(Cursor cursor) {
         super(cursor);
     }
@@ -53,6 +55,7 @@ public class BuildsAdapter extends CursorRecyclerAdapter<BuildsAdapter.BuildView
 
     @SuppressLint("SetTextI18n")
     public static class BuildViewHolder extends RecyclerView.ViewHolder {
+        private final TimeAgo timeAgo;
         @Bind(R.id.buildStatus) TextView buildStatus;
         @Bind(R.id.starter) TextView starter;
         @Bind(R.id.branch) TextView branch;
@@ -62,12 +65,13 @@ public class BuildsAdapter extends CursorRecyclerAdapter<BuildsAdapter.BuildView
         public BuildViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            timeAgo = new TimeAgo(itemView.getResources());
         }
 
         public void bind(Build build, GHCommit relatedCommit) {
             buildStatus.setText("Build #" + build.getNumber());
             duration.setText("Duration:" + build.getDuration());
-            finishedAgo.setText("Finished:" + build.getFinishedAt());
+            finishedAgo.setText("Finished:" + timeAgo.timeAgo(build.getFinishedAt()));
             if (relatedCommit != null) {
                 starter.setText("Started by:" + relatedCommit.getCommitterName());
                 branch.setText("Branch:" + relatedCommit.getBranch());

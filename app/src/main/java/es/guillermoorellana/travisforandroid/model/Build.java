@@ -19,11 +19,11 @@ package es.guillermoorellana.travisforandroid.model;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.ConflictAction;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
-import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 
@@ -35,10 +35,10 @@ public class Build extends BaseModel {
     @PrimaryKey(autoincrement = true)
     int _id;
 
-    @ForeignKey(saveForeignKeyModel = false, references = {
-            @ForeignKeyReference(columnName = "commitId", columnType = long.class, foreignKeyColumnName = "commitId")
-    })
     GHCommit commit;
+
+    @Column
+    long commitId;
 
     @Column
     long duration;
@@ -78,9 +78,10 @@ public class Build extends BaseModel {
         // ctor for DBFlow
     }
 
-    public Build(long duration, long finishedAt, long id, String number,
+    public Build(long commitId, long duration, long finishedAt, long id, String number,
                  boolean pullRequest, String pullRequestNumber, String pullRequestTitle,
                  int repositoryId, long startedAt, String state) {
+        this.commitId = commitId;
         this.duration = duration;
         this.finishedAt = finishedAt;
         this.id = id;
@@ -138,6 +139,12 @@ public class Build extends BaseModel {
     }
 
     public GHCommit getCommit() {
+        if (commit == null) {
+            commit = SQLite.select()
+                    .from(GHCommit.class)
+                    .where(GHCommit_Table.commitId.eq(commitId))
+                    .querySingle();
+        }
         return commit;
     }
 }

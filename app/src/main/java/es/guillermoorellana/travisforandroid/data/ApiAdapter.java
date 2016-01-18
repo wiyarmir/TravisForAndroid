@@ -49,7 +49,7 @@ public final class ApiAdapter {
     }
 
     public static Build fromApi(ApiBuild apiBuild) {
-        return new BuildBuilder()
+        return new BuildBuilder().setCommitId(apiBuild.getCommitId())
                 .setDuration(apiBuild.getDuration())
                 .setFinishedAt(apiBuild.getFinishedAt().getMillis())
                 .setId(apiBuild.getId())

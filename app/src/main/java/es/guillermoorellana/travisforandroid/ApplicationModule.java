@@ -46,7 +46,7 @@ public class ApplicationModule {
     @Provides
     @NonNull
     @Singleton
-    public TravisApp provideQualityMattersApp() {
+    public TravisApp provideTravisApp() {
         return travisApp;
     }
 
