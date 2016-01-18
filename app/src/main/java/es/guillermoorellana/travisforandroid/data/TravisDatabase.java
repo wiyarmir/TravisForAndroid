@@ -37,9 +37,37 @@ public class TravisDatabase {
     }
 
     @TableEndpoint(name = "Repo")
-    public static final class RepoModel {
+    public static final class REPO_MODEL {
         public static final String PATH_REPO = "repo";
         @ContentUri(path = PATH_REPO, type = ContentUri.ContentType.VND_MULTIPLE + PATH_REPO)
         public static final Uri CONTENT_REPO_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_REPO).build();
+    }
+
+    @TableEndpoint(name = "GHCommit")
+    public static final class COMMIT_MODEL {
+        public static final String PATH_COMMIT = "commit";
+        @ContentUri(path = PATH_COMMIT, type = ContentUri.ContentType.VND_MULTIPLE + PATH_COMMIT)
+        public static final Uri CONTENT_COMMIT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_COMMIT).build();
+    }
+
+    @SuppressWarnings("PMD")
+    @TableEndpoint(name = "Build")
+    public static final class BUILD_MODEL {
+        public static final String PATH_BUILD = "build";
+
+        @ContentUri(
+                path = PATH_BUILD,
+                type = ContentUri.ContentType.VND_MULTIPLE + PATH_BUILD
+        )
+        public static final Uri URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_BUILD).build();
+
+        @ContentUri(
+                path = PATH_BUILD + "/#",
+                segments = @ContentUri.PathSegment(segment = 1, column = "repositoryId"),
+                type = ContentUri.ContentType.VND_MULTIPLE + PATH_BUILD
+        )
+        public static Uri URI_WITH_REPO(long id) {
+            return BASE_CONTENT_URI.buildUpon().appendPath(PATH_BUILD).appendPath(String.valueOf(id)).build();
+        }
     }
 }

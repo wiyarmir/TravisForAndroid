@@ -31,6 +31,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.raizlabs.android.dbflow.config.FlowManager;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -41,6 +43,7 @@ import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.data.Repository;
 import es.guillermoorellana.travisforandroid.data.TravisDatabase;
+import es.guillermoorellana.travisforandroid.model.Repo;
 import es.guillermoorellana.travisforandroid.model.Repo_Table;
 import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
@@ -73,7 +76,7 @@ public class ReposFragment
 
     @Inject ReposPresenter reposPresenter;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-    @Bind(R.id.contentView) RecyclerView contentView;
+    @Bind(R.id.recyclerView) RecyclerView contentView;
     @Bind(R.id.errorView) TextView errorView;
 
     private RepoAdapter mAdapter;
@@ -102,9 +105,10 @@ public class ReposFragment
         contentView.addItemDecoration(new DividerItemDecoration(getContext()));
         mAdapter.getOnClickSubject().subscribe(
                 clickedView -> {
-                    int adapterPosition = contentView.getChildAdapterPosition(clickedView);
-                    Timber.d("clicked position " + adapterPosition);
-//                    getMainView().replaceFragmentBackStack(BuildHistoryFragmentBuilder.newBuildHistoryFragment(adapterPosition));
+                    mAdapter.getCursor().moveToPosition(contentView.getChildAdapterPosition(clickedView));
+                    long repoId = FlowManager.getModelAdapter(Repo.class).loadFromCursor(mAdapter.getCursor()).getRepoId();
+                    Timber.d("looking for repo " + repoId);
+                    getMainView().replaceFragmentBackStack(BuildsFragmentBuilder.newBuildsFragment(repoId));
                 }
         );
     }
@@ -124,7 +128,7 @@ public class ReposFragment
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(
                 getActivity(),
-                TravisDatabase.RepoModel.CONTENT_REPO_URI,
+                TravisDatabase.REPO_MODEL.CONTENT_REPO_URI,
                 PROJECTION,
                 null,
                 null,
@@ -136,6 +140,7 @@ public class ReposFragment
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         Timber.d("onLoadFinished");
         mAdapter.changeCursor(data);
+        contentView.setVisibility(View.VISIBLE);
         swipeContainer.setRefreshing(false);
     }
 
@@ -153,6 +158,9 @@ public class ReposFragment
     @Override
     public void showError(Throwable error) {
         errorView.setText(error.getMessage());
+        errorView.setVisibility(View.VISIBLE);
+        contentView.setVisibility(View.GONE);
+        swipeContainer.setRefreshing(false);
     }
 
     @Subcomponent(modules = ReposFragmentModule.class)

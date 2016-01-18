@@ -66,7 +66,7 @@ ext {
     retrofitVersion = '2.0.0-beta2'
     espressoVersion = '2.2.1'
     stethoVersion = '1.2.0'
-    dbflowVersion = 'fix-providers'
+    dbflowVersion = 'fix-integers'
 }
 
 
@@ -180,6 +180,13 @@ subprojects {
         classpath = files()
     }
 
+    task checkstyleHtml(group: 'verification') << {
+        def path = "${project.buildDir}/reports/checkstyle/"
+        ant.xslt(in: path + 'checkstyle.xml',
+                style: rootProject.file("config/checkstyle-noframes-sorted.xsl"),
+                out: new File(path, 'checkstyle.html'))
+    }
+
     afterEvaluate {
         tasks.findByName('pmd').dependsOn('assemble')
         tasks.findByName('findbugs').dependsOn('assemble')
@@ -189,6 +196,7 @@ subprojects {
         checkTask.dependsOn('pmd')
         checkTask.dependsOn('findbugs')
         checkTask.dependsOn('checkstyle')
+        checkTask.dependsOn('checkstyleHtml')
 
         // Log instrumentation tests results.
         tasks.withType(com.android.build.gradle.internal.tasks.AndroidTestTask) { task ->

@@ -28,7 +28,7 @@ import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
-public class ApiCommitTest {
+public class ApiGHCommitTest {
     private static final String JSON_STRING = "{\n" +
             "      \"id\": 25061640,\n" +
             "      \"sha\": \"70cdbd4c93ed80a04e16256c780d96a8cdbed84d\",\n" +

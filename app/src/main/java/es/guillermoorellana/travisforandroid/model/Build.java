@@ -17,23 +17,28 @@
 package es.guillermoorellana.travisforandroid.model;
 
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ConflictAction;
 import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.ForeignKeyReference;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.raizlabs.android.dbflow.structure.container.ForeignKeyContainer;
 
 import es.guillermoorellana.travisforandroid.data.TravisDatabase;
 
-@Table(database = TravisDatabase.class)
+@Table(database = TravisDatabase.class, insertConflict = ConflictAction.REPLACE, updateConflict = ConflictAction.REPLACE)
 public class Build extends BaseModel {
     @SuppressWarnings("checkstyle:membername")
     @PrimaryKey(autoincrement = true)
     int _id;
 
-    @Column
-    long commitId;
+    @ForeignKey(saveForeignKeyModel = false, references = {
+            @ForeignKeyReference(columnName = "commitId", columnType = long.class, foreignKeyColumnName = "commitId")
+    })
+    GHCommit commit;
 
     @Column
     long duration;
@@ -41,6 +46,7 @@ public class Build extends BaseModel {
     @Column
     long finishedAt;
 
+    @Unique(onUniqueConflict = ConflictAction.REPLACE)
     @Column
     long id;
 
@@ -72,10 +78,9 @@ public class Build extends BaseModel {
         // ctor for DBFlow
     }
 
-    public Build(long commitId, long duration, long finishedAt, long id, String number,
+    public Build(long duration, long finishedAt, long id, String number,
                  boolean pullRequest, String pullRequestNumber, String pullRequestTitle,
                  int repositoryId, long startedAt, String state) {
-        this.commitId = commitId;
         this.duration = duration;
         this.finishedAt = finishedAt;
         this.id = id;
@@ -90,10 +95,6 @@ public class Build extends BaseModel {
 
     public void associateRepo(Repo repo) {
         repoForeignKeyContainer = FlowManager.getContainerAdapter(Repo.class).toForeignKeyContainer(repo);
-    }
-
-    public long getCommitId() {
-        return commitId;
     }
 
     public long getDuration() {
@@ -136,4 +137,7 @@ public class Build extends BaseModel {
         return state;
     }
 
+    public GHCommit getCommit() {
+        return commit;
+    }
 }

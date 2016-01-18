@@ -17,7 +17,6 @@
 package es.guillermoorellana.travisforandroid.model;
 
 public class BuildBuilder {
-    private long commitId;
     private long duration;
     private long finishedAt;
     private long id;
@@ -28,11 +27,6 @@ public class BuildBuilder {
     private int repositoryId;
     private long startedAt;
     private String state;
-
-    public BuildBuilder setCommitId(long commitId) {
-        this.commitId = commitId;
-        return this;
-    }
 
     public BuildBuilder setDuration(long duration) {
         this.duration = duration;
@@ -85,7 +79,7 @@ public class BuildBuilder {
     }
 
     public Build createBuild() {
-        return new Build(commitId,
+        return new Build(
                 duration,
                 finishedAt,
                 id,

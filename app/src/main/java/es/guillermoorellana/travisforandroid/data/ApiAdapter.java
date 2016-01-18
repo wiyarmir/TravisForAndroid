@@ -17,9 +17,12 @@
 package es.guillermoorellana.travisforandroid.data;
 
 import es.guillermoorellana.travisforandroid.api.entity.ApiBuild;
+import es.guillermoorellana.travisforandroid.api.entity.ApiCommit;
 import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.Build;
 import es.guillermoorellana.travisforandroid.model.BuildBuilder;
+import es.guillermoorellana.travisforandroid.model.GHCommit;
+import es.guillermoorellana.travisforandroid.model.CommitBuilder;
 import es.guillermoorellana.travisforandroid.model.Repo;
 import es.guillermoorellana.travisforandroid.model.RepoBuilder;
 
@@ -46,7 +49,7 @@ public final class ApiAdapter {
     }
 
     public static Build fromApi(ApiBuild apiBuild) {
-        return new BuildBuilder().setCommitId(apiBuild.getCommitId())
+        return new BuildBuilder()
                 .setDuration(apiBuild.getDuration())
                 .setFinishedAt(apiBuild.getFinishedAt().getMillis())
                 .setId(apiBuild.getId())
@@ -58,5 +61,21 @@ public final class ApiAdapter {
                 .setStartedAt(apiBuild.getStartedAt().getMillis())
                 .setState(apiBuild.getState())
                 .createBuild();
+    }
+
+    public static GHCommit fromApi(ApiCommit apiCommit) {
+        return new CommitBuilder()
+                .setCommitId(apiCommit.getId())
+                .setAuthorEmail(apiCommit.getAuthorEmail())
+                .setAuthorName(apiCommit.getAuthorName())
+                .setBranch(apiCommit.getBranch())
+                .setCommittedAt(apiCommit.getCommittedAt().getMillis())
+                .setCommitterEmail(apiCommit.getCommitterEmail())
+                .setCommitterName(apiCommit.getCommitterName())
+                .setMessage(apiCommit.getMessage())
+                .setPullRequestNumber(apiCommit.getPullRequestNumber())
+                .setCompareUrl(apiCommit.getCompareUrl())
+                .setSha(apiCommit.getSha())
+                .createCommit();
     }
 }

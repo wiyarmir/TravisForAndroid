@@ -16,6 +16,7 @@
 
 package es.guillermoorellana.travisforandroid.data;
 
+import com.fernandocejas.frodo.annotation.RxLogObservable;
 import com.raizlabs.android.dbflow.structure.provider.ContentUtils;
 
 import java.util.List;
@@ -23,6 +24,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
+import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
+import es.guillermoorellana.travisforandroid.model.Build;
+import es.guillermoorellana.travisforandroid.model.GHCommit;
 import es.guillermoorellana.travisforandroid.model.Repo;
 import rx.Observable;
 import rx.Single;
@@ -45,10 +49,53 @@ public class Repository {
                 .toList()
                 .flatMap((Func1<List<Repo>, Observable<Integer>>) repos -> Observable.create(
                         subscriber -> {
-                            ContentUtils.bulkInsert(TravisDatabase.RepoModel.CONTENT_REPO_URI, Repo.class, repos);
+                            ContentUtils.bulkInsert(TravisDatabase.REPO_MODEL.CONTENT_REPO_URI, Repo.class, repos);
                             subscriber.onNext(repos.size());
                             subscriber.onCompleted();
                         })
-                ).toSingle();
+                )
+                .toSingle();
+    }
+
+    @RxLogObservable
+    public Observable<Integer> getBuildHistory(long repoId) {
+        return api.buildHistory(repoId)
+                .toObservable()
+                .flatMap(apiBuildHistory -> getBuilds(apiBuildHistory).mergeWith(getCommits(apiBuildHistory)));
+
+    }
+
+    @RxLogObservable
+    public Single<Integer> getBuilds(ApiBuildHistory apiBuildHistory) {
+        return Observable.just(apiBuildHistory.getBuilds())
+                .flatMapIterable(apiBuilds -> apiBuilds)
+                .map(ApiAdapter::fromApi)
+                .toList()
+                .flatMap((Func1<List<Build>, Observable<Integer>>)
+                        builds -> Observable.create(
+                                subscriber -> {
+                                    ContentUtils.bulkInsert(TravisDatabase.BUILD_MODEL.URI, Build.class, builds);
+                                    subscriber.onNext(builds.size());
+                                    subscriber.onCompleted();
+                                }
+                        )
+                )
+                .toSingle();
+    }
+
+    @RxLogObservable
+    public Single<Integer> getCommits(ApiBuildHistory apiBuildHistory) {
+        return Observable.just(apiBuildHistory.getCommits())
+                .flatMapIterable(apiCommits -> apiCommits)
+                .map(ApiAdapter::fromApi)
+                .toList()
+                .flatMap((Func1<List<GHCommit>, Observable<Integer>>) commits -> Observable.create(
+                        subscriber -> {
+                            ContentUtils.bulkInsert(TravisDatabase.COMMIT_MODEL.CONTENT_COMMIT_URI, GHCommit.class, commits);
+                            subscriber.onNext(commits.size());
+                            subscriber.onCompleted();
+                        }
+                ))
+                .toSingle();
     }
 }

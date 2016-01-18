@@ -64,6 +64,7 @@ public abstract class CursorRecyclerAdapter<VH extends android.support.v7.widget
         mCursor = c;
         mDataValid = cursorPresent;
         mRowIDColumn = cursorPresent ? c.getColumnIndexOrThrow("_id") : -1;
+        setHasStableIds(true);
     }
 
     @LayoutRes

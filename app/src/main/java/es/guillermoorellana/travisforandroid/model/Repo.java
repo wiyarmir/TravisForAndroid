@@ -18,14 +18,15 @@ package es.guillermoorellana.travisforandroid.model;
 
 
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ConflictAction;
 import com.raizlabs.android.dbflow.annotation.ModelContainer;
 import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.annotation.Unique;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import java.io.Serializable;
 import java.util.List;
 
 import es.guillermoorellana.travisforandroid.data.TravisDatabase;
@@ -33,14 +34,14 @@ import es.guillermoorellana.travisforandroid.data.TravisDatabase;
 import static com.raizlabs.android.dbflow.annotation.OneToMany.Method.ALL;
 
 @ModelContainer
-@Table(database = TravisDatabase.class)
-public class Repo extends BaseModel implements Serializable {
-    private static final long serialVersionUID = 8763033273883847886L;
+@Table(database = TravisDatabase.class, insertConflict = ConflictAction.REPLACE, updateConflict = ConflictAction.REPLACE)
+public class Repo extends BaseModel {
 
     @SuppressWarnings("checkstyle:membername")
     @PrimaryKey(autoincrement = true)
     int _id;
 
+    @Unique(onUniqueConflict = ConflictAction.REPLACE)
     @Column
     int repoId;
 
@@ -163,5 +164,4 @@ public class Repo extends BaseModel implements Serializable {
     public String getGithubLanguage() {
         return githubLanguage;
     }
-
 }
