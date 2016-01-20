@@ -73,7 +73,6 @@ android {
     }
 
     lintOptions {
-        warningsAsErrors true
         abortOnError true // Fail early.
 
         disable 'GoogleAppIndexingWarning' // App does not have deep linking.
@@ -104,6 +103,7 @@ dependencies {
     compile libraries.rxJava
     compile libraries.rxAndroid
     compile libraries.rxBinding
+    compile libraries.rxBindingV7
 
     compile libraries.okHttp
     compile libraries.okHttpLoggingInterceptor

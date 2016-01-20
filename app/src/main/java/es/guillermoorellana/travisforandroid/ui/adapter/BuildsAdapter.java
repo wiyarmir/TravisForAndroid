@@ -16,11 +16,9 @@
 
 package es.guillermoorellana.travisforandroid.ui.adapter;
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -29,7 +27,7 @@ import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.model.Build;
 import es.guillermoorellana.travisforandroid.model.GHCommit;
-import es.guillermoorellana.travisforandroid.model.TimeAgo;
+import es.guillermoorellana.travisforandroid.ui.view.BuildView;
 
 public class BuildsAdapter extends CursorRecyclerAdapter<BuildsAdapter.BuildViewHolder> {
 
@@ -53,29 +51,16 @@ public class BuildsAdapter extends CursorRecyclerAdapter<BuildsAdapter.BuildView
         return R.layout.item_build;
     }
 
-    @SuppressLint("SetTextI18n")
     public static class BuildViewHolder extends RecyclerView.ViewHolder {
-        private final TimeAgo timeAgo;
-        @Bind(R.id.buildStatus) TextView buildStatus;
-        @Bind(R.id.starter) TextView starter;
-        @Bind(R.id.branch) TextView branch;
-        @Bind(R.id.duration) TextView duration;
-        @Bind(R.id.finishedAgo) TextView finishedAgo;
+        @Bind(R.id.build) BuildView buildView;
 
         public BuildViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            timeAgo = new TimeAgo(itemView.getResources());
         }
 
         public void bind(Build build, GHCommit relatedCommit) {
-            buildStatus.setText("Build #" + build.getNumber());
-            duration.setText("Duration:" + build.getDuration());
-            finishedAgo.setText("Finished:" + timeAgo.timeAgo(build.getFinishedAt()));
-            if (relatedCommit != null) {
-                starter.setText("Started by:" + relatedCommit.getCommitterName());
-                branch.setText("Branch:" + relatedCommit.getBranch());
-            }
+            buildView.setBuildData(build, relatedCommit);
         }
     }
 }

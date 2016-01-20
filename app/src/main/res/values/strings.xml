@@ -17,4 +17,21 @@
 <resources>
     <string name="app_name">Travis for Android</string>
     <string name="search">Search</string>
+
+
+    <!-- Build history -->
+    <string name="build_history_title">Build history</string>
+    <string name="build_finished_at">Finished: %1$s</string>
+    <string name="build_build_in_progress">In progress</string>
+    <string name="build_duration">Duration: %1$s</string>
+    <string name="build_build_number">Build: #%1$s</string>
+
+    <!-- Build details -->
+    <string name="build_details_title">Build details</string>
+    <string name="build_details_job_number">Job #%1$s</string>
+    <string name="build_details_job_duration">Duration: %1$s</string>
+    <string name="build_details_job_in_progress">In progress</string>
+    <string name="build_details_empty">No build details</string>
+    <string name="pull_request_number">PR #%1$s</string>
+
 </resources>

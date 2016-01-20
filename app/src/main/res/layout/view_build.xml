@@ -1,0 +1,99 @@
+<!--
+  ~   Copyright 2016 Guillermo Orellana Ruiz
+  ~
+  ~   Licensed under the Apache License, Version 2.0 (the "License");
+  ~   you may not use this file except in compliance with the License.
+  ~   You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~   Unless required by applicable law or agreed to in writing, software
+  ~   distributed under the License is distributed on an "AS IS" BASIS,
+  ~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~   See the License for the specific language governing permissions and
+  ~   limitations under the License.
+  -->
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/build_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Build #33"
+                />
+
+            <TextView
+                android:id="@+id/build_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="passed"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/build_commit_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/person"
+            tools:text="Bob Builder"
+            />
+
+        <TextView
+            android:id="@+id/build_pull_request_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/pullrequest"
+            tools:text="PR: replace something with other stuff"
+            />
+
+        <TextView
+            android:id="@+id/build_branch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/branch"
+            tools:text="master"
+            />
+
+        <TextView
+            android:id="@+id/build_commit_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/commit"
+            android:ellipsize="end"
+            android:lines="1"
+            tools:text="Commit message somethingsomt"
+            />
+
+        <TextView
+            android:id="@+id/build_duration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/watch"
+            tools:text="Duration: 09234802394"
+            />
+
+        <TextView
+            android:id="@+id/build_finished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/calendar"
+            tools:text="Finished: today"
+            />
+    </LinearLayout>
+
+</merge>
