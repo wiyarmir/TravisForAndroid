@@ -16,4 +16,5 @@
 
 <resources>
     <string name="app_name">Travis for Android</string>
+    <string name="search">Search</string>
 </resources>

@@ -26,6 +26,7 @@ import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +55,11 @@ import timber.log.Timber;
 
 public class ReposFragment
         extends BaseFragment<ReposView, ReposPresenter>
-        implements LoaderManager.LoaderCallbacks<Cursor>, ReposView, SwipeRefreshLayout.OnRefreshListener {
+        implements LoaderManager.LoaderCallbacks<Cursor>, ReposView,
+        SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener {
 
-    public static final int LOADER_ID = 1001;
+    public static final int REGULAR = 1001;
+    public static final int SEARCH = 1002;
 
     private static final String[] PROJECTION = new String[]{
             Repo_Table._id.toString(),
@@ -73,6 +76,7 @@ public class ReposFragment
             Repo_Table.lastBuildFinishedAt.toString(),
             Repo_Table.githubLanguage.toString(),
     };
+    public static final String KEY_SEARCH = "SEARCHTEXT";
 
     @Inject ReposPresenter reposPresenter;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
@@ -116,7 +120,7 @@ public class ReposFragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(LOADER_ID, null, this);
+        getLoaderManager().initLoader(REGULAR, null, this);
     }
 
     @Override
@@ -126,12 +130,29 @@ public class ReposFragment
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        String selection = null;
+        String[] selectionArgs = null;
+
+        switch (id) {
+            case SEARCH:
+                String searchString = args.getString(KEY_SEARCH, "");
+                if (!searchString.isEmpty()) {
+                    selection = Repo_Table.slug.toString() + " LIKE %?%";
+                    selectionArgs = new String[]{searchString};
+                }
+                break;
+            case REGULAR:
+            default:
+                // noop
+                break;
+        }
+
         return new CursorLoader(
                 getActivity(),
                 TravisDatabase.REPO_MODEL.CONTENT_REPO_URI,
                 PROJECTION,
-                null,
-                null,
+                selection,
+                selectionArgs,
                 Repo_Table.lastBuildStartedAt.getContainerKey() + "DESC"
         );
     }
@@ -161,6 +182,24 @@ public class ReposFragment
         errorView.setVisibility(View.VISIBLE);
         contentView.setVisibility(View.GONE);
         swipeContainer.setRefreshing(false);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        performSearch(query);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        performSearch(newText);
+        return true;
+    }
+
+    private void performSearch(String search) {
+        Bundle args = new Bundle();
+        args.putString(KEY_SEARCH, search);
+        getLoaderManager().restartLoader(SEARCH, args, this);
     }
 
     @Subcomponent(modules = ReposFragmentModule.class)
