@@ -24,40 +24,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
+import es.guillermoorellana.travisforandroid.api.Fixtures;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
 public class ApiJobTest {
-    private static final String JSON_STRING = "{\n" +
-            "      \"id\": 94825893,\n" +
-            "      \"repository_id\": 82,\n" +
-            "      \"build_id\": 94825892,\n" +
-            "      \"commit_id\": 26947606,\n" +
-            "      \"log_id\": 67657671,\n" +
-            "      \"state\": \"passed\",\n" +
-            "      \"number\": \"1059.1\",\n" +
-            "      \"config\": {\n" +
-            "        \"language\": \"ruby\",\n" +
-            "        \"rvm\": \"1.8.7\",\n" +
-            "        \"sudo\": false,\n" +
-            "        \".result\": \"configured\",\n" +
-            "        \"group\": \"stable\",\n" +
-            "        \"dist\": \"precise\",\n" +
-            "        \"os\": \"linux\"\n" +
-            "      },\n" +
-            "      \"started_at\": \"2015-12-04T08:54:43Z\",\n" +
-            "      \"finished_at\": \"2015-12-04T08:55:00Z\",\n" +
-            "      \"queue\": \"builds.docker\",\n" +
-            "      \"allow_failure\": false,\n" +
-            "      \"tags\": null,\n" +
-            "      \"annotation_ids\": []\n" +
-            "    }";
 
     @Test
     public void test_fromJson() {
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
-        ApiJob job = gson.fromJson(JSON_STRING, ApiJob.class);
+        ApiJob job = gson.fromJson(Fixtures.JOB_JSON, ApiJob.class);
         assertThat(job.getId()).isEqualTo(94825893L);
         assertThat(job.getRepositoryId()).isEqualTo(82);
         assertThat(job.getBuildId()).isEqualTo(94825892L);

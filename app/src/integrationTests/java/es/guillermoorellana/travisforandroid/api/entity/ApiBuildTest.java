@@ -24,31 +24,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
+import es.guillermoorellana.travisforandroid.api.Fixtures;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
 public class ApiBuildTest {
-    private static final String JSON_STRING = " {\n" +
-            "      \"commit_id\": 6534711,\n" +
-            "      \"config\": { },\n" +
-            "      \"duration\": 2648,\n" +
-            "      \"finished_at\": \"2014-04-08T19:52:56Z\",\n" +
-            "      \"id\": 22555277,\n" +
-            "      \"job_ids\": [22555278, 22555279, 22555280, 22555281],\n" +
-            "      \"number\": \"784\",\n" +
-            "      \"pull_request\": true,\n" +
-            "      \"pull_request_number\": \"1912\",\n" +
-            "      \"pull_request_title\": \"Example PR\",\n" +
-            "      \"repository_id\": 82,\n" +
-            "      \"started_at\": \"2014-04-08T19:37:44Z\",\n" +
-            "      \"state\": \"failed\"\n" +
-            "    }";
 
     @Test
     public void fromJson() {
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
-        ApiBuild build = gson.fromJson(JSON_STRING, ApiBuild.class);
+        ApiBuild build = gson.fromJson(Fixtures.BUILD_JSON, ApiBuild.class);
         assertThat(build.getCommitId()).isEqualTo(6534711L);
         assertThat(build.getDuration()).isEqualTo(2648L);
         assertThat(build.getFinishedAt())

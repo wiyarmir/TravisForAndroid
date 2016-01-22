@@ -24,31 +24,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
+import es.guillermoorellana.travisforandroid.api.Fixtures;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
 public class ApiRepoTest {
-    private static final String JSON_STRING = "{\n" +
-            "    \"id\": 82,\n" +
-            "    \"slug\": \"sinatra/sinatra\",\n" +
-            "    \"active\": true,\n" +
-            "    \"description\": \"Classy web-development dressed in a DSL (official / canonical repo)\",\n" +
-            "    \"last_build_id\": 94825892,\n" +
-            "    \"last_build_number\": \"1059\",\n" +
-            "    \"last_build_state\": \"passed\",\n" +
-            "    \"last_build_duration\": 1361,\n" +
-            "    \"last_build_language\": \"Ruby\",\n" +
-            "    \"last_build_started_at\": \"2015-12-04T08:54:43Z\",\n" +
-            "    \"last_build_finished_at\": \"2015-12-04T09:00:25Z\",\n" +
-            "    \"github_language\": \"Ruby\"\n" +
-            "  }";
 
     @Test
     public void fromJson() {
         // this way Gson is configured same way as in the app
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
-        ApiRepo item = gson.fromJson(JSON_STRING, ApiRepo.class);
+        ApiRepo item = gson.fromJson(Fixtures.REPO_JSON, ApiRepo.class);
         assertThat(item.getId()).isEqualTo(82);
         assertThat(item.getSlug()).isEqualTo("sinatra/sinatra");
         assertThat(item.isActive()).isEqualTo(true);

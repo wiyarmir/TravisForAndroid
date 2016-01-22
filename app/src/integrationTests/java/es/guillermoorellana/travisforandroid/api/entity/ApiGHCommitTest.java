@@ -24,29 +24,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import es.guillermoorellana.travisforandroid.TravisDroidRobolectricTestRunner;
+import es.guillermoorellana.travisforandroid.api.Fixtures;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(TravisDroidRobolectricTestRunner.class)
 public class ApiGHCommitTest {
-    private static final String JSON_STRING = "{\n" +
-            "      \"id\": 25061640,\n" +
-            "      \"sha\": \"70cdbd4c93ed80a04e16256c780d96a8cdbed84d\",\n" +
-            "      \"branch\": \"2.2.0-alpha\",\n" +
-            "      \"message\": \"Add POST verb to Rack::File's ALLOWED_VERBS array\\n\\nThis is a commit to make the tests pass.\",\n" +
-            "      \"committed_at\": \"2015-10-29T14:39:43Z\",\n" +
-            "      \"author_name\": \"Kashyap\",\n" +
-            "      \"author_email\": \"kashyap.kmbc@gmail.com\",\n" +
-            "      \"committer_name\": \"Kashyap\",\n" +
-            "      \"committer_email\": \"kashyap.kmbc@gmail.com\",\n" +
-            "      \"compare_url\": \"https://github.com/sinatra/sinatra/pull/1044\",\n" +
-            "      \"pull_request_number\": 1044\n" +
-            "    }";
 
     @Test
     public void fromJson() {
         Gson gson = TravisDroidRobolectricTestRunner.travisApp().applicationComponent().gson();
-        ApiCommit commit = gson.fromJson(JSON_STRING, ApiCommit.class);
+        ApiCommit commit = gson.fromJson(Fixtures.COMMIT_JSON, ApiCommit.class);
         assertThat(commit.getId()).isEqualTo(25061640);
         assertThat(commit.getSha()).isEqualTo("70cdbd4c93ed80a04e16256c780d96a8cdbed84d");
         assertThat(commit.getShortSha()).isEqualTo(commit.getSha().substring(0, ApiCommit.SHORT_SHA_LENGTH - 1));
