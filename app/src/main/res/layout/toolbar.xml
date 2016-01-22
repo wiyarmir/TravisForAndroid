@@ -25,7 +25,6 @@
     android:background="?attr/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     app:popupTheme="@style/AppTheme.PopupOverlay"
-    tools:showIn="@layout/activity_main"
     tools:ignore="Overdraw"/>
 
     

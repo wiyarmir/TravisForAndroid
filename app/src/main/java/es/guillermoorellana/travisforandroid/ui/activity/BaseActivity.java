@@ -49,7 +49,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
     }
 
     @Nullable
