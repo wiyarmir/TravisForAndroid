@@ -32,6 +32,7 @@ import es.guillermoorellana.travisforandroid.io.network.NetworkModule;
 import es.guillermoorellana.travisforandroid.ui.activity.MainActivity;
 import es.guillermoorellana.travisforandroid.ui.fragment.BuildsFragment;
 import es.guillermoorellana.travisforandroid.ui.fragment.ReposFragment;
+import es.guillermoorellana.travisforandroid.ui.fragment.SingleRepoFragment;
 
 @Singleton
 @Component(modules = {
@@ -56,6 +57,8 @@ public interface ApplicationComponent {
     ReposFragment.ReposFragmentComponent plus(@NonNull ReposFragment.ReposFragmentModule reposFragmentModule);
 
     BuildsFragment.BuildsFragmentComponent plus(@NonNull BuildsFragment.BuildsFragmentModule buildsFragmentModule);
+
+    SingleRepoFragment.SingleRepoFragmentComponent plus(@NonNull SingleRepoFragment.SingleRepoFragmentModule singleRepoFragmentComponent);
 
     void inject(@NonNull TravisApp travisApp);
 

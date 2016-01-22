@@ -111,7 +111,7 @@ public class ReposFragment
                     mAdapter.getCursor().moveToPosition(contentView.getChildAdapterPosition(clickedView));
                     long repoId = FlowManager.getModelAdapter(Repo.class).loadFromCursor(mAdapter.getCursor()).getRepoId();
                     Timber.d("looking for repo " + repoId);
-                    getMainView().replaceFragmentBackStack(BuildsFragmentBuilder.newBuildsFragment(repoId));
+                    getMainView().replaceFragmentBackStack(SingleRepoFragmentBuilder.newSingleRepoFragment(repoId));
                 }
         );
         onRefresh();
