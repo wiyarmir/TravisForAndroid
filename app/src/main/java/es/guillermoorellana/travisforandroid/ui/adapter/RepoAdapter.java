@@ -97,11 +97,14 @@ public class RepoAdapter extends CursorRecyclerAdapter<RepoAdapter.RepoViewHolde
 
         @ColorInt
         private static int colorForRepo(@NonNull Repo repo) {
+            if (repo.getLastBuildState().equals("passed")) {
+                return Color.GREEN;
+            }
+            if (repo.getLastBuildNumber() == null) {
+                return Color.GRAY;
+            }
             if (repo.isActive()) {
                 return Color.YELLOW;
-            }
-            if (repo.getLastBuildState().equals("success")) {
-                return Color.GREEN;
             }
             return Color.RED;
         }

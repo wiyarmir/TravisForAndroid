@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -58,9 +59,9 @@ public class ReposFragment
         implements LoaderManager.LoaderCallbacks<Cursor>, ReposView,
         SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener {
 
+    public static final String KEY_SEARCH = "SEARCHTEXT";
     public static final int REGULAR = 1001;
     public static final int SEARCH = 1002;
-
     private static final String[] PROJECTION = new String[]{
             Repo_Table._id.toString(),
             Repo_Table.repoId.toString(),
@@ -76,8 +77,6 @@ public class ReposFragment
             Repo_Table.lastBuildFinishedAt.toString(),
             Repo_Table.githubLanguage.toString(),
     };
-    public static final String KEY_SEARCH = "SEARCHTEXT";
-
     @Inject ReposPresenter reposPresenter;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @Bind(R.id.recyclerView) RecyclerView contentView;
@@ -115,6 +114,7 @@ public class ReposFragment
                     getMainView().replaceFragmentBackStack(BuildsFragmentBuilder.newBuildsFragment(repoId));
                 }
         );
+        onRefresh();
     }
 
     @Override
@@ -160,27 +160,33 @@ public class ReposFragment
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         Timber.d("onLoadFinished");
-        mAdapter.changeCursor(data);
-        contentView.setVisibility(View.VISIBLE);
-        swipeContainer.setRefreshing(false);
+        if (data.getCount() > 0) {
+            mAdapter.changeCursor(data);
+            contentView.setVisibility(View.VISIBLE);
+        } else {
+            fatalError("No quick search results.");
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         Timber.d("onLoaderReset");
-        swipeContainer.setRefreshing(false);
+        swipeContainer.setRefreshing(true);
     }
 
     @Override
     public void onRefresh() {
+        swipeContainer.setRefreshing(true);
         getPresenter().reloadData();
     }
 
     @Override
     public void showError(Throwable error) {
-        errorView.setText(error.getMessage());
-        errorView.setVisibility(View.VISIBLE);
-        contentView.setVisibility(View.GONE);
+        if (mAdapter.getItemCount() > 0) {
+            discreteError(error.getMessage());
+        } else {
+            fatalError(error.getMessage());
+        }
         swipeContainer.setRefreshing(false);
     }
 
@@ -192,7 +198,9 @@ public class ReposFragment
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        performSearch(newText);
+        swipeContainer.setRefreshing(true);
+//        performSearch(newText);
+        getPresenter().reloadData(newText);
         return true;
     }
 
@@ -200,6 +208,16 @@ public class ReposFragment
         Bundle args = new Bundle();
         args.putString(KEY_SEARCH, search);
         getLoaderManager().restartLoader(SEARCH, args, this);
+    }
+
+    private void fatalError(String message) {
+        errorView.setText(message);
+        errorView.setVisibility(View.VISIBLE);
+        contentView.setVisibility(View.GONE);
+    }
+
+    private void discreteError(String message) {
+        Snackbar.make(contentView, message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Subcomponent(modules = ReposFragmentModule.class)

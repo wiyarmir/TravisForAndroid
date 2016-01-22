@@ -23,6 +23,8 @@ import javax.inject.Inject;
 import es.guillermoorellana.travisforandroid.data.Repository;
 import es.guillermoorellana.travisforandroid.mvp.BasePresenter;
 import es.guillermoorellana.travisforandroid.ui.view.ReposView;
+import rx.Single;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
@@ -30,6 +32,7 @@ import timber.log.Timber;
 public class ReposPresenter extends BasePresenter<ReposView> {
 
     @NonNull private final Repository repository;
+    private Subscription subscription;
 
     @Inject
     public ReposPresenter(@NonNull Repository repository) {
@@ -37,8 +40,16 @@ public class ReposPresenter extends BasePresenter<ReposView> {
     }
 
     public void reloadData() {
-        repository.getRepos()
-                .subscribeOn(Schedulers.io())
+        subscribe(repository.getRepos());
+    }
+
+    public void reloadData(String search) {
+        subscribe(repository.getRepos(search));
+    }
+
+    private void subscribe(Single<Integer> repos) {
+        unsubscribe();
+        subscription = repos.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((n) -> {
                 }, (error) -> {
@@ -47,5 +58,14 @@ public class ReposPresenter extends BasePresenter<ReposView> {
                         getView().showError(error);
                     }
                 });
+    }
+
+    private void unsubscribe() {
+        // unsubscribing is deemed NetworkOnMainThreadException :/
+        Schedulers.io().createWorker().schedule(() -> {
+            if (subscription != null && !subscription.isUnsubscribed()) {
+                subscription.unsubscribe();
+            }
+        });
     }
 }

@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 import es.guillermoorellana.travisforandroid.api.TravisRestApi;
 import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
+import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.Build;
 import es.guillermoorellana.travisforandroid.model.GHCommit;
 import es.guillermoorellana.travisforandroid.model.Repo;
@@ -42,19 +43,26 @@ public class Repository {
     }
 
     public Single<Integer> getRepos() {
-        return api.repos()
-                .toObservable()
+        return getReposCommon(api.repos());
+    }
+
+    private Single<Integer> getReposCommon(Single<List<ApiRepo>> apiCall) {
+        return apiCall.toObservable()
                 .flatMapIterable(repos -> repos)
                 .map(ApiAdapter::fromApi)
                 .toList()
                 .flatMap((Func1<List<Repo>, Observable<Integer>>) repos -> Observable.create(
-                        subscriber -> {
-                            ContentUtils.bulkInsert(TravisDatabase.REPO_MODEL.CONTENT_REPO_URI, Repo.class, repos);
-                            subscriber.onNext(repos.size());
-                            subscriber.onCompleted();
-                        })
+                                subscriber -> {
+                                    ContentUtils.bulkInsert(TravisDatabase.REPO_MODEL.CONTENT_REPO_URI, Repo.class, repos);
+                                    subscriber.onNext(repos.size());
+                                    subscriber.onCompleted();
+                                })
                 )
                 .toSingle();
+    }
+
+    public Single<Integer> getRepos(String search) {
+        return getReposCommon(api.repos(search));
     }
 
     @RxLogObservable

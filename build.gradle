@@ -79,7 +79,7 @@ ext.libraries = [
         rxJava                  : "io.reactivex:rxjava:1.1.0",
         rxAndroid               : "io.reactivex:rxandroid:1.0.1",
         rxBinding               : 'com.jakewharton.rxbinding:rxbinding:0.3.0',
-        rxBindingV7             : 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0',
+        rxBindingV7             : 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0',
 
         okHttp                  : "com.squareup.okhttp:okhttp:$okHttpVersion",
         okHttpLoggingInterceptor: "com.squareup.okhttp:logging-interceptor:$okHttpVersion",
@@ -153,7 +153,7 @@ subprojects {
         effort = 'default'
         reportLevel = 'low' // Report even low priority problems.
 
-        classes = files("${project.projectDir}/build/intermediates/classes")
+        classes = files("${project.projectDir}/build/intermediates/classes/release")
         source = fileTree('src/main/java')
 
         // If somebody has an idea how to make this work with support libraries -> open a PR please.

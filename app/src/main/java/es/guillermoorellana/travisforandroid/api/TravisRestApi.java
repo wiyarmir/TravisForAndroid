@@ -30,6 +30,9 @@ public interface TravisRestApi {
     @GET("repos/")
     Single<List<ApiRepo>> repos();
 
+    @GET("repos/")
+    Single<List<ApiRepo>> repos(@Query("search") String search);
+
     @GET("repos/{id}")
     Single<ApiRepo> repo(@Path("id") int id);
 
