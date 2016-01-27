@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Guillermo Orellana Ruiz
+ * Copyright 2016 Guillermo Orellana Ruiz
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,14 +49,13 @@ import es.guillermoorellana.travisforandroid.model.Build_Table;
 import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.BuildsAdapter;
-import es.guillermoorellana.travisforandroid.ui.presenter.BuildsPresenter;
-import es.guillermoorellana.travisforandroid.ui.view.BuildsView;
-import hugo.weaving.DebugLog;
+import es.guillermoorellana.travisforandroid.ui.presenter.PRPresenter;
+import es.guillermoorellana.travisforandroid.ui.view.PRView;
 
 @FragmentWithArgs
-public class BuildsFragment
-        extends BaseFragment<BuildsView, BuildsPresenter>
-        implements LoaderManager.LoaderCallbacks<Cursor>, BuildsView, SwipeRefreshLayout.OnRefreshListener {
+public class PRFragment extends BaseFragment<PRView, PRPresenter>
+        implements LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener, PRView {
+    @Arg long repoId;
 
     private static final String[] PROJECTION = {
             Build_Table._id.toString(),
@@ -73,15 +72,15 @@ public class BuildsFragment
             Build_Table.commitId.toString()
     };
 
-    private static final int LOADER_ID = 1003;
+    private static final int LOADER_ID = 1004;
 
-    @Arg long repoId;
     @NonNull
     @Inject
-    BuildsPresenter buildsPresenter;
+    PRPresenter prPresenter;
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     @Bind(R.id.errorView) TextView errorView;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+
     private BuildsAdapter mAdapter;
 
     @Override
@@ -89,14 +88,14 @@ public class BuildsFragment
         super.onCreate(savedInstanceState);
         FragmentArgs.inject(this);
         TravisApp.get(getContext()).applicationComponent()
-                .plus(new BuildsFragmentModule())
+                .plus(new PRFragmentModule())
                 .inject(this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_builds, container, false);
+        return inflater.inflate(R.layout.fragment_pr, container, false);
     }
 
     @Override
@@ -116,35 +115,30 @@ public class BuildsFragment
     }
 
     @Override
-    public BuildsPresenter createPresenter() {
-        return buildsPresenter;
+    public PRPresenter createPresenter() {
+        return prPresenter;
     }
 
-    @DebugLog
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(
                 getActivity(),
                 TravisDatabase.BUILD_MODEL.URI_WITH_REPO(repoId),
                 PROJECTION,
-                null,
+                Build_Table.pullRequest.eq(true).getQuery(),
                 null,
                 Build_Table.startedAt + "DESC"
         );
     }
 
-    @DebugLog
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mAdapter.changeCursor(data);
-
         swipeContainer.setRefreshing(false);
     }
 
-    @DebugLog
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        swipeContainer.setRefreshing(false);
         mAdapter.changeCursor(null);
     }
 
@@ -161,18 +155,18 @@ public class BuildsFragment
         swipeContainer.setRefreshing(false);
     }
 
-    @Subcomponent(modules = BuildsFragmentModule.class)
-    public interface BuildsFragmentComponent {
-        void inject(@NonNull BuildsFragment buildsFragment);
+    @Subcomponent(modules = PRFragmentModule.class)
+    public interface PRFragmentComponent {
+        void inject(@NonNull PRFragment prFragment);
     }
 
     @Module
-    public static class BuildsFragmentModule {
+    public static class PRFragmentModule {
 
         @Provides
         @NonNull
-        public BuildsPresenter provideReposPresenter(Repository repository) {
-            return new BuildsPresenter(repository);
+        public PRPresenter provideReposPresenter(Repository repository) {
+            return new PRPresenter(repository);
         }
     }
 }

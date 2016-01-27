@@ -16,7 +16,6 @@
 
 package es.guillermoorellana.travisforandroid.data;
 
-import com.fernandocejas.frodo.annotation.RxLogObservable;
 import com.raizlabs.android.dbflow.structure.provider.ContentUtils;
 
 import java.util.List;
@@ -65,34 +64,36 @@ public class Repository {
         return getReposCommon(api.repos(search));
     }
 
-    @RxLogObservable
     public Observable<Integer> getBuildHistory(long repoId) {
         return api.buildHistory(repoId)
                 .toObservable()
                 .flatMap(apiBuildHistory -> getBuilds(apiBuildHistory).mergeWith(getCommits(apiBuildHistory)));
-
     }
 
-    @RxLogObservable
-    public Single<Integer> getBuilds(ApiBuildHistory apiBuildHistory) {
+    public Observable<Integer> getPRHistory(long repoId) {
+        return api.buildHistoryByEventType(repoId, "pull_request")
+                .toObservable()
+                .flatMap(apiBuildHistory -> getBuilds(apiBuildHistory).mergeWith(getCommits(apiBuildHistory)));
+    }
+
+    private Single<Integer> getBuilds(ApiBuildHistory apiBuildHistory) {
         return Observable.just(apiBuildHistory.getBuilds())
                 .flatMapIterable(apiBuilds -> apiBuilds)
                 .map(ApiAdapter::fromApi)
                 .toList()
                 .flatMap((Func1<List<Build>, Observable<Integer>>)
-                        builds -> Observable.create(
-                                subscriber -> {
-                                    ContentUtils.bulkInsert(TravisDatabase.BUILD_MODEL.URI, Build.class, builds);
-                                    subscriber.onNext(builds.size());
-                                    subscriber.onCompleted();
-                                }
-                        )
+                                builds -> Observable.create(
+                                        subscriber -> {
+                                            ContentUtils.bulkInsert(TravisDatabase.BUILD_MODEL.URI, Build.class, builds);
+                                            subscriber.onNext(builds.size());
+                                            subscriber.onCompleted();
+                                        }
+                                )
                 )
                 .toSingle();
     }
 
-    @RxLogObservable
-    public Single<Integer> getCommits(ApiBuildHistory apiBuildHistory) {
+    private Single<Integer> getCommits(ApiBuildHistory apiBuildHistory) {
         return Observable.just(apiBuildHistory.getCommits())
                 .flatMapIterable(apiCommits -> apiCommits)
                 .map(ApiAdapter::fromApi)

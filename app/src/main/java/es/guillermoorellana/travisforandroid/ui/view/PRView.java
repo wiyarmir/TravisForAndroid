@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Guillermo Orellana Ruiz
+ * Copyright 2016 Guillermo Orellana Ruiz
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,13 +16,8 @@
 
 package es.guillermoorellana.travisforandroid.ui.view;
 
-import android.support.v4.app.Fragment;
+import es.guillermoorellana.travisforandroid.mvp.BaseView;
 
-public interface MainView {
-    void addFragment(Fragment fragment);
-    void addFragmentBackstack(Fragment fragment);
-    void replaceFragment(Fragment fragment);
-    void replaceFragmentBackStack(Fragment fragment);
-    void removeFragment(Fragment fragment);
-    void setTitle(String title);
+public interface PRView extends BaseView {
+    void showError(Throwable throwable);
 }

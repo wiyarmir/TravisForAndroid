@@ -21,8 +21,8 @@ import es.guillermoorellana.travisforandroid.api.entity.ApiCommit;
 import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.Build;
 import es.guillermoorellana.travisforandroid.model.BuildBuilder;
-import es.guillermoorellana.travisforandroid.model.GHCommit;
 import es.guillermoorellana.travisforandroid.model.CommitBuilder;
+import es.guillermoorellana.travisforandroid.model.GHCommit;
 import es.guillermoorellana.travisforandroid.model.Repo;
 import es.guillermoorellana.travisforandroid.model.RepoBuilder;
 

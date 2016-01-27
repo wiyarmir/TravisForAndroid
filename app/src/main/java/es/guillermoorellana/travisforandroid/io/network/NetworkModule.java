@@ -28,7 +28,7 @@ import dagger.Provides;
 import es.guillermoorellana.travisforandroid.BuildConfig;
 import timber.log.Timber;
 
-import static com.squareup.okhttp.logging.HttpLoggingInterceptor.Level.BODY;
+import static com.squareup.okhttp.logging.HttpLoggingInterceptor.Level.BASIC;
 import static com.squareup.okhttp.logging.HttpLoggingInterceptor.Level.NONE;
 
 @Module
@@ -49,7 +49,7 @@ public class NetworkModule {
     @Singleton
     public HttpLoggingInterceptor provideHttpLoggingInterceptor() {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(message -> Timber.d(message));
-        httpLoggingInterceptor.setLevel(BuildConfig.DEBUG ? BODY : NONE);
+        httpLoggingInterceptor.setLevel(BuildConfig.DEBUG ? BASIC : NONE);
         return httpLoggingInterceptor;
     }
 }

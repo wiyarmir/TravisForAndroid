@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import javax.inject.Inject;
 
@@ -39,9 +40,12 @@ import dagger.Provides;
 import dagger.Subcomponent;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
+import es.guillermoorellana.travisforandroid.model.Repo;
+import es.guillermoorellana.travisforandroid.model.Repo_Table;
 import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
 import es.guillermoorellana.travisforandroid.ui.presenter.SingleRepoPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.SingleRepoView;
+import hugo.weaving.DebugLog;
 
 @FragmentWithArgs
 public class SingleRepoFragment
@@ -54,6 +58,7 @@ public class SingleRepoFragment
     @Inject
     SingleRepoPresenter singlreRepoPresenter;
 
+    @DebugLog
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +72,7 @@ public class SingleRepoFragment
         private static final int FRAGMENT_BUILDS = 0;
         private static final int FRAGMENT_BRANCHES = 1;
         private static final int FRAGMENT_PR = 2;
-        private static final int[] PAGES = {FRAGMENT_BUILDS};
+        private static final int[] PAGES = {FRAGMENT_BUILDS, FRAGMENT_BRANCHES, FRAGMENT_PR};
         private final long repoId;
 
         public PagerAdapter(FragmentManager fragmentManager, long repoId) {
@@ -86,9 +91,9 @@ public class SingleRepoFragment
                 case FRAGMENT_BUILDS:
                     return BuildsFragmentBuilder.newBuildsFragment(repoId);
                 case FRAGMENT_BRANCHES:
-                    return null;
+                    return BranchesFragmentBuilder.newBranchesFragment(repoId);
                 case FRAGMENT_PR:
-                    return null;
+                    return PRFragmentBuilder.newPRFragment(repoId);
                 default:
                     return null;
             }
@@ -100,9 +105,9 @@ public class SingleRepoFragment
                 case FRAGMENT_BUILDS:
                     return "Builds";
                 case FRAGMENT_BRANCHES:
-                    return null;
+                    return "Branches";
                 case FRAGMENT_PR:
-                    return null;
+                    return "Pull Requests";
                 default:
                     return null;
             }
@@ -119,6 +124,13 @@ public class SingleRepoFragment
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initViewPagerAndTabs(view);
+        getMainView().setTitle(
+                SQLite.select(Repo_Table.slug)
+                        .from(Repo.class)
+                        .where(Repo_Table.repoId.eq((int) repoId))
+                        .querySingle()
+                        .getSlug()
+        );
     }
 
     @Override
@@ -128,7 +140,7 @@ public class SingleRepoFragment
 
     private void initViewPagerAndTabs(View view) {
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        PagerAdapter pagerAdapter = new PagerAdapter(getActivity().getSupportFragmentManager(), repoId);
+        PagerAdapter pagerAdapter = new PagerAdapter(getChildFragmentManager(), repoId);
         viewPager.setAdapter(pagerAdapter);
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);

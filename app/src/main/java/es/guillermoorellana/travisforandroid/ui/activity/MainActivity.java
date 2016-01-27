@@ -81,6 +81,7 @@ public class MainActivity extends BaseActivity implements MainView {
         }
     }
 
+    @DebugLog
     @Override
     public void addFragmentBackstack(Fragment fragment) {
         setSearchableCallback(fragment);
@@ -101,6 +102,7 @@ public class MainActivity extends BaseActivity implements MainView {
                 .commit();
     }
 
+    @DebugLog
     @Override
     public void replaceFragmentBackStack(Fragment fragment) {
         setSearchableCallback(fragment);
@@ -120,5 +122,10 @@ public class MainActivity extends BaseActivity implements MainView {
                 .commit();
         // pop the callback as well
         setSearchableCallback(getSupportFragmentManager().findFragmentById(R.id.mainFrame));
+    }
+
+    @Override
+    public void setTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

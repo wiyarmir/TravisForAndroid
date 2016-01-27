@@ -41,4 +41,7 @@ public interface TravisRestApi {
 
     @GET("builds")
     Single<ApiBuildHistory> buildHistory(@Query("repository_id") long repositoryId);
+
+    @GET("builds")
+    Single<ApiBuildHistory> buildHistoryByEventType(@Query("repository_id") long repositoryId, @Query("event_type") String eventType);
 }

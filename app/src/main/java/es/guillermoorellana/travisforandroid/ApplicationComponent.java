@@ -31,6 +31,7 @@ import es.guillermoorellana.travisforandroid.devtools.LeakCanaryProxy;
 import es.guillermoorellana.travisforandroid.io.network.NetworkModule;
 import es.guillermoorellana.travisforandroid.ui.activity.MainActivity;
 import es.guillermoorellana.travisforandroid.ui.fragment.BuildsFragment;
+import es.guillermoorellana.travisforandroid.ui.fragment.PRFragment;
 import es.guillermoorellana.travisforandroid.ui.fragment.ReposFragment;
 import es.guillermoorellana.travisforandroid.ui.fragment.SingleRepoFragment;
 
@@ -59,6 +60,8 @@ public interface ApplicationComponent {
     BuildsFragment.BuildsFragmentComponent plus(@NonNull BuildsFragment.BuildsFragmentModule buildsFragmentModule);
 
     SingleRepoFragment.SingleRepoFragmentComponent plus(@NonNull SingleRepoFragment.SingleRepoFragmentModule singleRepoFragmentComponent);
+
+    PRFragment.PRFragmentComponent plus(@NonNull PRFragment.PRFragmentModule prFragmentModule);
 
     void inject(@NonNull TravisApp travisApp);
 

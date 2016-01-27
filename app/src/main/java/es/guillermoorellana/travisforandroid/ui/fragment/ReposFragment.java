@@ -170,8 +170,7 @@ public class ReposFragment
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        Timber.d("onLoaderReset");
-        swipeContainer.setRefreshing(true);
+        mAdapter.swapCursor(null);
     }
 
     @Override
