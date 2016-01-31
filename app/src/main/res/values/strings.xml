@@ -33,5 +33,7 @@
     <string name="build_details_job_in_progress">In progress</string>
     <string name="build_details_empty">No build details</string>
     <string name="pull_request_number">PR #%1$s</string>
+    <string name="widget_header_text">Builds in Travis</string>
+    <string name="widget_header_description">Builds being processed in Travis CI system</string>
 
 </resources>

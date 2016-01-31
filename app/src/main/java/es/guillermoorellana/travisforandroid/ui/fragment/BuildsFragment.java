@@ -58,21 +58,6 @@ public class BuildsFragment
         extends BaseFragment<BuildsView, BuildsPresenter>
         implements LoaderManager.LoaderCallbacks<Cursor>, BuildsView, SwipeRefreshLayout.OnRefreshListener {
 
-    private static final String[] PROJECTION = {
-            Build_Table._id.toString(),
-            Build_Table.id.toString(),
-            Build_Table.duration.toString(),
-            Build_Table.startedAt.toString(),
-            Build_Table.number.toString(),
-            Build_Table.repositoryId.toString(),
-            Build_Table.state.toString(),
-            Build_Table.finishedAt.toString(),
-            Build_Table.pullRequest.toString(),
-            Build_Table.pullRequestNumber.toString(),
-            Build_Table.pullRequestTitle.toString(),
-            Build_Table.commitId.toString()
-    };
-
     private static final int LOADER_ID = 1003;
 
     @Arg long repoId;
@@ -126,7 +111,7 @@ public class BuildsFragment
         return new CursorLoader(
                 getActivity(),
                 TravisDatabase.BUILD_MODEL.URI_WITH_REPO(repoId),
-                PROJECTION,
+                TravisDatabase.BUILD_MODEL.FULL_PROJECTION,
                 null,
                 null,
                 Build_Table.startedAt + "DESC"

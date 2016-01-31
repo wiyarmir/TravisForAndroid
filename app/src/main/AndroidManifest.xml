@@ -43,7 +43,20 @@
         <provider
             android:name="es.guillermoorellana.travisforandroid.data.TravisDatabase_Provider"
             android:authorities="es.guillermoorellana.travisforandroid"
-            android:exported="false"/>
+            android:exported="true"/>
+
+        <service
+            android:name=".ui.widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+        <receiver android:name=".ui.widget.TravisWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_provider"/>
+        </receiver>
     </application>
 
 </manifest>

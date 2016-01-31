@@ -23,6 +23,8 @@ import com.raizlabs.android.dbflow.annotation.provider.ContentProvider;
 import com.raizlabs.android.dbflow.annotation.provider.ContentUri;
 import com.raizlabs.android.dbflow.annotation.provider.TableEndpoint;
 
+import es.guillermoorellana.travisforandroid.model.Build_Table;
+
 @ContentProvider(authority = TravisDatabase.CONTENT_AUTHORITY,
         database = TravisDatabase.class,
         baseContentUri = "content://" + TravisDatabase.CONTENT_AUTHORITY)
@@ -54,6 +56,20 @@ public class TravisDatabase {
     @TableEndpoint(name = "Build")
     public static final class BUILD_MODEL {
         public static final String PATH_BUILD = "build";
+        public static final String[] FULL_PROJECTION = {
+                Build_Table._id.toString(),
+                Build_Table.id.toString(),
+                Build_Table.duration.toString(),
+                Build_Table.startedAt.toString(),
+                Build_Table.number.toString(),
+                Build_Table.repositoryId.toString(),
+                Build_Table.state.toString(),
+                Build_Table.finishedAt.toString(),
+                Build_Table.pullRequest.toString(),
+                Build_Table.pullRequestNumber.toString(),
+                Build_Table.pullRequestTitle.toString(),
+                Build_Table.commitId.toString()
+        };
 
         @ContentUri(
                 path = PATH_BUILD,

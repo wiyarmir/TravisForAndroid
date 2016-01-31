@@ -60,4 +60,8 @@
         <Bug code="UwF"/>
     </Match>
 
+    <Match>
+        <Bug pattern="MS_MUTABLE_ARRAY" type="MS_MUTABLE_ARRAY"/>
+    </Match>
+
 </FindBugsFilter>
