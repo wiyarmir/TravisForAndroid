@@ -19,6 +19,7 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.fernandocejas.frodo'
+apply plugin: 'com.getkeepsafe.dexcount'
 apply from: '../jacoco.gradle'
 apply from: '../lint-summary.gradle'
 
@@ -45,10 +46,20 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        release {
+            storeFile file("travis.keystore")
+            storePassword "supersecret"
+            keyAlias "megaalias"
+            keyPassword "themostsecurepasswordever"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -110,9 +121,7 @@ dependencies {
     compile libraries.retrofit
     compile libraries.retrofitGsonConverter
     compile libraries.retrofitRxJavaAdapter
-    compile libraries.moshi
 
-    compile libraries.autoValue
     compile libraries.jodaTimeAndroid
 
     compile libraries.supportAnnotations
@@ -132,6 +141,10 @@ dependencies {
     apt libraries.dbflowProcessor
     compile libraries.dbflowCore
     compile libraries.dbflow
+
+    // shitty stuff
+    compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
 
     // Developer tools (Developer Settings)
     debugCompile libraries.stetho
@@ -164,3 +177,5 @@ configurations.all {
         force libraries.supportAnnotations
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -31,6 +31,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -98,6 +100,14 @@ public class BuildsFragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(LOADER_ID, null, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Tracker tracker = TravisApp.get(getContext()).getDefaultTracker();
+        tracker.setScreenName("SingleRepo~" + repoId);
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

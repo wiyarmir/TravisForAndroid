@@ -33,6 +33,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import javax.inject.Inject;
@@ -121,6 +123,14 @@ public class ReposFragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(REGULAR, null, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Tracker tracker = TravisApp.get(getContext()).getDefaultTracker();
+        tracker.setScreenName("Repos~");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
