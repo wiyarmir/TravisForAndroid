@@ -20,8 +20,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -36,7 +34,6 @@ public class TravisApp extends Application {
     // Initialized in onCreate. But be careful if you have ContentProviders in different processes -> their onCreate will be called before app.onCreate().
     @NonNull
     private ApplicationComponent applicationComponent;
-    private Tracker mTracker;
 
     // Prevent need in a singleton (global) reference to the application object.
     @NonNull
@@ -72,16 +69,5 @@ public class TravisApp extends Application {
     @NonNull
     public ApplicationComponent applicationComponent() {
         return applicationComponent;
-    }
-
-    public Tracker getDefaultTracker() {
-        synchronized (this) {
-            if (mTracker == null) {
-                GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-                // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-                mTracker = analytics.newTracker(R.xml.global_tracker);
-            }
-            return mTracker;
-        }
     }
 }

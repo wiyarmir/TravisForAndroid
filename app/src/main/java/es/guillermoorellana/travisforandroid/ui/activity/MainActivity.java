@@ -25,9 +25,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.ui.fragment.ReposFragment;
 import es.guillermoorellana.travisforandroid.ui.view.MainView;
@@ -45,12 +42,6 @@ public class MainActivity extends BaseActivity implements MainView {
         if (savedInstanceState == null) {
             replaceFragment(new ReposFragment());
         }
-
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice("F8D9ED170B824C5928AC42FB4E515DFD")
-                .build();
-        mAdView.loadAd(adRequest);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

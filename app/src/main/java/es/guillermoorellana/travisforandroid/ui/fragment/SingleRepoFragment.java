@@ -28,8 +28,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
@@ -133,14 +131,6 @@ public class SingleRepoFragment
                         .querySingle()
                         .getSlug()
         );
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Tracker tracker = TravisApp.get(getContext()).getDefaultTracker();
-        tracker.setScreenName("SingleRepo~" + repoId);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

@@ -22,13 +22,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
 import es.guillermoorellana.travisforandroid.R;
-import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
 import es.guillermoorellana.travisforandroid.ui.presenter.BranchesPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.BranchesView;
@@ -43,14 +40,6 @@ public class BranchesFragment extends BaseFragment<BranchesView, BranchesPresent
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_branches, container, false);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Tracker tracker = TravisApp.get(getContext()).getDefaultTracker();
-        tracker.setScreenName("Branches~" + repoId);
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
