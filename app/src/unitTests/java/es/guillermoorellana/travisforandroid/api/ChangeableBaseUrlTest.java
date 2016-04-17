@@ -16,7 +16,7 @@
 
 package es.guillermoorellana.travisforandroid.api;
 
-import com.squareup.okhttp.HttpUrl;
+import okhttp3.HttpUrl;
 
 import org.junit.Test;
 

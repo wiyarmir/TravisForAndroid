@@ -21,9 +21,9 @@ import java.util.List;
 import es.guillermoorellana.travisforandroid.api.entity.ApiBuildDetails;
 import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
 import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Single;
 
 public interface TravisRestApi {

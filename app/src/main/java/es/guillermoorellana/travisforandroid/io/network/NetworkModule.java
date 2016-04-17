@@ -18,18 +18,17 @@ package es.guillermoorellana.travisforandroid.io.network;
 
 import android.support.annotation.NonNull;
 
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.logging.HttpLoggingInterceptor;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import es.guillermoorellana.travisforandroid.BuildConfig;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;
 
-import static com.squareup.okhttp.logging.HttpLoggingInterceptor.Level.BASIC;
-import static com.squareup.okhttp.logging.HttpLoggingInterceptor.Level.NONE;
+import static okhttp3.logging.HttpLoggingInterceptor.Level.BASIC;
+import static okhttp3.logging.HttpLoggingInterceptor.Level.NONE;
 
 @Module
 public class NetworkModule {
@@ -38,9 +37,10 @@ public class NetworkModule {
     @NonNull
     @Singleton
     public OkHttpClient provideOkHttpClient(@NonNull HttpLoggingInterceptor httpLoggingInterceptor) {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.interceptors().add(httpLoggingInterceptor);
-        okHttpClient.interceptors().add(new HeadersInterceptor());
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(new HeadersInterceptor())
+                .build();
         return okHttpClient;
     }
 

@@ -18,11 +18,11 @@ package es.guillermoorellana.travisforandroid.api;
 
 import android.support.annotation.NonNull;
 
-import com.squareup.okhttp.HttpUrl;
+import okhttp3.HttpUrl;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import retrofit.BaseUrl;
+import retrofit2.BaseUrl;
 
 public class ChangeableBaseUrl implements BaseUrl {
 

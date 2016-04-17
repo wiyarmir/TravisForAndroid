@@ -18,8 +18,8 @@ package es.guillermoorellana.travisforandroid.api;
 
 import android.support.annotation.NonNull;
 
-import com.squareup.okhttp.mockwebserver.MockResponse;
-import com.squareup.okhttp.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
