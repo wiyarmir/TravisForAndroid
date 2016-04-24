@@ -35,8 +35,6 @@ import android.widget.TextView;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import dagger.Module;
 import dagger.Provides;
@@ -54,41 +52,25 @@ import es.guillermoorellana.travisforandroid.ui.presenter.ReposPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.ReposView;
 import timber.log.Timber;
 
-public class ReposFragment
-        extends BaseFragment<ReposView, ReposPresenter>
+public class ReposFragment extends BaseFragment<ReposView, ReposPresenter>
         implements LoaderManager.LoaderCallbacks<Cursor>, ReposView,
         SwipeRefreshLayout.OnRefreshListener, SearchView.OnQueryTextListener {
 
     public static final String KEY_SEARCH = "SEARCHTEXT";
     public static final int REGULAR = 1001;
     public static final int SEARCH = 1002;
-    private static final String[] PROJECTION = new String[]{
-            Repo_Table._id.toString(),
-            Repo_Table.repoId.toString(),
-            Repo_Table.slug.toString(),
-            Repo_Table.active.toString(),
-            Repo_Table.description.toString(),
-            Repo_Table.lastBuildId.toString(),
-            Repo_Table.lastBuildNumber.toString(),
-            Repo_Table.lastBuildState.toString(),
-            Repo_Table.lastBuildDuration.toString(),
-            Repo_Table.lastBuildLanguage.toString(),
-            Repo_Table.lastBuildStartedAt.toString(),
-            Repo_Table.lastBuildFinishedAt.toString(),
-            Repo_Table.githubLanguage.toString(),
-    };
-    @Inject ReposPresenter reposPresenter;
+
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     @Bind(R.id.recyclerView) RecyclerView contentView;
     @Bind(R.id.errorView) TextView errorView;
 
     private RepoAdapter mAdapter;
+    private ReposFragmentComponent mComponent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        TravisApp.get(getContext()).applicationComponent().plus(new ReposFragmentModule()).inject(this);
+        mComponent = TravisApp.get(getContext()).applicationComponent().plus(new ReposFragmentModule());
     }
 
     @Nullable
@@ -126,7 +108,7 @@ public class ReposFragment
     @NonNull
     @Override
     public ReposPresenter createPresenter() {
-        return reposPresenter;
+        return mComponent.reposPresenter();
     }
 
     @Override
@@ -151,7 +133,7 @@ public class ReposFragment
         return new CursorLoader(
                 getActivity(),
                 TravisDatabase.REPO_MODEL.CONTENT_REPO_URI,
-                PROJECTION,
+                TravisDatabase.REPO_MODEL.PROJECTION,
                 selection,
                 selectionArgs,
                 Repo_Table.lastBuildStartedAt.getContainerKey() + "DESC"
@@ -199,7 +181,6 @@ public class ReposFragment
     @Override
     public boolean onQueryTextChange(String newText) {
         swipeContainer.setRefreshing(true);
-//        performSearch(newText);
         getPresenter().reloadData(newText);
         return true;
     }
@@ -223,6 +204,7 @@ public class ReposFragment
     @Subcomponent(modules = ReposFragmentModule.class)
     public interface ReposFragmentComponent {
         void inject(@NonNull ReposFragment itemsFragment);
+        ReposPresenter reposPresenter();
     }
 
     @Module

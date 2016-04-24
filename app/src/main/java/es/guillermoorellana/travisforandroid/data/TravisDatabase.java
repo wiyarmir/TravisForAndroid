@@ -24,6 +24,7 @@ import com.raizlabs.android.dbflow.annotation.provider.ContentUri;
 import com.raizlabs.android.dbflow.annotation.provider.TableEndpoint;
 
 import es.guillermoorellana.travisforandroid.model.Build_Table;
+import es.guillermoorellana.travisforandroid.model.Repo_Table;
 
 @ContentProvider(authority = TravisDatabase.CONTENT_AUTHORITY,
         database = TravisDatabase.class,
@@ -43,6 +44,21 @@ public class TravisDatabase {
         public static final String PATH_REPO = "repo";
         @ContentUri(path = PATH_REPO, type = ContentUri.ContentType.VND_MULTIPLE + PATH_REPO)
         public static final Uri CONTENT_REPO_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_REPO).build();
+        public static final String[] PROJECTION = new String[]{
+                Repo_Table._id.toString(),
+                Repo_Table.repoId.toString(),
+                Repo_Table.slug.toString(),
+                Repo_Table.active.toString(),
+                Repo_Table.description.toString(),
+                Repo_Table.lastBuildId.toString(),
+                Repo_Table.lastBuildNumber.toString(),
+                Repo_Table.lastBuildState.toString(),
+                Repo_Table.lastBuildDuration.toString(),
+                Repo_Table.lastBuildLanguage.toString(),
+                Repo_Table.lastBuildStartedAt.toString(),
+                Repo_Table.lastBuildFinishedAt.toString(),
+                Repo_Table.githubLanguage.toString(),
+        };
     }
 
     @TableEndpoint(name = "GHCommit")

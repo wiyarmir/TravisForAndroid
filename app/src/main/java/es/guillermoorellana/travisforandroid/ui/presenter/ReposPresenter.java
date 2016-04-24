@@ -68,4 +68,8 @@ public class ReposPresenter extends BasePresenter<ReposView> {
             }
         });
     }
+
+    public void performSearch(String query) {
+
+    }
 }

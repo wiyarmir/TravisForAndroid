@@ -35,8 +35,6 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
 import dagger.Module;
 import dagger.Provides;
@@ -61,21 +59,18 @@ public class BuildsFragment
     private static final int LOADER_ID = 1003;
 
     @Arg long repoId;
-    @NonNull
-    @Inject
-    BuildsPresenter buildsPresenter;
+
     @Bind(R.id.recyclerView) RecyclerView recyclerView;
     @Bind(R.id.errorView) TextView errorView;
     @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
     private BuildsAdapter mAdapter;
+    private BuildsFragmentComponent mComponent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FragmentArgs.inject(this);
-        TravisApp.get(getContext()).applicationComponent()
-                .plus(new BuildsFragmentModule())
-                .inject(this);
+        mComponent = TravisApp.get(getContext()).applicationComponent().plus(new BuildsFragmentModule());
     }
 
     @Nullable
@@ -102,7 +97,7 @@ public class BuildsFragment
 
     @Override
     public BuildsPresenter createPresenter() {
-        return buildsPresenter;
+        return mComponent.presenter();
     }
 
     @DebugLog
@@ -149,6 +144,7 @@ public class BuildsFragment
     @Subcomponent(modules = BuildsFragmentModule.class)
     public interface BuildsFragmentComponent {
         void inject(@NonNull BuildsFragment buildsFragment);
+        BuildsPresenter presenter();
     }
 
     @Module
