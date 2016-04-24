@@ -25,6 +25,7 @@ buildscript {
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
         classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         classpath 'com.fernandocejas.frodo:frodo-plugin:0.8.2'
+        classpath 'com.trickyandroid:jacoco-everywhere:0.2.1'
     }
     configurations.classpath.exclude group: 'com.android.tools.external.lombok'
 }

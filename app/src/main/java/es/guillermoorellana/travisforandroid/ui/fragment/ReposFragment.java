@@ -123,6 +123,7 @@ public class ReposFragment
         getLoaderManager().initLoader(REGULAR, null, this);
     }
 
+    @NonNull
     @Override
     public ReposPresenter createPresenter() {
         return reposPresenter;
