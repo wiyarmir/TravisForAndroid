@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,8 +41,6 @@ import dagger.Subcomponent;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.data.Repository;
-import es.guillermoorellana.travisforandroid.data.TravisDatabase;
-import es.guillermoorellana.travisforandroid.model.Build_Table;
 import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.BuildsAdapter;
@@ -95,6 +92,7 @@ public class BuildsFragment
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
+    @NonNull
     @Override
     public BuildsPresenter createPresenter() {
         return mComponent.presenter();
@@ -103,14 +101,7 @@ public class BuildsFragment
     @DebugLog
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(
-                getActivity(),
-                TravisDatabase.BUILD_MODEL.URI_WITH_REPO(repoId),
-                TravisDatabase.BUILD_MODEL.FULL_PROJECTION,
-                null,
-                null,
-                Build_Table.startedAt + "DESC"
-        );
+        return getPresenter().getCursorLoader(getActivity(), repoId);
     }
 
     @DebugLog
@@ -144,6 +135,8 @@ public class BuildsFragment
     @Subcomponent(modules = BuildsFragmentModule.class)
     public interface BuildsFragmentComponent {
         void inject(@NonNull BuildsFragment buildsFragment);
+
+        @NonNull
         BuildsPresenter presenter();
     }
 

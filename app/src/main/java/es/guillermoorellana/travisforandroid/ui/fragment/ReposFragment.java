@@ -22,7 +22,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,9 +41,7 @@ import dagger.Subcomponent;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.data.Repository;
-import es.guillermoorellana.travisforandroid.data.TravisDatabase;
 import es.guillermoorellana.travisforandroid.model.Repo;
-import es.guillermoorellana.travisforandroid.model.Repo_Table;
 import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
 import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.RepoAdapter;
@@ -113,31 +110,13 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter>
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String selection = null;
-        String[] selectionArgs = null;
-
         switch (id) {
             case SEARCH:
-                String searchString = args.getString(KEY_SEARCH, "");
-                if (!searchString.isEmpty()) {
-                    selection = Repo_Table.slug.toString() + " LIKE %?%";
-                    selectionArgs = new String[]{searchString};
-                }
-                break;
+                return getPresenter().getSearchCursorLoader(getActivity(), args.getString(KEY_SEARCH, ""));
             case REGULAR:
             default:
-                // noop
-                break;
+                return getPresenter().getCursorLoader(getActivity());
         }
-
-        return new CursorLoader(
-                getActivity(),
-                TravisDatabase.REPO_MODEL.CONTENT_REPO_URI,
-                TravisDatabase.REPO_MODEL.PROJECTION,
-                selection,
-                selectionArgs,
-                Repo_Table.lastBuildStartedAt.getContainerKey() + "DESC"
-        );
     }
 
     @Override
@@ -204,6 +183,7 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter>
     @Subcomponent(modules = ReposFragmentModule.class)
     public interface ReposFragmentComponent {
         void inject(@NonNull ReposFragment itemsFragment);
+
         ReposPresenter reposPresenter();
     }
 

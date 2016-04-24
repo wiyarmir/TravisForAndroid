@@ -19,7 +19,6 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.fernandocejas.frodo'
-apply plugin: 'jacoco-everywhere'
 apply from: '../jacoco.gradle'
 apply from: '../lint-summary.gradle'
 
@@ -47,9 +46,6 @@ android {
     }
 
     buildTypes {
-        debug{
-            testCoverageEnabled = true;
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
