@@ -19,7 +19,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.0.0'
+        classpath 'com.android.tools.build:gradle:2.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
         classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
@@ -113,7 +113,8 @@ ext.libraries = [
         // Developer Tools
         stetho                  : "com.facebook.stetho:stetho:$stethoVersion",
         stethoOkHttp            : "com.facebook.stetho:stetho-okhttp:$stethoVersion",
-        leakCanary              : "com.squareup.leakcanary:leakcanary-android:1.4-beta1",
+        leakCanary              : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
+        leakCanaryNoOp          : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
         tinyDancer              : "com.github.brianPlummer:tinydancer:0.0.7",
 
         // Test dependencies
