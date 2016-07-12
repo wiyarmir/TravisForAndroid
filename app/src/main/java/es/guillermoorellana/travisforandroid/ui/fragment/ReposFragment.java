@@ -84,7 +84,6 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter>
         mAdapter = new RepoAdapter(null);
         contentView.setAdapter(mAdapter);
         contentView.setLayoutManager(new LinearLayoutManager(getContext()));
-        contentView.addItemDecoration(new DividerItemDecoration(getContext()));
         mAdapter.getOnClickSubject().subscribe(
                 clickedView -> {
                     mAdapter.getCursor().moveToPosition(contentView.getChildAdapterPosition(clickedView));
@@ -93,7 +92,6 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter>
                     getMainView().replaceFragmentBackStack(SingleRepoFragmentBuilder.newSingleRepoFragment(repoId));
                 }
         );
-        onRefresh();
     }
 
     @Override
