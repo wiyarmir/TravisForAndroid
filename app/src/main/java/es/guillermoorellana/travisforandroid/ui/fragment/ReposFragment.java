@@ -43,7 +43,6 @@ import es.guillermoorellana.travisforandroid.TravisApp;
 import es.guillermoorellana.travisforandroid.data.Repository;
 import es.guillermoorellana.travisforandroid.model.Repo;
 import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
-import es.guillermoorellana.travisforandroid.ui.DividerItemDecoration;
 import es.guillermoorellana.travisforandroid.ui.adapter.RepoAdapter;
 import es.guillermoorellana.travisforandroid.ui.presenter.ReposPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.ReposView;
