@@ -133,6 +133,10 @@ dependencies {
     compile libraries.dbflowCore
     compile libraries.dbflow
 
+    provided libraries.jsr250
+    provided libraries.lombok
+    apt libraries.lombok
+
     // Developer tools (Developer Settings)
     debugCompile libraries.leakCanary
     releaseCompile libraries.leakCanaryNoOp

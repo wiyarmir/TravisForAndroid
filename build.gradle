@@ -110,6 +110,9 @@ ext.libraries = [
         dbflowCore              : "com.github.wiyarmir.DBFlow:dbflow-core:$dbflowVersion",
         dbflow                  : "com.github.wiyarmir.DBFlow:dbflow:$dbflowVersion",
 
+        lombok                  : "org.projectlombok:lombok:1.12.6",
+        jsr250                  : "javax.annotation:jsr250-api:1.0",
+
         // Developer Tools
         stetho                  : "com.facebook.stetho:stetho:$stethoVersion",
         stethoOkHttp            : "com.facebook.stetho:stetho-okhttp:$stethoVersion",
