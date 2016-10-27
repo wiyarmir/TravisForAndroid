@@ -8,8 +8,8 @@ android:
   components:
     - platform-tools
     - tools
-    - android-23
-    - build-tools-23.0.3
+    - android-25
+    - build-tools-25.0.0
     - extra-android-m2repository
     - extra-android-support
     - extra-google-m2repository
@@ -35,8 +35,3 @@ after_success:
   
 notifications:
   email: false
-
-cache:
-  directories:
-    - $HOME/.m2
-    - $HOME/.gradle

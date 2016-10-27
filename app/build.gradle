@@ -20,7 +20,6 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.fernandocejas.frodo'
 apply from: '../jacoco.gradle'
-apply from: '../lint-summary.gradle'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -95,68 +94,69 @@ android {
     }
 }
 dependencies {
-    compile libraries.dagger
-    apt libraries.daggerCompiler
-    compile libraries.javaxInject
-    compile libraries.javaxAnnotationApi
 
-    compile libraries.rxJava
-    compile libraries.rxAndroid
-    compile libraries.rxBinding
-    compile libraries.rxBindingV7
+    compile libraries.app.timber
+    compile libraries.app.dagger
+    apt libraries.app.daggerCompiler
+    compile libraries.app.javaxInject
+    compile libraries.app.javaxAnnotationApi
 
-    compile libraries.okHttp
-    compile libraries.okHttpLoggingInterceptor
-    compile libraries.retrofit
-    compile libraries.retrofitGsonConverter
-    compile libraries.retrofitRxJavaAdapter
-    compile libraries.moshi
+    compile libraries.app.rxJava
+    compile libraries.app.rxAndroid
+    compile libraries.app.rxBinding
+    compile libraries.app.rxBindingV7
 
-    compile libraries.autoValue
-    compile libraries.jodaTimeAndroid
+    compile libraries.app.okHttp
+    compile libraries.app.okHttpLoggingInterceptor
+    compile libraries.app.retrofit
+    compile libraries.app.retrofitGsonConverter
+    compile libraries.app.retrofitRxJavaAdapter
+    compile libraries.app.moshi
 
-    compile libraries.supportAnnotations
-    compile libraries.supportAppCompat
-    compile libraries.supportDesign
-    compile libraries.supportRecyclerView
-    compile libraries.supportCardView
+    compile libraries.app.autoValue
+    compile libraries.app.jodaTimeAndroid
 
-    compile libraries.butterKnife
-    compile libraries.picasso
-    compile libraries.timber
-    compile libraries.mosby
-    compile libraries.mosbyViewstate
-    compile libraries.fragmentargs
-    apt libraries.fragmentargsProcessor
+    compile libraries.app.supportAnnotations
+    compile libraries.app.supportAppCompat
+    compile libraries.app.supportDesign
+    compile libraries.app.supportRecyclerView
+    compile libraries.app.supportCardView
 
-    apt libraries.dbflowProcessor
-    compile libraries.dbflowCore
-    compile libraries.dbflow
+    compile libraries.app.butterKnife
+    compile libraries.app.picasso
+    compile libraries.app.mosby
+    compile libraries.app.mosbyViewstate
+    compile libraries.app.fragmentargs
+    apt libraries.app.fragmentargsProcessor
 
-    provided libraries.jsr250
-    provided libraries.lombok
-    apt libraries.lombok
+    apt libraries.app.dbflowProcessor
+    compile libraries.app.dbflowCore
+    compile libraries.app.dbflow
+
+    provided libraries.app.jsr250
+    provided libraries.app.lombok
+    apt libraries.app.lombok
 
     // Developer tools (Developer Settings)
-    debugCompile libraries.leakCanary
-    releaseCompile libraries.leakCanaryNoOp
-    testCompile libraries.leakCanaryNoOp
 
-    debugCompile libraries.stetho
-    debugCompile libraries.stethoOkHttp
-    debugCompile libraries.tinyDancer
+    debugCompile libraries.app.leakCanary
+    releaseCompile libraries.app.leakCanaryNoOp
+    testCompile libraries.app.leakCanaryNoOp
 
-    testCompile libraries.junit
-    testCompile libraries.robolectric
-    testCompile libraries.assertJ
-    testCompile libraries.equalsVerifier
-    testCompile libraries.okHttpMockWebServer
-    testCompile libraries.mockitoCore
+    debugCompile libraries.app.stetho
+    debugCompile libraries.app.stethoOkHttp
 
-    androidTestCompile libraries.supportTestRunner
-    androidTestCompile libraries.supportTestRules
-    androidTestCompile libraries.espressoCore
-    androidTestCompile(libraries.espressoContrib) {
+    testCompile libraries.test.junit
+    testCompile libraries.test.robolectric
+    testCompile libraries.test.assertJ
+    testCompile libraries.test.equalsVerifier
+    testCompile libraries.test.okHttpMockWebServer
+    testCompile libraries.test.mockitoCore
+
+    androidTestCompile libraries.test.supportTestRunner
+    androidTestCompile libraries.test.supportTestRules
+    androidTestCompile libraries.test.espressoCore
+    androidTestCompile(libraries.test.espressoContrib) {
         // Causes IncompatibleClassChangeError. As always…
         exclude module: 'support-annotations'
         exclude module: 'recyclerview-v7'
@@ -164,12 +164,12 @@ dependencies {
         exclude module: 'appcompat-v7'
         exclude module: 'design'
     }
-    androidTestCompile libraries.okHttpMockWebServer
+    androidTestCompile libraries.test.okHttpMockWebServer
 }
 
 configurations.all {
     resolutionStrategy {
         // Force our version of support-annotations, we have a conflict between app and androidTest dependency resolution.
-        force libraries.supportAnnotations
+        force libraries.app.supportAnnotations
     }
 }

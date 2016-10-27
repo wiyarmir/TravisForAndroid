@@ -37,10 +37,10 @@ import es.guillermoorellana.travisforandroid.ui.fragment.SingleRepoFragment;
 
 @Singleton
 @Component(modules = {
-        ApplicationModule.class,
-        ApiModule.class,
-        DevToolsModule.class,
-        NetworkModule.class
+    ApplicationModule.class,
+    ApiModule.class,
+    DevToolsModule.class,
+    NetworkModule.class
 })
 public interface ApplicationComponent {
     @NonNull
