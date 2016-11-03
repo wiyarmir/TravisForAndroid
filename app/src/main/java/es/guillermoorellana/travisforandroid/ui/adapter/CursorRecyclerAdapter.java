@@ -55,15 +55,11 @@ public abstract class CursorRecyclerAdapter<VH extends android.support.v7.widget
     private int mRowIDColumn;
     private Cursor mCursor;
 
-    public CursorRecyclerAdapter(Cursor cursor) {
-        init(cursor);
-    }
-
-    void init(Cursor c) {
-        boolean cursorPresent = c != null;
-        mCursor = c;
+    public CursorRecyclerAdapter(@Nullable Cursor cursor) {
+        boolean cursorPresent = cursor != null;
+        mCursor = cursor;
         mDataValid = cursorPresent;
-        mRowIDColumn = cursorPresent ? c.getColumnIndexOrThrow("_id") : -1;
+        mRowIDColumn = cursorPresent ? cursor.getColumnIndexOrThrow("_id") : -1;
         setHasStableIds(true);
     }
 
@@ -171,6 +167,7 @@ public abstract class CursorRecyclerAdapter<VH extends android.support.v7.widget
      * If the given new Cursor is the same instance is the previously set
      * Cursor, null is also returned.
      */
+    @SuppressWarnings("PMD.CompareObjectsWithEquals")
     public Cursor swapCursor(@Nullable Cursor newCursor) {
         if (newCursor == mCursor) {
             return null;

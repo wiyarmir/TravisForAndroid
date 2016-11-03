@@ -27,7 +27,7 @@ public class LeakCanaryProxyImpl implements LeakCanaryProxy {
     @NonNull private final Application application;
     @Nullable private RefWatcher refWatcher;
 
-    public LeakCanaryProxyImpl(Application application) {
+    public LeakCanaryProxyImpl(@NonNull Application application) {
         this.application = application;
     }
 

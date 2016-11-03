@@ -19,7 +19,7 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.jakewharton.hugo'
 apply plugin: 'com.fernandocejas.frodo'
-apply from: '../jacoco.gradle'
+apply plugin: 'jacoco-everywhere'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -45,6 +45,9 @@ android {
     }
 
     buildTypes {
+        debug{
+            testCoverageEnabled = true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -72,7 +75,8 @@ android {
     }
 
     lintOptions {
-        abortOnError true // Fail early.
+        abortOnError false
+        ignoreWarnings true
 
         disable 'GoogleAppIndexingWarning' // App does not have deep linking.
         disable 'InvalidPackage' // Okio references java.nio that does not presented in Android SDK.

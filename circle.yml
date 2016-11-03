@@ -1,0 +1,21 @@
+machine:
+  java:
+    version: openjdk8
+  environment:
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+
+dependencies:
+  pre:
+    - ./deps.sh
+
+test:
+  override:
+    - (./gradlew assemble -PdisablePreDex):
+        timeout: 600
+    - emulator -avd circleci-android22 -no-audio -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+    - ./gradlew connectedCheck:
+        timeout: 1200 # android build time fuck yeah
+    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
