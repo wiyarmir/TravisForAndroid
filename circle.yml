@@ -2,9 +2,14 @@ machine:
   java:
     version: openjdk8
   environment:
+    _JAVA_OPTIONS: "-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"
     GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
 
 dependencies:
+  pre:
+    - TERM=dumb ./gradlew --foreground:
+        background: true
+    - until (./gradlew --status | grep -q IDLE); do echo "Waiting for Gradle daemon..."; done
   override:
     - ./deps.sh
 
@@ -17,7 +22,7 @@ test:
     - ./gradlew findbugs
     - ./gradlew lint
     - echo no | android create avd -n testing -t android-23 --abi default/x86
-    - emulator -avd testing -no-audio -no-window:
+    - emulator -avd testing -no-audio -no-window 2>&1 >$CIRCLE_ARTIFACTS/emulator.out.txt:
         background: true
         parallel: true
     - circle-android wait-for-boot
