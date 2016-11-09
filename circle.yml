@@ -21,8 +21,7 @@ test:
     - ./gradlew checkstyle checkStyleHtml
     - ./gradlew findbugs
     - ./gradlew lint
-    - echo no | android create avd -n testing -t android-23 --abi default/x86
-    - emulator -avd testing -no-audio -no-window 2>&1 >$CIRCLE_ARTIFACTS/emulator.out.txt:
+    - emulator -avd circleci-android22 -no-audio -no-window:
         background: true
         parallel: true
     - circle-android wait-for-boot
