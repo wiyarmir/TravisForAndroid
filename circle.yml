@@ -5,14 +5,19 @@ machine:
     GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
 
 dependencies:
-  pre:
+  override:
     - ./deps.sh
 
 test:
   override:
-    - (./gradlew assemble -PdisablePreDex):
+    - ./gradlew assemble -PdisablePreDex:
         timeout: 600
-    - emulator -avd circleci-android22 -no-audio -no-window:
+    - ./gradlew pmd
+    - ./gradlew checkstyle checkStyleHtml
+    - ./gradlew findbugs
+    - ./gradlew lint
+    - echo no | android create avd -n testing -t android-23 --abi default/x86
+    - emulator -avd testing -no-audio -no-window:
         background: true
         parallel: true
     - circle-android wait-for-boot
