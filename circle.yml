@@ -17,7 +17,7 @@ test:
         parallel: true
     - circle-android wait-for-boot
     - ./gradlew connectedCheck:
-        timeout: 1200 # android build time fuck yeah
+        timeout: 1500 # android build time fuck yeah
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
