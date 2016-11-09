@@ -151,7 +151,6 @@ dependencies {
     debugCompile libraries.app.stethoOkHttp
 
     testCompile libraries.test.junit
-    testCompile libraries.test.robolectric
     testCompile libraries.test.assertJ
     testCompile libraries.test.equalsVerifier
     testCompile libraries.test.okHttpMockWebServer
