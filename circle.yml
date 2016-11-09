@@ -7,9 +7,7 @@ machine:
 
 dependencies:
   pre:
-    - TERM=dumb ./gradlew --foreground:
-        background: true
-    - until (./gradlew --status | grep -q IDLE); do echo "Waiting for Gradle daemon..."; done
+    - mkdir -p ~/.gradle && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties
   override:
     - ./deps.sh
 
