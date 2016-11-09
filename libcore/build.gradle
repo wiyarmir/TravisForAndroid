@@ -1,0 +1,8 @@
+apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
+
+dependencies {
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

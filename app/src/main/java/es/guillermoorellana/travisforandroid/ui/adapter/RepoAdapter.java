@@ -32,7 +32,7 @@ import org.joda.time.format.PeriodFormatter;
 
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.model.Repo;
@@ -61,11 +61,16 @@ public class RepoAdapter extends CursorRecyclerAdapter<RepoAdapter.RepoViewHolde
     public static class RepoViewHolder extends RecyclerView.ViewHolder {
         private static final PeriodFormatter FORMATTER = PeriodFormat.wordBased(Locale.getDefault());
 
-        @Bind(R.id.buildNumber) TextView buildNumber;
-        @Bind(R.id.duration) TextView duration;
-        @Bind(R.id.finishedAgo) TextView finishedAgo;
-        @Bind(R.id.repo) TextView repoName;
-        @Bind(R.id.status) View status;
+        @BindView(R.id.buildNumber)
+        TextView buildNumber;
+        @BindView(R.id.duration)
+        TextView duration;
+        @BindView(R.id.finishedAgo)
+        TextView finishedAgo;
+        @BindView(R.id.repo)
+        TextView repoName;
+        @BindView(R.id.status)
+        View status;
 
         public RepoViewHolder(View repoView) {
             super(repoView);

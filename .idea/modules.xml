@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TravisForAndroid.iml" filepath="$PROJECT_DIR$/TravisForAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libcore/libcore.iml" filepath="$PROJECT_DIR$/libcore/libcore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/liblogic/liblogic.iml" filepath="$PROJECT_DIR$/liblogic/liblogic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libservices/libservices.iml" filepath="$PROJECT_DIR$/libservices/libservices.iml" />
     </modules>
   </component>
 </project>

@@ -15,16 +15,12 @@ test:
   override:
     - ./gradlew assemble -PdisablePreDex:
         timeout: 600
-    - ./gradlew pmd
-    - ./gradlew checkstyle checkStyleHtml
-    - ./gradlew findbugs
-    - ./gradlew lint
     - emulator -avd circleci-android22 -no-audio -no-window:
         background: true
         parallel: true
     - circle-android wait-for-boot
     - ./gradlew connectedCheck:
-        timeout: 1500 # android build time fuck yeah
+        timeout: 600 # android build time fuck yeah
     - cp -r app/build/outputs $CIRCLE_ARTIFACTS
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/

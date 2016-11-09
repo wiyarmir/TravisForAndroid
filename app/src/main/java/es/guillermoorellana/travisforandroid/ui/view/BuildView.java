@@ -28,7 +28,7 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 import org.joda.time.Period;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.model.Build;
@@ -36,28 +36,28 @@ import es.guillermoorellana.travisforandroid.model.GHCommit;
 
 public class BuildView extends LinearLayout {
 
-    @Bind(R.id.build_number)
+    @BindView(R.id.build_number)
     TextView buildNumber;
 
-    @Bind(R.id.build_state)
+    @BindView(R.id.build_state)
     TextView buildState;
 
-    @Bind(R.id.build_pull_request_title)
+    @BindView(R.id.build_pull_request_title)
     TextView pullRequestTitle;
 
-    @Bind(R.id.build_branch)
+    @BindView(R.id.build_branch)
     TextView buildBranch;
 
-    @Bind(R.id.build_commit_message)
+    @BindView(R.id.build_commit_message)
     TextView buildCommitMessage;
 
-    @Bind(R.id.build_commit_person)
+    @BindView(R.id.build_commit_person)
     TextView buildCommitPerson;
 
-    @Bind(R.id.build_duration)
+    @BindView(R.id.build_duration)
     TextView buildDuration;
 
-    @Bind(R.id.build_finished)
+    @BindView(R.id.build_finished)
     TextView buildFinished;
 
     public BuildView(Context context) {

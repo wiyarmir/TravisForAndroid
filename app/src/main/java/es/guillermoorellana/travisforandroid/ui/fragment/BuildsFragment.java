@@ -34,7 +34,7 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs;
 import com.hannesdorfmann.fragmentargs.annotation.Arg;
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import dagger.Module;
 import dagger.Provides;
 import dagger.Subcomponent;
@@ -57,9 +57,12 @@ public class BuildsFragment
 
     @Arg long repoId;
 
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
-    @Bind(R.id.errorView) TextView errorView;
-    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.errorView)
+    TextView errorView;
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
     private BuildsAdapter mAdapter;
     private BuildsFragmentComponent mComponent;
 

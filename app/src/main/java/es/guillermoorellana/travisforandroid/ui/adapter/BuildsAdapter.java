@@ -22,7 +22,7 @@ import android.view.View;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.model.Build;
@@ -52,7 +52,8 @@ public class BuildsAdapter extends CursorRecyclerAdapter<BuildsAdapter.BuildView
     }
 
     public static class BuildViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.build) BuildView buildView;
+        @BindView(R.id.build)
+        BuildView buildView;
 
         public BuildViewHolder(View itemView) {
             super(itemView);

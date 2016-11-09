@@ -14,23 +14,7 @@
  *   limitations under the License.
  */
 
-package es.guillermoorellana.travisforandroid.model;
+package es.guillermoorellana.travisforandroid.core;
 
-import javax.inject.Inject;
-
-import es.guillermoorellana.travisforandroid.api.TravisApi;
-import es.guillermoorellana.travisforandroid.api.entity.ApiBuildDetails;
-import rx.Single;
-
-public class BuildDetailsModel {
-    private final TravisApi mTravisApi;
-
-    @Inject
-    public BuildDetailsModel(TravisApi travisApi) {
-        mTravisApi = travisApi;
-    }
-
-    public Single<ApiBuildDetails> getBuildDetails(long buildId) {
-        return mTravisApi.build(buildId);
-    }
+public class Logger {
 }

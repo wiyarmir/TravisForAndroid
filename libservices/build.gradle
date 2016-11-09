@@ -1,0 +1,20 @@
+apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+dependencies {
+    compile libraries.app.okHttp
+    compile libraries.app.okHttpLoggingInterceptor
+    compile libraries.app.retrofit
+    compile libraries.app.retrofitGsonConverter
+    compile libraries.app.retrofitRxJavaAdapter
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

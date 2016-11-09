@@ -25,7 +25,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import es.guillermoorellana.travisforandroid.api.ApiModule;
 import es.guillermoorellana.travisforandroid.api.ChangeableBaseUrl;
-import es.guillermoorellana.travisforandroid.api.TravisRestApi;
+import es.guillermoorellana.travisforandroid.api.TravisApi;
 import es.guillermoorellana.travisforandroid.devtools.DevToolsModule;
 import es.guillermoorellana.travisforandroid.devtools.LeakCanaryProxy;
 import es.guillermoorellana.travisforandroid.io.network.NetworkModule;
@@ -44,7 +44,7 @@ import es.guillermoorellana.travisforandroid.ui.fragment.SingleRepoFragment;
 })
 public interface ApplicationComponent {
     @NonNull
-    TravisRestApi travisRestApi();
+    TravisApi travisRestApi();
 
     @NonNull
     ChangeableBaseUrl changeableBaseUrl();

@@ -22,7 +22,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import es.guillermoorellana.travisforandroid.api.TravisRestApi;
+import es.guillermoorellana.travisforandroid.api.TravisApi;
 import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
 import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.Build;
@@ -34,11 +34,11 @@ import rx.functions.Func1;
 
 public class Repository {
 
-    private final TravisRestApi api;
+    private final TravisApi api;
 
     @Inject
-    public Repository(TravisRestApi travisRestApi) {
-        api = travisRestApi;
+    public Repository(TravisApi travisApi) {
+        api = travisApi;
     }
 
     public Single<Integer> getRepos() {
