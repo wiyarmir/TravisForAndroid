@@ -9,6 +9,9 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/libcore" />
+            <option value="$PROJECT_DIR$/liblogic" />
+            <option value="$PROJECT_DIR$/libservices" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

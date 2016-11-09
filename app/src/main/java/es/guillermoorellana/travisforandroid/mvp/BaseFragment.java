@@ -26,7 +26,7 @@ import com.hannesdorfmann.mosby.mvp.MvpFragment;
 import com.hannesdorfmann.mosby.mvp.MvpPresenter;
 import com.hannesdorfmann.mosby.mvp.MvpView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.guillermoorellana.travisforandroid.R;
 import es.guillermoorellana.travisforandroid.TravisApp;
@@ -35,7 +35,7 @@ import es.guillermoorellana.travisforandroid.ui.view.MainView;
 public abstract class BaseFragment<V extends MvpView, P extends MvpPresenter<V>>
         extends MvpFragment<V, P> {
     @Nullable
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Override

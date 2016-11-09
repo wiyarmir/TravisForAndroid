@@ -42,8 +42,8 @@ public final class ApiAdapter {
                 .setLastBuildDuration(apiRepo.getLastBuildDuration())
                 .setLastBuildLanguage(apiRepo.getLastBuildLanguage())
                 .setLastBuildNumber(apiRepo.getLastBuildNumber())
-                .setLastBuildStartedAt(apiRepo.getLastBuildStartedAt().getMillis())
-                .setLastBuildFinishedAt(apiRepo.getLastBuildFinishedAt().getMillis())
+                .setLastBuildStartedAt(apiRepo.getLastBuildStartedAt().getTime())
+                .setLastBuildFinishedAt(apiRepo.getLastBuildFinishedAt().getTime())
                 .setGithubLanguage(apiRepo.getGithubLanguage())
                 .createRepo();
     }
@@ -51,14 +51,14 @@ public final class ApiAdapter {
     public static Build fromApi(ApiBuild apiBuild) {
         return new BuildBuilder().setCommitId(apiBuild.getCommitId())
                 .setDuration(apiBuild.getDuration())
-                .setFinishedAt(apiBuild.getFinishedAt().getMillis())
+                .setFinishedAt(apiBuild.getFinishedAt().getTime())
                 .setId(apiBuild.getId())
                 .setNumber(apiBuild.getNumber())
                 .setPullRequest(apiBuild.isPullRequest())
                 .setPullRequestNumber(apiBuild.getPullRequestNumber())
                 .setPullRequestTitle(apiBuild.getPullRequestTitle())
                 .setRepositoryId(apiBuild.getRepositoryId())
-                .setStartedAt(apiBuild.getStartedAt().getMillis())
+                .setStartedAt(apiBuild.getStartedAt().getTime())
                 .setState(apiBuild.getState())
                 .createBuild();
     }
@@ -69,7 +69,7 @@ public final class ApiAdapter {
                 .setAuthorEmail(apiCommit.getAuthorEmail())
                 .setAuthorName(apiCommit.getAuthorName())
                 .setBranch(apiCommit.getBranch())
-                .setCommittedAt(apiCommit.getCommittedAt().getMillis())
+                .setCommittedAt(apiCommit.getCommittedAt().getTime())
                 .setCommitterEmail(apiCommit.getCommitterEmail())
                 .setCommitterName(apiCommit.getCommitterName())
                 .setMessage(apiCommit.getMessage())

@@ -34,7 +34,7 @@ import android.widget.TextView;
 
 import com.raizlabs.android.dbflow.config.FlowManager;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import dagger.Module;
 import dagger.Provides;
 import dagger.Subcomponent;
@@ -56,9 +56,12 @@ public class ReposFragment extends BaseFragment<ReposView, ReposPresenter>
     public static final int REGULAR = 1001;
     public static final int SEARCH = 1002;
 
-    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
-    @Bind(R.id.recyclerView) RecyclerView contentView;
-    @Bind(R.id.errorView) TextView errorView;
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.recyclerView)
+    RecyclerView contentView;
+    @BindView(R.id.errorView)
+    TextView errorView;
 
     private RepoAdapter mAdapter;
     private ReposFragmentComponent mComponent;

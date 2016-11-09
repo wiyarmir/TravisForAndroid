@@ -23,6 +23,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import es.guillermoorellana.travisforandroid.BuildConfig;
+import es.guillermoorellana.travisforandroid.services.network.HeadersInterceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import timber.log.Timber;

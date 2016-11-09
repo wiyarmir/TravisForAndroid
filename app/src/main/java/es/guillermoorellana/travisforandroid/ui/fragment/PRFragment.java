@@ -37,7 +37,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs;
 
 import javax.inject.Inject;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import dagger.Module;
 import dagger.Provides;
 import dagger.Subcomponent;
@@ -77,9 +77,12 @@ public class PRFragment extends BaseFragment<PRView, PRPresenter>
     @NonNull
     @Inject
     PRPresenter prPresenter;
-    @Bind(R.id.recyclerView) RecyclerView recyclerView;
-    @Bind(R.id.errorView) TextView errorView;
-    @Bind(R.id.swipeContainer) SwipeRefreshLayout swipeContainer;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.errorView)
+    TextView errorView;
+    @BindView(R.id.swipeContainer)
+    SwipeRefreshLayout swipeContainer;
 
     private BuildsAdapter mAdapter;
 
@@ -114,6 +117,7 @@ public class PRFragment extends BaseFragment<PRView, PRPresenter>
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
+    @NonNull
     @Override
     public PRPresenter createPresenter() {
         return prPresenter;

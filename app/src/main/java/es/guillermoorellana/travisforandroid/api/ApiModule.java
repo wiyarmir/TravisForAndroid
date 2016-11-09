@@ -19,13 +19,13 @@ package es.guillermoorellana.travisforandroid.api;
 import android.support.annotation.NonNull;
 
 import com.google.gson.Gson;
-import okhttp3.OkHttpClient;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import es.guillermoorellana.travisforandroid.BuildConfig;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -50,9 +50,9 @@ public class ApiModule {
     @Provides
     @NonNull
     @Singleton
-    public TravisRestApi provideQualityMattersApi(@NonNull OkHttpClient okHttpClient,
-                                                  @NonNull ChangeableBaseUrl changeableBaseUrl,
-                                                  @NonNull Gson gson) {
+    public TravisApi provideTravisApi(@NonNull OkHttpClient okHttpClient,
+                                      @NonNull ChangeableBaseUrl changeableBaseUrl,
+                                      @NonNull Gson gson) {
         final Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(changeableBaseUrl)
                 .client(okHttpClient)
@@ -61,7 +61,7 @@ public class ApiModule {
                 // Fail early: check Retrofit configuration at creation time
                 .validateEagerly(BuildConfig.DEBUG);
 
-        return builder.build().create(TravisRestApi.class);
+        return builder.build().create(TravisApi.class);
     }
 }
 

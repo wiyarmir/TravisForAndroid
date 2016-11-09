@@ -54,26 +54,6 @@ android {
         }
     }
 
-    sourceSets {
-        // Common code for JVM tests lives in src/jvmTestsCommon.
-        test.java.srcDir 'src/jvmTestsCommon/java'
-
-        // Unit tests live in src/unitTest.
-        test.java.srcDir 'src/unitTests/java'
-
-        // Integration tests live in src/integrationTest.
-        test.java.srcDir 'src/integrationTests/java'
-
-        // Unit tests for debug build type specific code live in src/debugUnitTest.
-        testDebug.java.srcDir 'src/debugUnitTests/java'
-
-        // Unit tests for release build type specific code live in src/releaseUnitTest.
-        testRelease.java.srcDir 'src/releaseUnitTests/java'
-
-        // Functional tests live in src/functionalTests.
-        androidTest.java.srcDir 'src/functionalTests/java'
-    }
-
     lintOptions {
         abortOnError false
         ignoreWarnings true
@@ -98,6 +78,9 @@ android {
     }
 }
 dependencies {
+    compile project(':libcore')
+    compile project(':liblogic')
+    compile project(':libservices')
 
     compile libraries.app.timber
     compile libraries.app.dagger
@@ -107,17 +90,11 @@ dependencies {
 
     compile libraries.app.rxJava
     compile libraries.app.rxAndroid
+    compile libraries.app.rxAndroidProguard
     compile libraries.app.rxBinding
     compile libraries.app.rxBindingV7
 
-    compile libraries.app.okHttp
-    compile libraries.app.okHttpLoggingInterceptor
-    compile libraries.app.retrofit
-    compile libraries.app.retrofitGsonConverter
-    compile libraries.app.retrofitRxJavaAdapter
-    compile libraries.app.moshi
-
-    compile libraries.app.autoValue
+    provided libraries.app.autoValue
     compile libraries.app.jodaTimeAndroid
 
     compile libraries.app.supportAnnotations
@@ -126,7 +103,9 @@ dependencies {
     compile libraries.app.supportRecyclerView
     compile libraries.app.supportCardView
 
+    apt libraries.app.butterKnifeCompiler
     compile libraries.app.butterKnife
+
     compile libraries.app.picasso
     compile libraries.app.mosby
     compile libraries.app.mosbyViewstate
