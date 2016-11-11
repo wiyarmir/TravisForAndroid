@@ -16,66 +16,64 @@
 
 package es.guillermoorellana.travisforandroid.data;
 
-import es.guillermoorellana.travisforandroid.api.entity.ApiBuild;
-import es.guillermoorellana.travisforandroid.api.entity.ApiCommit;
-import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
-import es.guillermoorellana.travisforandroid.model.Build;
 import es.guillermoorellana.travisforandroid.model.BuildBuilder;
 import es.guillermoorellana.travisforandroid.model.CommitBuilder;
 import es.guillermoorellana.travisforandroid.model.GHCommit;
-import es.guillermoorellana.travisforandroid.model.Repo;
 import es.guillermoorellana.travisforandroid.model.RepoBuilder;
+import es.guillermoorellana.travisforandroid.services.network.model.entity.Build;
+import es.guillermoorellana.travisforandroid.services.network.model.entity.Commit;
+import es.guillermoorellana.travisforandroid.services.network.model.entity.Repo;
 
 public final class ApiAdapter {
     private ApiAdapter() {
         // util class
     }
 
-    public static Repo fromApi(ApiRepo apiRepo) {
+    public static es.guillermoorellana.travisforandroid.model.Repo fromApi(Repo repo) {
         return new RepoBuilder()
-                .setId(apiRepo.getId())
-                .setSlug(apiRepo.getSlug())
-                .setActive(apiRepo.isActive())
-                .setDescription(apiRepo.getDescription())
-                .setLastBuildId(apiRepo.getLastBuildId())
-                .setLastBuildState(apiRepo.getLastBuildState())
-                .setLastBuildDuration(apiRepo.getLastBuildDuration())
-                .setLastBuildLanguage(apiRepo.getLastBuildLanguage())
-                .setLastBuildNumber(apiRepo.getLastBuildNumber())
-                .setLastBuildStartedAt(apiRepo.getLastBuildStartedAt().getTime())
-                .setLastBuildFinishedAt(apiRepo.getLastBuildFinishedAt().getTime())
-                .setGithubLanguage(apiRepo.getGithubLanguage())
+                .setId(repo.getId())
+                .setSlug(repo.getSlug())
+                .setActive(repo.isActive())
+                .setDescription(repo.getDescription())
+                .setLastBuildId(repo.getLastBuildId())
+                .setLastBuildState(repo.getLastBuildState())
+                .setLastBuildDuration(repo.getLastBuildDuration())
+                .setLastBuildLanguage(repo.getLastBuildLanguage())
+                .setLastBuildNumber(repo.getLastBuildNumber())
+                .setLastBuildStartedAt(repo.getLastBuildStartedAt().getTime())
+                .setLastBuildFinishedAt(repo.getLastBuildFinishedAt().getTime())
+                .setGithubLanguage(repo.getGithubLanguage())
                 .createRepo();
     }
 
-    public static Build fromApi(ApiBuild apiBuild) {
-        return new BuildBuilder().setCommitId(apiBuild.getCommitId())
-                .setDuration(apiBuild.getDuration())
-                .setFinishedAt(apiBuild.getFinishedAt().getTime())
-                .setId(apiBuild.getId())
-                .setNumber(apiBuild.getNumber())
-                .setPullRequest(apiBuild.isPullRequest())
-                .setPullRequestNumber(apiBuild.getPullRequestNumber())
-                .setPullRequestTitle(apiBuild.getPullRequestTitle())
-                .setRepositoryId(apiBuild.getRepositoryId())
-                .setStartedAt(apiBuild.getStartedAt().getTime())
-                .setState(apiBuild.getState())
+    public static es.guillermoorellana.travisforandroid.model.Build fromApi(Build build) {
+        return new BuildBuilder().setCommitId(build.getCommitId())
+                .setDuration(build.getDuration())
+                .setFinishedAt(build.getFinishedAt().getTime())
+                .setId(build.getId())
+                .setNumber(build.getNumber())
+                .setPullRequest(build.isPullRequest())
+                .setPullRequestNumber(build.getPullRequestNumber())
+                .setPullRequestTitle(build.getPullRequestTitle())
+                .setRepositoryId(build.getRepositoryId())
+                .setStartedAt(build.getStartedAt().getTime())
+                .setState(build.getState())
                 .createBuild();
     }
 
-    public static GHCommit fromApi(ApiCommit apiCommit) {
+    public static GHCommit fromApi(Commit commit) {
         return new CommitBuilder()
-                .setCommitId(apiCommit.getId())
-                .setAuthorEmail(apiCommit.getAuthorEmail())
-                .setAuthorName(apiCommit.getAuthorName())
-                .setBranch(apiCommit.getBranch())
-                .setCommittedAt(apiCommit.getCommittedAt().getTime())
-                .setCommitterEmail(apiCommit.getCommitterEmail())
-                .setCommitterName(apiCommit.getCommitterName())
-                .setMessage(apiCommit.getMessage())
-                .setPullRequestNumber(apiCommit.getPullRequestNumber())
-                .setCompareUrl(apiCommit.getCompareUrl())
-                .setSha(apiCommit.getSha())
+                .setCommitId(commit.getId())
+                .setAuthorEmail(commit.getAuthorEmail())
+                .setAuthorName(commit.getAuthorName())
+                .setBranch(commit.getBranch())
+                .setCommittedAt(commit.getCommittedAt().getTime())
+                .setCommitterEmail(commit.getCommitterEmail())
+                .setCommitterName(commit.getCommitterName())
+                .setMessage(commit.getMessage())
+                .setPullRequestNumber(commit.getPullRequestNumber())
+                .setCompareUrl(commit.getCompareUrl())
+                .setSha(commit.getSha())
                 .createCommit();
     }
 }

@@ -22,12 +22,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import es.guillermoorellana.travisforandroid.api.TravisApi;
-import es.guillermoorellana.travisforandroid.api.entity.ApiBuildHistory;
-import es.guillermoorellana.travisforandroid.api.entity.ApiRepo;
 import es.guillermoorellana.travisforandroid.model.Build;
 import es.guillermoorellana.travisforandroid.model.GHCommit;
-import es.guillermoorellana.travisforandroid.model.Repo;
+import es.guillermoorellana.travisforandroid.services.network.TravisApi;
+import es.guillermoorellana.travisforandroid.services.network.model.entity.BuildHistory;
+import es.guillermoorellana.travisforandroid.services.network.model.entity.Repo;
 import rx.Observable;
 import rx.Single;
 import rx.functions.Func1;
@@ -45,14 +44,14 @@ public class Repository {
         return getReposCommon(api.repos());
     }
 
-    private Single<Integer> getReposCommon(Single<List<ApiRepo>> apiCall) {
+    private Single<Integer> getReposCommon(Single<List<Repo>> apiCall) {
         return apiCall.toObservable()
                 .flatMapIterable(repos -> repos)
                 .map(ApiAdapter::fromApi)
                 .toList()
-                .flatMap((Func1<List<Repo>, Observable<Integer>>) repos -> Observable.create(
+                .flatMap((Func1<List<es.guillermoorellana.travisforandroid.model.Repo>, Observable<Integer>>) repos -> Observable.create(
                                 subscriber -> {
-                                    ContentUtils.bulkInsert(TravisDatabase.REPO_MODEL.CONTENT_REPO_URI, Repo.class, repos);
+                                    ContentUtils.bulkInsert(TravisDatabase.REPO_MODEL.CONTENT_REPO_URI, es.guillermoorellana.travisforandroid.model.Repo.class, repos);
                                     subscriber.onNext(repos.size());
                                     subscriber.onCompleted();
                                 })
@@ -76,8 +75,8 @@ public class Repository {
                 .flatMap(apiBuildHistory -> getBuilds(apiBuildHistory).mergeWith(getCommits(apiBuildHistory)));
     }
 
-    private Single<Integer> getBuilds(ApiBuildHistory apiBuildHistory) {
-        return Observable.just(apiBuildHistory.getBuilds())
+    private Single<Integer> getBuilds(BuildHistory buildHistory) {
+        return Observable.just(buildHistory.getBuilds())
                 .flatMapIterable(apiBuilds -> apiBuilds)
                 .map(ApiAdapter::fromApi)
                 .toList()
@@ -93,8 +92,8 @@ public class Repository {
                 .toSingle();
     }
 
-    private Single<Integer> getCommits(ApiBuildHistory apiBuildHistory) {
-        return Observable.just(apiBuildHistory.getCommits())
+    private Single<Integer> getCommits(BuildHistory buildHistory) {
+        return Observable.just(buildHistory.getCommits())
                 .flatMapIterable(apiCommits -> apiCommits)
                 .map(ApiAdapter::fromApi)
                 .toList()

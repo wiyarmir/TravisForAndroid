@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package es.guillermoorellana.travisforandroid.api.entity;
+package es.guillermoorellana.travisforandroid.services.network.model.entity;
 
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class ApiRepo implements Serializable {
+public class Repo implements Serializable {
     private static final long serialVersionUID = 8763033273883847886L;
 
     private int id;

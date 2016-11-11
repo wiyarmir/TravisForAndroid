@@ -18,8 +18,8 @@ package es.guillermoorellana.travisforandroid.model;
 
 import javax.inject.Inject;
 
-import es.guillermoorellana.travisforandroid.api.TravisApi;
-import es.guillermoorellana.travisforandroid.api.entity.ApiBuildDetails;
+import es.guillermoorellana.travisforandroid.services.network.TravisApi;
+import es.guillermoorellana.travisforandroid.services.network.model.entity.BuildDetails;
 import rx.Single;
 
 public class BuildDetailsModel {
@@ -30,7 +30,7 @@ public class BuildDetailsModel {
         mTravisApi = travisApi;
     }
 
-    public Single<ApiBuildDetails> getBuildDetails(long buildId) {
+    public Single<BuildDetails> getBuildDetails(long buildId) {
         return mTravisApi.build(buildId);
     }
 }

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package es.guillermoorellana.travisforandroid.api.entity;
+package es.guillermoorellana.travisforandroid.services.network.model.entity;
 
 import java.util.Date;
 
-public class ApiBuild {
+public class Build {
     private long commitId;
     private long duration;
     private Date finishedAt;

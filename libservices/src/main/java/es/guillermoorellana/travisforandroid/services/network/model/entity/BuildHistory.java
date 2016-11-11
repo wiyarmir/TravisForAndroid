@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-package es.guillermoorellana.travisforandroid.api.entity;
+package es.guillermoorellana.travisforandroid.services.network.model.entity;
 
-public class ApiBuildDetails {
-    private ApiBuild build;
-    private ApiCommit commit;
-    private ApiJob job;
+import java.util.List;
 
-    public ApiBuild getBuild() {
-        return build;
+import static java.util.Collections.emptyList;
+
+public class BuildHistory {
+    @SuppressWarnings("PMD.ImmutableField")
+    private List<Build> builds = emptyList();
+    @SuppressWarnings("PMD.ImmutableField")
+    private List<Commit> commits = emptyList();
+
+    public List<Build> getBuilds() {
+        return builds;
     }
 
-    public ApiCommit getCommit() {
-        return commit;
-    }
-
-    public ApiJob getJob() {
-        return job;
+    public List<Commit> getCommits() {
+        return commits;
     }
 }

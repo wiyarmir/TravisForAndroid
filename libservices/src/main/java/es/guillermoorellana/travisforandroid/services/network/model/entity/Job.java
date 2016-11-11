@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package es.guillermoorellana.travisforandroid.api.entity;
+package es.guillermoorellana.travisforandroid.services.network.model.entity;
 
 import java.util.Date;
 
-public class ApiJob {
+public class Job {
     private long id;
 
     private long repositoryId;

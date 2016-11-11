@@ -14,12 +14,12 @@
  *   limitations under the License.
  */
 
-package es.guillermoorellana.travisforandroid.api.entity;
+package es.guillermoorellana.travisforandroid.services.network.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class ApiCommit implements Serializable {
+public class Commit implements Serializable {
     private static final long serialVersionUID = 4390847522215353298L;
     public static final int SHORT_SHA_LENGTH = 7;
 
