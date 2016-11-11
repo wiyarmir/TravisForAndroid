@@ -44,7 +44,7 @@ import es.guillermoorellana.travisforandroid.ui.fragment.SingleRepoFragment;
 })
 public interface ApplicationComponent {
     @NonNull
-    TravisApi travisRestApi();
+    TravisApi travisApi();
 
     @NonNull
     ChangeableBaseUrl changeableBaseUrl();
