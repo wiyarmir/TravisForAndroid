@@ -1,25 +1,5 @@
-/*
- * Copyright 2015 Guillermo Orellana Ruiz
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'com.jakewharton.hugo'
-apply plugin: 'com.fernandocejas.frodo'
-apply plugin: 'jacoco-everywhere'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -82,19 +62,19 @@ dependencies {
     compile project(':liblogic')
     compile project(':libservices')
 
-    compile "com.jakewharton.timber:timber:4.1.0"
+    compile "com.jakewharton.timber:timber:4.5.1"
 
     // dagger2
-    compile "com.google.dagger:dagger:2.5"
-    apt "com.google.dagger:dagger-compiler:2.5"
+    compile "com.google.dagger:dagger:2.11"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.11"
     compile "javax.inject:javax.inject:1"
     compile "javax.annotation:javax.annotation-api:1.2"
 
     // reactive family
-    compile "io.reactivex:rxjava:1.2.2"
+    compile "io.reactivex:rxjava:1.3.0"
     compile "io.reactivex:rxandroid:1.2.1" // lazy guys not bumping...
     compile "com.artemzin.rxjava:proguard-rules:1.2.2.0"
-    compile "com.jakewharton.rxbinding:rxbinding:0.3.0"
+    compile "com.jakewharton.rxbinding:rxbinding:0.4.0"
     compile "com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0"
 
     compile "net.danlew:android.joda:2.9.0"
@@ -106,21 +86,21 @@ dependencies {
     compile "com.android.support:recyclerview-v7:$supportLibsVersion"
     compile "com.android.support:cardview-v7:$supportLibsVersion"
 
-    compile "com.jakewharton:butterknife:8.4.0"
-    apt "com.jakewharton:butterknife-compiler:8.4.0"
+    compile "com.jakewharton:butterknife:8.7.0"
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.7.0"
 
     compile "com.hannesdorfmann.mosby:mvp:2.0.0"
     compile "com.hannesdorfmann.mosby:viewstate:2.0.0"
     compile "com.hannesdorfmann.fragmentargs:annotation:3.0.0"
-    apt "com.hannesdorfmann.fragmentargs:processor:3.0.0"
+    annotationProcessor "com.hannesdorfmann.fragmentargs:processor:3.0.0"
 
-    apt "com.github.wiyarmir.DBFlow:dbflow-processor:$dbflowVersion"
+    annotationProcessor "com.github.wiyarmir.DBFlow:dbflow-processor:$dbflowVersion"
     compile "com.github.wiyarmir.DBFlow:dbflow-core:$dbflowVersion"
     compile "com.github.wiyarmir.DBFlow:dbflow:$dbflowVersion"
 
     provided "javax.annotation:jsr250-api:1.0"
-    provided "org.projectlombok:lombok:1.12.6"
-    apt "org.projectlombok:lombok:1.12.6"
+    provided "org.projectlombok:lombok:1.16.16"
+    annotationProcessor "org.projectlombok:lombok:1.16.16"
 
     // Developer tools (Developer Settings)
 
@@ -135,12 +115,12 @@ dependencies {
     testCompile "org.assertj:assertj-core:1.7.1"
     testCompile "nl.jqno.equalsverifier:equalsverifier:1.7.5"
     testCompile "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
-    testCompile "org.mockito:mockito-core:1.10.19"
+    testCompile "org.mockito:mockito-core:2.8.9"
 
-    androidTestCompile "com.android.support.test:runner:0.5"
-    androidTestCompile "com.android.support.test:rules:0.5"
-    androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
-    androidTestCompile("com.android.support.test.espresso:espresso-contrib:2.2.2") {
+    androidTestCompile "com.android.support.test:runner:1.0.0"
+    androidTestCompile "com.android.support.test:rules:1.0.0"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:3.0.0"
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:3.0.0") {
         // Causes IncompatibleClassChangeError. As always…
         exclude module: 'support-annotations'
         exclude module: 'recyclerview-v7'

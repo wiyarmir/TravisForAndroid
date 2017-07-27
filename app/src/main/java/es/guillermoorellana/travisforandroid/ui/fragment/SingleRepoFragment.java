@@ -45,7 +45,6 @@ import es.guillermoorellana.travisforandroid.model.Repo_Table;
 import es.guillermoorellana.travisforandroid.mvp.BaseFragment;
 import es.guillermoorellana.travisforandroid.ui.presenter.SingleRepoPresenter;
 import es.guillermoorellana.travisforandroid.ui.view.SingleRepoView;
-import hugo.weaving.DebugLog;
 
 @FragmentWithArgs
 public class SingleRepoFragment
@@ -58,7 +57,6 @@ public class SingleRepoFragment
     @Inject
     SingleRepoPresenter singlreRepoPresenter;
 
-    @DebugLog
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
